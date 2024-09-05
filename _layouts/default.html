@@ -1,7 +1,6 @@
 ---
 layout: compress
 ---
-
 <!doctype html>
 
 {% include origin-type.html %}
@@ -10,6 +9,10 @@ layout: compress
 
 {% if site.theme_mode %}
   {% capture prefer_mode %}data-mode="{{ site.theme_mode }}"{% endcapture %}
+{% endif %}
+
+{% if page.use_math %}
+  {% include mathjax_support.html %}
 {% endif %}
 
 <!-- `site.alt_lang` can specify a language different from the UI -->

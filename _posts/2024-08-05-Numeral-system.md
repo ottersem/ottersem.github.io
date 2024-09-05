@@ -3,8 +3,11 @@ layout: post
 title: Numeral System
 date: 2024-08-05 19:26:00
 description: 기수법(수를 표현하는 방법)
-tags: bit variable
+tags: 
+- Bit 
+- Variable
 categories: CS
+use_math: true
 ---
 
 # 기수법Numeral System
@@ -24,11 +27,11 @@ categories: CS
 ## 10진수를 2진수로
  10진수를 2진수로 바꾸기 위해선 다음과 같은 절차를 거친다. 예시로 25를 2진수로 표현하는 방법을 알아보자.
 1. 2의 거듭제곱의 합으로 쪼갠다
-	$$25 = 16 + 8 + 1 = 2^4 + 2^3 + 2^0$$
+	$25 = 16 + 8 + 1 = 2^4 + 2^3 + 2^0$
 2. $2^2, 2^1$ 처럼 중간에 빠진 지수는 0을 이용해 표현한다
-	$$25 = 1\times2^4 + 1\times2^3 + 0\times2^2 + 0\times2^1 + 1\times2^0$$
+	$25 = 1\times2^4 + 1\times2^3 + 0\times2^2 + 0\times2^1 + 1\times2^0$
 3. 2의 거듭제곱 수를 제외하고 앞의 수 1과 0만 모아 나열한다.
-	$$1\times2^4 + 1\times2^3 + 0\times2^2 + 0\times2^1 + 1\times2^0 = 11001$$
+	$1\times2^4 + 1\times2^3 + 0\times2^2 + 0\times2^1 + 1\times2^0 = 11001$
  해당 변환은 bin()함수를 활용해 간단하게 계산 할 수 있다.
 ```
 >>>bin(25)
@@ -39,14 +42,14 @@ categories: CS
 ## 16진수를 2진수로
  16진수 한 자리는 2진수 네 자릿수까지 표현할 수 있다.
  0에서 9까지의 2진수 변환은 10진수의 변환과 같으므로 a에서 f까지를 2진수로 변환하면 다음과 같다.
-$$\begin{matrix}
+$\begin{matrix}
 a = 1010\\
 b = 1011\\
 c = 1100\\
 d = 1101\\
 e = 1110\\
 f = 1111
-\end{matrix}$$
+\end{matrix}$
  hex()함수를 활용하여 간단하게 16진수를 변환할 수도 있다.
 ```python
 >>>hex(0b00101101)
