@@ -82,28 +82,36 @@
   ],
   "skills": [
     {
-      "name": "Physics",
-      "level": "Master",
+      "name": "Language",
+      "level": "Intermediate",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
+        "Python",
+        "SQL",
+        "MEL(Maya Embedded Language)",
+        "C++"
+      ]
+    },
+    {
+      "name": "Data Analysis",
+      "level": "Novice",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Pandas",
+        "Seaborn",
+        "Matplot Library"
       ]
     }
   ],
   "languages": [
     {
       "language": "Korean",
-      "fluency": "Native speaker",
+      "fluency": "Native Speaker",
       "icon": ""
     },
     {
       "language": "English",
-      "fluency": "Fluent",
+      "fluency": ["Toeic : 880"],
       "icon": ""
     }
   ],
@@ -124,7 +132,7 @@
   "projects": [
     {
       "name": "Application Modernization",
-      "summary": "Modernize and integrate Eldim(optical metrology engineering company)'s software.",
+      "summary": "Modernize and integrate Eldim(optical metrology engineering company)'s opearting software.",
       "highlights": ["Qt", "Python"],
       "startDate": "2024-06-10",
       "endDate": "2024-11-23",

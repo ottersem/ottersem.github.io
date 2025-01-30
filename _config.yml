@@ -9,11 +9,10 @@ last_name: Park
 contact_note: >
   Contact me by e-mail please.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Blog and CV about Machine Learning, Computer Vision, Data Science, Python.
+  CV and Blog about Machine Learning, Computer Vision, Data Science, Python.
 footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+  Powered by Seungmin Park.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
 keywords: Computer Vision, Machine Learning, Data Science # add your own keywords or leave empty
 lang: ko # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: J # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -29,8 +28,8 @@ back_to_top: true # set to false to disable the back to top button
 # -----------------------------------------------------------------------------
 
 # repo color theme
-repo_theme_light: swift # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
-repo_theme_dark: codeSTACKr # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
+repo_theme_light: default # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
+repo_theme_dark: vue-dark # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
 repo_trophies:
   enabled: true
   theme_light: flat # https://github.com/ryo-ma/github-profile-trophy
