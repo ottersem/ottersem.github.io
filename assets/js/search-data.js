@@ -44,7 +44,73 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "news-a-simple-inline-announcement",
+        },{id: "post-variable",
+      
+        title: "Variable",
+      
+      description: "변수",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Variable/";
+        
+      },
+    },{id: "post-string",
+      
+        title: "String",
+      
+      description: "문자열의 표현",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/String/";
+        
+      },
+    },{id: "post-real-number",
+      
+        title: "Real Number",
+      
+      description: "실수의 표현",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Real-Number/";
+        
+      },
+    },{id: "post-integer",
+      
+        title: "Integer",
+      
+      description: "양,음의 정수와 표현",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Integer/";
+        
+      },
+    },{id: "post-numeral-system",
+      
+        title: "Numeral System",
+      
+      description: "기수법(수를 표현하는 방법)",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Numeral-system/";
+        
+      },
+    },{id: "post-bits-and-variables",
+      
+        title: "Bits and Variables",
+      
+      description: "비트와 변수에 대한 간략한 설명",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/bits-and-variables/";
+        
+      },
+    },{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
           section: "News",},{id: "news-a-long-announcement-with-details",
