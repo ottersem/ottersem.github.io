@@ -3,7 +3,7 @@ layout: post
 title: Real Number
 date: 2024-08-06 15:58:00
 description: 실수의 표현
-tags: Real number, floating point, double precision
+tags: Real_number floating_point double_precision
 categories: CS
 pretty_table: true
 ---

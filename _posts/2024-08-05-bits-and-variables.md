@@ -3,7 +3,7 @@ layout: post
 title: Bits and Variables
 date: 2024-08-05 19:00:00
 description: 비트와 변수에 대한 간략한 설명
-tags: bit, variable
+tags: bit variable
 categories: CS
 ---
 

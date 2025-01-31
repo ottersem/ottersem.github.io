@@ -3,7 +3,7 @@ layout: post
 title: Numeral System
 date: 2024-08-05 19:26:00
 description: 기수법(수를 표현하는 방법)
-tags: bit, variable
+tags: bit variable
 categories: CS
 ---
 
