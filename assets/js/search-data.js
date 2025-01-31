@@ -44,7 +44,73 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-variable",
+        },{id: "post-class",
+      
+        title: "Class",
+      
+      description: "메서드 오버라이딩과 다형성(Polymorphism)",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Class/";
+        
+      },
+    },{id: "post-method-overriding-and-polymorphism",
+      
+        title: "Method Overriding and Polymorphism",
+      
+      description: "메서드 오버라이딩과 다형성(Polymorphism)",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Method-Overriding-and-polymorphism/";
+        
+      },
+    },{id: "post-object-oriented-programming",
+      
+        title: "Object Oriented Programming",
+      
+      description: "객체 지향 프로그래밍",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Object-Oriented-Programming/";
+        
+      },
+    },{id: "post-procedural-programming",
+      
+        title: "Procedural Programming",
+      
+      description: "절차 지향 프로그래밍",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Procedural-Programming/";
+        
+      },
+    },{id: "post-perceptron",
+      
+        title: "Perceptron",
+      
+      description: "퍼셉트론",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Perceptron/";
+        
+      },
+    },{id: "post-argument",
+      
+        title: "Argument",
+      
+      description: "인자",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Argument/";
+        
+      },
+    },{id: "post-variable",
       
         title: "Variable",
       
