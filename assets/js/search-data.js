@@ -44,15 +44,81 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-class",
+        },{id: "post-initial-value-of-weight",
+      
+        title: "Initial value of weight",
+      
+      description: "가중치의 초기값",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Initial-value-of-weight/";
+        
+      },
+    },{id: "post-batch-normalization",
+      
+        title: "Batch Normalization",
+      
+      description: "배치 정규화",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Batch-Normalization/";
+        
+      },
+    },{id: "post-parameter-renewal",
+      
+        title: "Parameter Renewal",
+      
+      description: "파라미터 갱신",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Parameter-Renewal/";
+        
+      },
+    },{id: "post-backpropagation",
+      
+        title: "Backpropagation",
+      
+      description: "오차역전파법",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Backpropagation/";
+        
+      },
+    },{id: "post-class",
       
         title: "Class",
       
-      description: "메서드 오버라이딩과 다형성(Polymorphism)",
+      description: "클래스",
       section: "Posts",
       handler: () => {
         
           window.location.href = "/blog/2024/Class/";
+        
+      },
+    },{id: "post-gradient-method",
+      
+        title: "Gradient Method",
+      
+      description: "뉴럴 네트워크에서의 경사법(Gradient Method)",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Gradient-Method/";
+        
+      },
+    },{id: "post-nn-derivative",
+      
+        title: "NN Derivative",
+      
+      description: "뉴럴 네트워크에서의 미분",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/NN-Derivative/";
         
       },
     },{id: "post-method-overriding-and-polymorphism",
@@ -64,6 +130,17 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2024/Method-Overriding-and-polymorphism/";
+        
+      },
+    },{id: "post-nn-learning",
+      
+        title: "NN Learning",
+      
+      description: "뉴럴 네트워크에서의 학습",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/NN-Learning/";
         
       },
     },{id: "post-object-oriented-programming",
@@ -97,6 +174,17 @@ ninja.data = [{
       handler: () => {
         
           window.location.href = "/blog/2024/Perceptron/";
+        
+      },
+    },{id: "post-neural-network",
+      
+        title: "Neural Network",
+      
+      description: "뉴럴 네트워크",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Neural-Network/";
         
       },
     },{id: "post-argument",
