@@ -44,7 +44,73 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-initial-value-of-weight",
+        },{id: "post-performance-measurement-of-regression-model",
+      
+        title: "Performance measurement of Regression Model",
+      
+      description: "RMSE와 MAE를 활용한 회귀 모델의 성능 측정",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/RMSE-And-MAE/";
+        
+      },
+    },{id: "post-data-scaling-for-regression-modeling",
+      
+        title: "Data Scaling for Regression Modeling",
+      
+      description: "회귀 모델링을 위한 데이터 표준화",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Data-Scaling-for-Regression-Modeling/";
+        
+      },
+    },{id: "post-classification",
+      
+        title: "Classification",
+      
+      description: "분류 문제의 정의와 종류",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Classification/";
+        
+      },
+    },{id: "post-regression",
+      
+        title: "Regression",
+      
+      description: "회귀분석",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Regression/";
+        
+      },
+    },{id: "post-logistic-regression",
+      
+        title: "Logistic Regression",
+      
+      description: "로지스틱 회귀분석",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Logistic-Regression/";
+        
+      },
+    },{id: "post-categorical-variable",
+      
+        title: "Categorical Variable",
+      
+      description: "범주형 변수",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2024/Categorical-Variable/";
+        
+      },
+    },{id: "post-initial-value-of-weight",
       
         title: "Initial value of weight",
       
