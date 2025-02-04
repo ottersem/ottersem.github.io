@@ -6,7 +6,8 @@ description: 퍼셉트론
 tags: Perceptron
 categories: DL
 pretty_table: true
-
+toc:
+  beginning: true
 ---
 # Perceptron
 - 퍼셉트론 : 다수의 신호를 입력받아 하나의 신호를 출력한다.

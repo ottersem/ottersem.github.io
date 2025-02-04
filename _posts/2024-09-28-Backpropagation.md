@@ -6,6 +6,8 @@ description: 오차역전파법
 tags: Neural_Network
 categories: DL
 pretty_table: true
+toc:
+  beginning: true
 ---
 
 # Backpropagation

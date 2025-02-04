@@ -5,6 +5,8 @@ date: 2024-09-06 12:27:00
 description: 객체 지향 프로그래밍
 tags: Object_Oriented_Programming OOP
 categories: CS
+toc:
+  beginning: true
 ---
 
 # 객체 지향 프로그래밍Object-Oriented

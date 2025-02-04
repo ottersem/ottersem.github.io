@@ -6,6 +6,8 @@ description: 뉴럴 네트워크
 tags: Neural_Network
 categories: DL
 pretty_table: true
+toc:
+  beginning: true
 ---
 
 # Neural Networks 
