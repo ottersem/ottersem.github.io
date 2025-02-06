@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/people/";
           },
-        },{id: "post-performance-measurement-of-regression-model",
+        },{id: "post-outlier-scan",
+      
+        title: "Outlier Scan",
+      
+      description: "이상치의 탐지",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Outlier-Scan/";
+        
+      },
+    },{id: "post-performance-measurement-of-regression-model",
       
         title: "Performance measurement of Regression Model",
       
@@ -52,7 +63,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/RMSE-And-MAE/";
+          window.location.href = "/blog/2025/RMSE-And-MAE/";
         
       },
     },{id: "post-data-scaling-for-regression-modeling",
@@ -63,7 +74,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/Data-Scaling-for-Regression-Modeling/";
+          window.location.href = "/blog/2025/Data-Scaling-for-Regression-Modeling/";
         
       },
     },{id: "post-classification",
@@ -74,7 +85,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/Classification/";
+          window.location.href = "/blog/2025/Classification/";
         
       },
     },{id: "post-regression",
@@ -85,7 +96,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/Regression/";
+          window.location.href = "/blog/2025/Regression/";
         
       },
     },{id: "post-logistic-regression",
@@ -96,7 +107,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/Logistic-Regression/";
+          window.location.href = "/blog/2025/Logistic-Regression/";
         
       },
     },{id: "post-categorical-variable",
@@ -107,7 +118,7 @@ ninja.data = [{
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2024/Categorical-Variable/";
+          window.location.href = "/blog/2025/Categorical-Variable/";
         
       },
     },{id: "post-initial-value-of-weight",
