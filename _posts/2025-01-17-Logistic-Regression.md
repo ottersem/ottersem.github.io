@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Logistic Regression
-date: 2024-10-17 14:26:00
+date: 2025-01-17 14:26:00
 description: 로지스틱 회귀분석
 tags: Logistic_Regression, Odds, Logit, Sigmoid
 categories: ML

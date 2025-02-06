@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Classification
-date: 2024-10-20 23:45:00
+date: 2025-01-20 23:45:00
 description: 분류 문제의 정의와 종류
 tags: Binary_Classification, Multi-Class_Classification
 categories: ML

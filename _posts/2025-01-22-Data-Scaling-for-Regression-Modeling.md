@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Data Scaling for Regression Modeling
-date: 2024-10-22 15:58:00
+date: 2025-01-22 15:58:00
 description: 회귀 모델링을 위한 데이터 표준화
 tags: Standard_Scaler, Regression
 categories: ML

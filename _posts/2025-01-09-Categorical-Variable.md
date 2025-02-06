@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Categorical Variable
-date: 2024-10-09 20:24:00
+date: 2025-01-09 20:24:00
 description: 범주형 변수
 tags: Categorical_Variable, Nominal_Variable, Ordinal_Variable
 categories: ML

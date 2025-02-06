@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Regression
-date: 2024-10-17 16:17:00
+date: 2025-01-17 16:17:00
 description: 회귀분석
 tags: Regression, SLR, MLR, Multicollinearity
 categories: ML
