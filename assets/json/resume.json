@@ -25,7 +25,7 @@
       "startDate": "2020-03-01",
       "endDate": "2026-03-01",
       "score": "3.3",
-      "courses": ["Object Oriented Programming", "Data Storage and Application", 
+      "courses": ["Advanced Visual Effects Technique","Object Oriented Programming", "Data Storage and Application", 
       "Image Processing and Vision","Artificial Intelligence and Machine Learning", "Intelligent Vision"]
     }
   ],
@@ -110,15 +110,11 @@
   ],
   "interests": [
     {
-      "name": "Physics",
+      "name": "Computer Science",
       "icon": "fa-solid fa-tag",
       "keywords": [
-        "Quantum Mechanics",
-        "Quantum Computing",
-        "Quantum Information",
-        "Quantum Cryptography",
-        "Quantum Communication",
-        "Quantum Teleportation"
+        "Deep Learning Algorithm",
+        "Computer Vision"
       ]
     }
   ],
