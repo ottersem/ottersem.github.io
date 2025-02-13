@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-outlier-scan",
+        },{id: "post-difference-between-removing-outliers-before-vs-after-splitting-the-data",
+      
+        title: "Difference Between Removing Outliers Before vs. After Splitting the Data",
+      
+      description: "이상치 제거와 데이터 분할 순서에 따르는 차이점",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Difference-Between-Removing-Outliers-Timing/";
+        
+      },
+    },{id: "post-outlier-scan",
       
         title: "Outlier Scan",
       
