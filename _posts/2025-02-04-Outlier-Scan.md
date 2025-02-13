@@ -6,6 +6,8 @@ description: 이상치의 탐지
 tags: Z-Score, IQR, DBSCAN, LOF
 categories: ML
 pretty_table: true
+toc:
+  beginning: true
 ---
 
 # 이상치 탐지

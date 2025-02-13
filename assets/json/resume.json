@@ -111,10 +111,20 @@
   "interests": [
     {
       "name": "Computer Science",
-      "icon": "fa-solid fa-tag",
+      "icon": "fa-solid fa-desktop",
       "keywords": [
         "Deep Learning Algorithm",
         "Computer Vision"
+      ]
+    },
+    {
+      "name": "One man band",
+      "icon": "fa-solid fa-music",
+      "keywords": [
+        "Guitar",
+        "Keyboard Instrument",
+        "Bass Guitar",
+        "Wind Instrument"
       ]
     }
   ],
