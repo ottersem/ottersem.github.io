@@ -46,10 +46,10 @@ toc:
         {% include figure.liquid loading="eager" path="assets/img/GE_project/Reference1.jpeg" title="ref1" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/Reference2.jpeg" title="ref2" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/Reference2.gif" title="ref2" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/Reference3.jpeg" title="ref3" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/Reference3.png" title="ref3" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -382,13 +382,13 @@ J는 일관된 태도로 묵묵히 3D만 작업했다. 아니, 작업할 수밖�
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/J1.png" title="ref1" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/J1.png" title="J1" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/J2.png" title="ref2" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/J2.png" title="J2" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/J3.png" title="ref3" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/J3.png" title="J3" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -400,13 +400,13 @@ J는 일관된 태도로 묵묵히 3D만 작업했다. 아니, 작업할 수밖�
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/M1.png" title="ref1" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/M1.png" title="M1" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/M2.png" title="ref2" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/M2.jpeg" title="M2" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/GE_project/M3.png" title="ref3" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/GE_project/M3.jpeg" title="M3" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
