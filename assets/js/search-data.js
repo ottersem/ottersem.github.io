@@ -356,7 +356,12 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{
+          section: "News",},{id: "projects-gameengine-team-project-assignment",
+          title: 'GameEngine team-project assignment',
+          description: "Focusing on Unity&#39;s C# scripting",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/Game_Engine_Assignment/";
+            },},{
       id: 'light-theme',
       title: 'Change theme to light',
       description: 'Change the theme of the site to Light',
