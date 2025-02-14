@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: GameEngine team assignment
+title: GameEngine Team Assignment
 description: Focusing on Unity's C# scripting
 img: assets/img/GE_project/Thumbnail.jpeg
 importance: 1
@@ -9,7 +9,7 @@ toc:
   - name: Team up
   - name: Before we start...
   - name: What we gonna do is...
-  - name: What i develpoed is...
+  - name: What I developed is...
     subsections:
       - name: Camera.cs
       - name: DialogueUI.cs
@@ -80,7 +80,7 @@ toc:
     시나리오 로드맵. 조건부로 분기를 나눠 멀티 엔딩을 구현하는 방향으로 진행...
 </div>
 
-# What i develpoed is...
+# What I develpoed is...
 개발을 시작하기에 앞서 나 뿐 아니라 팀원들도 개발된 스크립트의 수치 조정이 용이했어야 하므로 이를 염두에 두고 제작했다. 사실 C# 스크립팅은 처음이라 6할은 GPT가 제작했다고 해도 과언이 아니다. 아무튼, Camera Control과 Character Movement를 먼저 작업해 나가기 시작했다. Isometric 시점에서의 카메라의 위치 조절과 이에 상응하는 무브먼트를 제작했어야 하는데 다행히 수업 중 배웠던 내용으로 빠르게 커버할 수 있었다.
 
 ## Camera.cs
