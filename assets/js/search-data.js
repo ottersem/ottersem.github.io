@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-difference-between-removing-outliers-before-vs-after-splitting-the-data",
+        },{id: "post-imbalanced-data",
+      
+        title: "Imbalanced Data",
+      
+      description: "데이터 불균형",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Imbalanced-Data/";
+        
+      },
+    },{id: "post-feature-engineering-1",
+      
+        title: "Feature Engineering(1)",
+      
+      description: "피처 엔지니어링",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Feature-Engineering(1)/";
+        
+      },
+    },{id: "post-difference-between-removing-outliers-before-vs-after-splitting-the-data",
       
         title: "Difference Between Removing Outliers Before vs. After Splitting the Data",
       
