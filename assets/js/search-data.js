@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-imbalanced-data",
+        },{id: "post-dimensionality-reduction",
+      
+        title: "Dimensionality Reduction",
+      
+      description: "PCA와 LDA를 활용한 차원축소",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Dimensionality-Reduction/";
+        
+      },
+    },{id: "post-imbalanced-data",
       
         title: "Imbalanced Data",
       
