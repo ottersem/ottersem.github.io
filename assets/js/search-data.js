@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-dimensionality-reduction",
+        },{id: "post-model-optimization",
+      
+        title: "Model Optimization",
+      
+      description: "하이퍼 파라미터 튜닝과 모델 최적화",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Model-Optimization/";
+        
+      },
+    },{id: "post-dimensionality-reduction",
       
         title: "Dimensionality Reduction",
       
