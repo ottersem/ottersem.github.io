@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Model Optimization
-date: 2025-03-10 16:38:00
+date: 2025-03-14 16:38:00
 description: 하이퍼 파라미터 튜닝과 모델 최적화
 tags: Overfitting, Cross-Validation, K-Fold
 categories: ML
