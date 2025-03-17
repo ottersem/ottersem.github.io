@@ -37,7 +37,40 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-model-optimization",
+        },{id: "post-polynomial-features",
+      
+        title: "Polynomial Features",
+      
+      description: "PolynomialFeatures를 활용한 피처의 다항식 조합 생성",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Polynomial-Features/";
+        
+      },
+    },{id: "post-feature-importances-and-feature-selection",
+      
+        title: "Feature Importances and Feature Selection",
+      
+      description: "피처 중요도와 피처 선택",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Feature-Importacnes-and-Selection/";
+        
+      },
+    },{id: "post-binning",
+      
+        title: "Binning",
+      
+      description: "Binning을 통한 데이터 범주화",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Binning/";
+        
+      },
+    },{id: "post-model-optimization",
       
         title: "Model Optimization",
       
