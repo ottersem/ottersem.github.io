@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-polynomial-features",
+        },{id: "post-ensemble-1",
+      
+        title: "Ensemble-1",
+      
+      description: "앙상블 모델 - 보팅과 스태킹을 중심으로",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Ensemble1/";
+        
+      },
+    },{id: "post-lightgbm",
+      
+        title: "LightGBM",
+      
+      description: "LightGBM과 그 설명",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/LightGBM/";
+        
+      },
+    },{id: "post-polynomial-features",
       
         title: "Polynomial Features",
       
