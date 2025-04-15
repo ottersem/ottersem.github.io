@@ -455,7 +455,12 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "projects-gameengine-team-assignment",
+          section: "News",},{id: "projects-car-insurance-fraud-detection",
+          title: 'Car Insurance Fraud Detection',
+          description: "Car Insurance Fraud Detection",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/Car_Insurance_Fraud_Detection/";
+            },},{id: "projects-gameengine-team-assignment",
           title: 'GameEngine Team Assignment',
           description: "Focusing on Unity&#39;s C# scripting",
           section: "Projects",handler: () => {
