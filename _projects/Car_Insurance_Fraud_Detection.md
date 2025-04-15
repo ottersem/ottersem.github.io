@@ -1,8 +1,8 @@
 ---
 layout: distill
 title: Car Insurance Fraud Detection
-description: Car Insurance Fraud Detection
-img: assets/img/GE_project/Thumbnail.jpeg
+description: Ensemble-based approach to detect fraudulent car insurance claims with high specificity.
+img: assets/img/Car_Insurance/EDA/EDA7.png
 importance: 1
 category: work
 toc:
