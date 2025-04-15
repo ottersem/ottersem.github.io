@@ -120,9 +120,9 @@ marital\_status, address\_change\_ind, accident\_site, channel 등의 변수는 
 해당 플롯은 모델로부터 얻어진 class=1 의 확률 분포를 히스토그램 형태로 나타낸 것이다.
 대다수의 샘플이 0.0 ~ 0.2 구간에 몰려 있으며, 사기라고 예측된 강한 신호는 상대적으로 드물며, 0.2, 0.3, 0.5의 세 가지 threshold를 기준으로 분포의 컷오프를 시각적으로 비교할 수 있도록 설정하였다.
 - 0.5: Precision은 높지만 Recall이 낮음
-	- 0.3: 보다 균형 잡힌 전략
-	- 0.2: Recall을 극대화할 수 있음 (false positive 위험 존재)
-	- 
+- 0.3: 보다 균형 잡힌 전략
+- 0.2: Recall을 극대화할 수 있음 (false positive 위험 존재)
+
 위 플롯을 통해 클래스 불균형이 존재하는 상황에서 적절한 threshold 조정은 Precision-Recall trade-off를 제어하는 핵심 도구가 될 수 있음을 시사한다.
 
 <div class="row">
@@ -296,13 +296,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### XGBoost
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP1.png" title="SHAP1" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_1.png" title="SHAP_1" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP2.png" title="SHAP2" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_2.png" title="SHAP_2" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP3.png" title="SHAP3" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_3.png" title="SHAP_3" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -314,13 +314,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### CatBoost
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP4.png" title="SHAP4" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_4.png" title="SHAP_4" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP5.png" title="SHAP5" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_5.png" title="SHAP_5" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP6.png" title="SHAP6" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_6.png" title="SHAP_6" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -332,13 +332,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### LightGBM
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP7.png" title="SHAP7" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_7.png" title="SHAP_7" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP8.png" title="SHAP8" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_8.png" title="SHAP_8" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP9.png" title="SHAP9" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_9.png" title="SHAP_9" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
