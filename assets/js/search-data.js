@@ -457,7 +457,7 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "projects-car-insurance-fraud-detection",
           title: 'Car Insurance Fraud Detection',
-          description: "Car Insurance Fraud Detection",
+          description: "Ensemble-based approach to detect fraudulent car insurance claims with high specificity.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/Car_Insurance_Fraud_Detection/";
             },},{id: "projects-gameengine-team-assignment",
