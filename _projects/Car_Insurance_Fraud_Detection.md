@@ -120,9 +120,9 @@ marital\_status, address\_change\_ind, accident\_site, channel 등의 변수는 
 해당 플롯은 모델로부터 얻어진 class=1 의 확률 분포를 히스토그램 형태로 나타낸 것이다.
 대다수의 샘플이 0.0 ~ 0.2 구간에 몰려 있으며, 사기라고 예측된 강한 신호는 상대적으로 드물며, 0.2, 0.3, 0.5의 세 가지 threshold를 기준으로 분포의 컷오프를 시각적으로 비교할 수 있도록 설정하였다.
 - 0.5: Precision은 높지만 Recall이 낮음
-	- 0.3: 보다 균형 잡힌 전략
-	- 0.2: Recall을 극대화할 수 있음 (false positive 위험 존재)
-	- 
+- 0.3: 보다 균형 잡힌 전략
+- 0.2: Recall을 극대화할 수 있음 (false positive 위험 존재)
+
 위 플롯을 통해 클래스 불균형이 존재하는 상황에서 적절한 threshold 조정은 Precision-Recall trade-off를 제어하는 핵심 도구가 될 수 있음을 시사한다.
 
 <div class="row">
