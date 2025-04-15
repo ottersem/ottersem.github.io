@@ -296,13 +296,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### XGBoost
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP1.png" title="SHAP1" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP1.png" title="SHAP_1" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP2.png" title="SHAP2" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP2.png" title="SHAP_2" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP3.png" title="SHAP3" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP3.png" title="SHAP_3" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -314,13 +314,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### CatBoost
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP4.png" title="SHAP4" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP4.png" title="SHAP_4" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP5.png" title="SHAP5" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP5.png" title="SHAP_5" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP6.png" title="SHAP6" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP6.png" title="SHAP_6" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -332,13 +332,13 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 ### LightGBM
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP7.png" title="SHAP7" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP7.png" title="SHAP_7" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP8.png" title="SHAP8" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP8.png" title="SHAP_8" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP9.png" title="SHAP9" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP9.png" title="SHAP_9" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
