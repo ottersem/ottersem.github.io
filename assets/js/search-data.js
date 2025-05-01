@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ensemble-1",
+        },{id: "post-linear-algebra",
+      
+        title: "Linear Algebra",
+      
+      description: "Linear Algebra from MML",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Linear-Algebra/";
+        
+      },
+    },{id: "post-ensemble-1",
       
         title: "Ensemble-1",
       
