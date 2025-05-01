@@ -31,6 +31,34 @@ toc:
 
 본 해커톤에서 제공한 학습 데이터 셋은 약 1만 3천개의 보험 청구 기록 데이터와 25개의 피처가 포함되었다. 이 중 수치형, 범주형 피처가 혼합되어 있으며. 일부 피처는 불균형 분포와 결측치를 포함하고 있다.
 
+> 피쳐 정보
+ID : 고유ID
+age_of driver : 운전자 나이
+gender : 운전자 성별
+marital_status : 결혼 상태
+safty_rating : 운전자의 안전점수
+annual_income : 연간소득(단위:달러)
+high_education_ind : 운전자의 학력
+address_change_ind : 운전자의 주소변경 여부
+living_status : 자동차 소유상태
+claim_day_of_week : 청구된 접수된 요일
+accident_site  : 사고 발생 지역
+past_num_of claims : 과거 청구 건수
+witness_present_ind : 목격자 여부
+liab_prct : 운전자 과실 비율(%)
+channel : 청구 접수 매체
+policy_report_filed_ind : 경찰 신고 접수 여부
+claim_est_payout : 보험금 지급 추정 비율(%)
+age_of_vehicle : 자동차 연식
+vehicle_category : 자동차 카테고리
+vehicle_price : 자동차 가격(단위:달러)
+vehicle_color : 자동차 색깔
+vehicle_weight : 자동차 무게(kg)
+fraud : 사기여부
+year : 청구(년)
+month : 청구(월)
+day : 청구(일)
+
 ## Process
 본 프로젝트의 전체 수행 프로세스는 다음과 같다.
 1. EDA : 데이터의 구조, 분포, 이상치 및 결측치 파악
