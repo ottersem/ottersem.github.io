@@ -660,3 +660,144 @@ $$\tilde{A_\Phi} = T^{-1}A_\Phi S$$
 > $$\rightarrow \tilde{A_\Phi} = T^{-1}A_\Phi S$$
 
 > 임을 알 수 있고, 이 마지막 식이 **기저 변경에 따른 선형 사상의 행렬 표현 변환 법칙**이다.
+
+### Equivalence
+$A, \tilde{A} \in \mathbb{R}^{m\times n}$은 $\tilde{A} = T^{-1}AS$를 따르는 정규 행렬 $S \in \mathbb{R}^{n\times n}$과 $T \in \mathbb{R}^{m\times m}$이 존재하면 등가법칙을 따른다.
+
+### Similarity
+$A, \tilde{A} \in \mathbb{R}^{n\times n}$은 $\tilde{A} = S^{-1}AS$를 따르는 $S \in \mathbb{R}^{n\times n}$이 존재하면 **유사**하다. 이 때, similarity를 가지는 행렬은 언제나 equivalente하지만, 그 역은 성립하지 않는다.
+
+### 고려해야 할 점
+벡터공간 $V, W, X$가 존재할 때, 위 정리에 따르면 사상 $\Phi : V \rightarrow W$ 와 $\Psi : W \rightarrow X$ 이 선형이면  $\Phi \circ \Psi : V \rightarrow X$ 또한 선형이다. 상응하는 사상의 변환행렬 $A_\Phi$와 $A_\Psi$가 존재하면 $A_{\Psi \circ \Phi} = A_\Psi A_\Phi$로 작성할 수 있다.
+
+그럼 이제 기저 변환을 선형 사상들의 합성 관점에서 바라볼 수 있다.
+- $A_\Phi$는 선형 사상 $\Phi_{CB} : V \rightarrow W$의 변환 행렬이다.
+- $\tilde{A_\Phi}$는 선형 사상 $\Phi_{\tilde{C}\tilde{B}} : V \rightarrow W$의 변환행렬이다.
+- $S$는 $\tilde{B}$ 를 $B$의 관점에서 표현하는 선형 사상 $\Psi_{B\tilde{B}}:V\rightarrow V$(자기동형사상)의 좌표변환행렬이다. 일반적으로, $\Psi = \mathrm{id}_V$는 $V$의 단위행렬이다.
+- $T$는 $\tilde{C}$ 를 $C$의 관점에서 표현하는 선형 사상 $\Xi_{C\tilde{C}}:W\rightarrow W$(자기동형사상)의 변환행렬이다. 일반적으로, $\Xi = \mathrm{id}_W$는 $W$의 단위행렬이다.
+
+위 선형 사상들의 합성 관점에서 바라본 기저 변환을 요약하면
+
+$$ A_\Phi:B\rightarrow C,\quad \tilde{A_\Phi}:\tilde{B} \rightarrow \tilde{C}, \quad S: \tilde{B} \rightarrow B, \quad T: \tilde{C} \rightarrow C, \quad T^{-1}: C\rightarrow \tilde{C} $$
+
+이고,
+
+$$ 
+\tilde{B} \rightarrow \tilde{C} = {\color{blue} \tilde{B} \rightarrow B} {\color{red} \rightarrow C} \rightarrow \tilde{C}
+
+$$
+
+$$\tilde{A_\Phi} = T^{-1}{\color{red}A_\Phi}{\color{blue}S} $$
+
+임을 알 수 있다.
+
+바로 위의 수식에서 식은 오른쪽에서 왼쪽으로 수행되는데, 그 이유는 선형 사상들이 벡터 오른쪽에 곱해지는 구조이기 때문이다. 따라서 변환의 흐름은
+
+$$x \mapsto Sx \mapsto A_{\Phi}(Sx) \mapsto T^{-1}(A_{\Phi}(Sx)) = \tilde{A}_{\Phi}x$$ 
+
+와 같이 진행된다.
+
+## 상과 영공간(Image and Kernel)
+**상(_Image/Range_)** 과 **영공간(_Kernel/Null Space_)** 은 몇가지 중요한 성질을 가진 벡터 부분 공간이다.
+선형 사상 $\Phi : V \rightarrow W$에서 영공간은 다음과 같이 정의한다.$$\mathrm{ker}(\Phi) := \Phi^{-1}(0_W) = \{v \in V: \Phi(v)=0_W \}$$
+풀어서 해석하자면 $\Phi(V)=0$이 되는 모든 $v \in V$의 집합이며, 걸러져서 0이 되는 방향임을 의미한다. 비유하자면 $V$는 입력 공간, $\Phi$는 선형 필터와 같다.
+
+선형 사상 $\Phi : V \rightarrow W$에서 상은 다음과 같이 정의한다.
+
+$$
+\mathrm{Im}(\Phi) := \Phi(V) = \{w \in W |\exists v\in V : \Phi(v) = w\}
+$$
+
+풀어서 해석하자면 $v \in V$가 존재해서 $\Phi(v) = w$가 된다는 의미이며, 필터를 통과한 정보가 도달되는 공간이라고 볼 수 있다.
+
+또한 각각 $V,W$를 $\Phi$의 $domain$과 $codomain$라고 부르기도 한다.
+
+임의의 벡터 공간 $V,W$의 선형 사상 $\Phi : W \rightarrow W$에서 다음 특성을 가진다.
+- $V$의 영벡터 $0_V$는 항상 $W$의 영벡터 $0_W$로 매핑($\Phi(0_V)=0_W$)된다. 따라서 $0_V \in \mathrm{ker}(\Phi)$이며, 커널은 최소한 영벡터 하나는 항상 포함하므로 절대 비어있지 않다.
+- $\mathrm{Im}(\Phi) \subseteq W$는 항상 $W$의 부분 공간이며, $\mathrm{ker}(\Phi) \subseteq V$는 $V$의 부분 공간이다.
+- $\Phi$는 단사(Injective)일 때이자 그 때에만 $\mathrm{ker}(\Phi)=\{0\}$이다.
+
+### 영공간과 열공간
+임의의 행렬 $A \in \mathbb{R}^{m\times n}$과 임의의 선형 사상 $\Phi : \mathbb{R}^n \rightarrow \mathbb{R}^m, x\mapsto Ax$이 존재한다고 가정하자($\mapsto$는 mapping을 의미).
+
+- $a_i$ 가 $A$의 열인 모든 $A = [a_1, \dots, a_2]$에 대해 다음 수식을 얻을 수 있다.
+
+$$\begin{align}
+\mathrm{Im}(\Phi) &= \{Ax:x\in \mathbb{R}^n\}=\{\sum_{i=1}^nx_ia_i:x1, \dots, x_n \in \mathbb{R}\} \\
+&=span[a_1, \dots, a_n] \subseteq \mathbb{R}^m
+\end{align}
+$$ 
+
+예를 들면, 상은 $A$의 열의 스팬이며, 열공간(_column space_)라고 부른다. 그러므로 열공간(상)은 $\mathbb{R}^m$의 부분공간이며 $m$은 행렬의 '높이'를 의미한다.
+- $\mathrm{rk}(A) = \mathrm{dim}(\mathrm{Im}(\Phi))$. Rank는 독립적인 열의 수를 의미하며, 이는 이미지의 차원과 같고, $A$가 얼마나 많은 출력을 생성하는지와 관련있다.
+- 영공간은 동차방정식 $Ax=0$의 해 공간이며, $\mathrm{ker}(\Phi)$은 $Ax=0$의 일반해 공간이다. 따라서 $\mathrm{ker}(\Phi) = \{x \in \mathbb{R}^n:Ax=0\}$이며, 이는 영공간이 $A$의 열벡터들에 어떤 $x$를 곱했을 때, $0 \in \mathbb{R}^m$이 되는 모든 $x$임을 의미한다. 정리하자면, $0 \in \mathbb{R}^m$이므로 커널은 정의역에서 입력값으로 향하는 값 중 무효가 되는 방향임을 의미한다
+- $\mathrm{dim}(\mathrm{ker}(\Phi))+\mathrm{dim}(\mathrm{Im}(\Phi)) = n$ (Rank-Nullity 정리)
+- 커널은 $\mathbb{R}^n$의 부분공간이며 $n$은 행렬의 '너비'를 의미한다.
+
+### Rank-Nullity Theorem
+임의의 벡터 공간 $V,W$와 임의의 선형사상 $\Phi : V \rightarrow W$는 다음을 만족한다.
+
+$$
+\mathrm{dim(ker}(\Phi))+\mathrm{dim(Im(}\Phi)) = \mathrm{dim}(V)
+$$
+
+- 만약 상이 정의역보다 작으면(($\mathrm{dim}(\mathrm{Im}(\Phi))<\mathrm{dim}(V)$) 반드시 커널에 0 이외의 벡터가 존재하고(non-injective, 단사하지 않음), $Ax=0$에 무수히 많은 해 존재가 가능하다.
+- $\mathrm{dim}(V) = \mathrm{dim}(W)$면 다음 상관관계가 성립한다. 
+$$\Phi \ is \ injective \Leftrightarrow \Phi \ is \ surjective \Leftrightarrow \Phi \ is \ bijective$$ 정리하면, 정의역의 차원이 공역의 차원일 때 $\Phi$가 단사이면 자동으로 전사이고 그 반대도 성립한다. $\mathrm{Im}(\Phi) \subseteq W$이기 때문.
+- $\mathrm{dim}(\mathrm{ker}(\Phi)) = 0$ : 단사
+- $\mathrm{dim}(\mathrm{Im}(\Phi))=\mathrm{dim}(W)$ : 전사
+
+# 아핀 공간(Affine Spaces)
+## 아핀 부분 공간(Affine Subspaces)
+임의의 벡터 공간 $V$가 $x_0 \in V, U \subseteq V$를 만족한다면, 다음 부분집합
+
+$$
+\begin{align}
+L &= x_0 + U :=\{x_0 + u : u \in U\} \\
+&=\{v \in V|\exists u\in U:v=x_0+u\}\subseteq V
+\end{align}
+$$
+
+은 **아핀 부분공간(_affine subspace_)** 또는 **V의 선형 다양체(_linear manifold_)**라고 부른다. $U$는 **방향(_direction_)** 또는 **방향 공간(_direction space_)**라고 부르며 $x_0$는 **기준점(_support point_)**라고 부른다.
+
+정의에 따르면, 어떤 점 $x_0 \notin U$ 일 때, 아핀 부분공간의 정의는 원점 0을 포함하지 않는다. 따라서 $x_0 \notin U$ 인 경우, 아핀 부분공간은 V의 (선형) 부분공간(즉, 벡터공간의 부분집합)이 아니다.
+
+아핀 부분공간의 예를 들자면 $\mathbb{R}^3$ 공간에서 원점을 지나지 않는 점, 선, 면을 들 수 있다.
+
+벡터 공간 $V$에 존재하는 두 아핀 부분 공간 $L=x_0+U$와 $\tilde{L} = \tilde{x_0}+\tilde{U}$가 존재한다고 상정해보자. 이때, $U \subseteq \tilde{U}$이며 $x_0 - \tilde{x_0} \in \tilde{U}$ 일 때이자 그 때에만 $L \subseteq \tilde{L}$이다.
+
+아핀 부분 공간은 종종 **파라미터**로 기술되기도 한다.$V$의 $k$차원 아핀 공간 $L=x_0+ U$가 존재한다고 가정해보자. 이때, $(b_1, \dots, b_k)$가 $U$의 순서가 있는 기저라면 $x\in L$의 모든 요소는
+
+$$
+x = x_0+\lambda_1b_1 + \dots + \lambda_kb_k
+$$
+
+로 유일하게 기술되며, $\lambda_1, \dots \lambda_k \in \mathbb{R}$이다. 
+
+위 표현은 $L$의 **매개변수 방정식(_parametric equation_)**라고 하며, 방향 벡터 $b_1, \dots, b_k$와 매개변수 $\lambda_1, \dots, \lambda_k$로 이루어진다.
+
+### 선형 방정식의 비동차계와 아핀 부분 공간(Inhomogeneous system of linear equations and affine subspaces)
+비동차 선형 시스템(Inhomogeneous linear system)의 해 공간(solution)은 항상 $n-\mathrm{rk}(A)$차원의 아핀 부분공간이다.
+
+어떤 k차원 아핀 부분 공간에서 적절한 $A\in \mathbb{R}^{m\times n}$과 $b \in \mathbb{R}^m$, 그리고 $Ax=0$을 찾으면 $Ax=b$의 해 집합과 같아진다.
+
+## 아핀 사상(Affine Mappings)
+벡터 공간 사이의 [[#선형사상(Linear Mappings)]]과 유사하게 두 아핀 공간 사이에도 아핀 사상을 정의할 수 있다. 선형 사상과 아핀 사상은 밀접하게 연관되어 있어 선형사상의 많은 요소들을 아핀사상에서도 공유한다.
+
+두 벡터 공간 $V, W$, 선형 변환 $\Phi \rightarrow W$ 그리고 $a \in W$가 있다고 하면, 아핀 사상 $\phi$를 다음과 같이 정의할 수 있다.
+
+$$
+\begin{align}
+\phi : &V \mapsto W\\
+& x \mapsto a+ \Phi(x)
+\end{align}
+$$
+
+이때 벡터 $a$는 $\phi$의 **변환 벡터(translation vector)**라고 부른다.
+
+### 아핀 사상의 성질
+- 모든 아핀 사상은 선형 사상과 평행이동의 합성이다.
+	- 임의의 아핀 사상 $\phi : V \to W$는 선형 사상 $\Phi:V\to W$와 평행이동 $\tau: W\to W$의 합성으로 나타낼 수 있다($\phi = \tau \circ\Phi$). 이때 $\Phi, \tau$는 유일하게 결정된다.
+- 아핀 사상들의 합성은 여전히 아핀 변환이다.
+- 아핀 사상이 전단사면 기하적 구조를 보존한다.
+	- 이는 길이, 각도는 변할 수 있지만, 차원(dimension), 평행성(parallelism)은 그대로 유지된다는 의미이다.
