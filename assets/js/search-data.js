@@ -466,7 +466,12 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "projects-car-insurance-fraud-detection",
+          section: "News",},{id: "projects-computer-vision-algorithms-and-applications",
+          title: 'Computer Vision Algorithms and Applications',
+          description: "Summerize CVAA",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/CVAA/";
+            },},{id: "projects-car-insurance-fraud-detection",
           title: 'Car Insurance Fraud Detection',
           description: "Ensemble-based approach to detect fraudulent car insurance claims with high specificity.",
           section: "Projects",handler: () => {
@@ -476,6 +481,11 @@ ninja.data = [{
           description: "Focusing on Unity&#39;s C# scripting",
           section: "Projects",handler: () => {
               window.location.href = "/projects/Game_Engine_Assignment/";
+            },},{id: "projects-mathmatics-for-machine-learning",
+          title: 'Mathmatics for Machine Learning',
+          description: "Summerize MML",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/MML/";
             },},{
       id: 'light-theme',
       title: 'Change theme to light',
