@@ -36,7 +36,7 @@ $$\forall A \in \mathbb{R}^{m \times n} : I_mA = AI_n = A$$
 이때 $m \ne n$이면 $I_m \ne I_n$이다.
 
 ## 역행렬(Inverse Matrix)
-두 정방 행렬 $A \in \mathbb{R}^{n \times n}, B \in \mathbb{R}^{n \times n}$에 대해 $AB = I_n = BA$를 만족하는 $B$를 $A$의 역행렬이라고 부르며 $A^{-1}$로 표기한다. 모든 행렬이 역행렬을 가지지 않으며 A가 역행렬을 가지지 않으면 A는 _regular/invertible/nonsingular_ 로 부르며, 역행렬을 가지면 _singular/noninvertible_ 로 부른다. 또한 행렬이 역행렬을 가지면 그 행렬은 _고유한(unique)_ 행렬이다. 
+두 정방 행렬 $A \in \mathbb{R}^{n \times n}, B \in \mathbb{R}^{n \times n}$에 대해 $AB = I_n = BA$를 만족하는 $B$를 $A$의 역행렬이라고 부르며 $A^{-1}$로 표기한다. 모든 행렬이 역행렬을 가지지 않으며 A가 역행렬을 가지면 A는 _regular/invertible/nonsingular_ 로 부르며, 역행렬을 가지지 않으면 _singular/noninvertible_ 로 부른다. 또한 행렬이 역행렬을 가지면 그 행렬은 _고유한(unique)_ 행렬이다. 
 
 ### 역행렬 계산하기
 
@@ -262,7 +262,7 @@ $$A^{-1} = \begin{bmatrix}
 군은 집합 연산을 위한 근본적인 역할을 할 뿐더러 컴퓨터 과학의 여러 분야에서 핵심적인 역할을 한다.
 집합$\mathcal{G}$와 연산 $\otimes : \mathcal{G} \times \mathcal{G} \rightarrow \mathcal{G}$로 $\mathcal{G}$를 정의하자. 이때 $G := (\mathcal{G}, \otimes)$가 다음 네가지를 충족하면 **군(Group)**이라고 부른다.
 1. $\otimes$연산시 $\mathcal{G}$의 닫힘 : $\forall x,y \in \mathcal{G} : x \otimes y \in \mathcal{G}$
-2. Associativity : $\exists x,y,z \in \mathcal{G} : (x \otimes y) \otimes z = x \otimes (y \otimes z)$
+2. Associativity : $\forall x,y,z \in \mathcal{G} : (x \otimes y) \otimes z = x \otimes (y \otimes z)$
 3. Neutral element : $\exists e \in \mathcal{G}, \forall x \in \mathcal{G} : x \otimes e = x \ and \ e \otimes x = x$
 4. Inverse element : $\forall x \in \mathcal{G}, \exists y \in \mathcal{G} : x \otimes y = e \ and \ y\otimes x = e$이때, $e$는 Neutral element 이며 $x$의 역$(y)$을 $x^{-1}$로 표기한다.
 
@@ -303,7 +303,7 @@ $$v=\lambda_1x_1 + \cdots + \lambda_k\lambda_k = \sum_{i=1}^k \lambda_ix_i \in V
 
 0벡터는 언제나 $k$개의 벡터의 선형 결합으로 표현될 수 있는데 $0 = \sum_{i=1}^k 0x_i$가 언제나 참이기 때문이다.
 ## 선형 독립(Linear (In)dependence)
-벡터공간 $V$가 $k \in \mathbb{N}$과 $x_1, \cdots, x_k \in V$을 만족하고, 최소 하나 이상의 $\lambda_i \ne 0$인 $0 = \sum_{i=1}^k \lambda_ix_i$과 같은 자명하지 않은 선형 결합이 있다면 벡터  $x_1, \cdots, x_k$는 **선형 독립**이다.
+벡터공간 $V$가 $k \in \mathbb{N}$과 $x_1, \cdots, x_k \in V$을 만족하고, 최소 하나 이상의 $\lambda_i \ne 0$인 $0 = \sum_{i=1}^k \lambda_ix_i$과 같이 결합이 오직 trivial(모든 계수가 0)일때 벡터  $x_1, \cdots, x_k$는 **선형 독립**이다.
 
 ### 선형 독립 찾기
 - 벡터들은 무조건 선형 독립이거나 종속적이다.
