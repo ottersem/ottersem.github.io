@@ -37,15 +37,15 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-image-formation",
+        },{id: "post-geometric-primitives-and-transformations",
       
-        title: "Image Formation",
+        title: "Geometric primitives and transformations",
       
       description: "Image Formation from CVAA",
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2025/image-formation/";
+          window.location.href = "/blog/2025/GPaT/";
         
       },
     },{id: "post-linear-algebra",
