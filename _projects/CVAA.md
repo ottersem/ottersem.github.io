@@ -2,7 +2,7 @@
 layout: distill
 title: Computer Vision Algorithms and Applications
 description: Summerize CVAA
-img: assets/img/GE_project/Thumbnail.jpeg
+img: assets/img/CVAA_front.png
 importance: 1
 category: study
 ---

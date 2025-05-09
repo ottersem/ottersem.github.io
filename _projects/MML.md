@@ -2,7 +2,7 @@
 layout: distill
 title: Mathmatics for Machine Learning
 description: Summerize MML
-img: assets/img/GE_project/Thumbnail.jpeg
+img: assets/img/mml-book-cover.jpg
 importance: 1
 category: study
 ---
