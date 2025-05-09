@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-linear-algebra",
+        },{id: "post-image-formation",
+      
+        title: "Image Formation",
+      
+      description: "Image Formation from CVAA",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/image-formation/";
+        
+      },
+    },{id: "post-linear-algebra",
       
         title: "Linear Algebra",
       
