@@ -41,7 +41,7 @@ ninja.data = [{
       
         title: "Geometric primitives and transformations",
       
-      description: "Image Formation from CVAA",
+      description: "Geometric primitives and transformations from CVAA",
       section: "Posts",
       handler: () => {
         
