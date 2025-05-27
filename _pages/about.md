@@ -18,7 +18,7 @@ social: false # includes social icons at the bottom of the page
 최근에는 프로그래밍과 알고리즘 문제 해결에 관심을 가지고 있으며, 특히 이미지 처리, 딥러닝, 데이터 분석과 같은 기술을 활용해 프로젝트를 진행하고자 합니다. Python과 C++을 주요 개발 언어로 사용하며, Qt 프레임워크를 활용한 GUI 개발과 Maya MEL 스크립팅을 통한 VFX 자동화에도 관심을 가지고 있습니다.
 
 이 블로그에서는 제가 공부하면서 배운 내용, 프로젝트 경험, 그리고 고민했던 문제들을 정리하고 공유하려 합니다.\\
-현재 컴퓨터 비전 및 인공지능을 활용한 Dacon 또는 Kaggle Contest 참가에 집중하고 있으며, 이전에는 광학 측정 장비 소프트웨어 현대화 프로젝트를 진행했던 경험이 있습니다. 
+현재 컴퓨티 비전 및 인공지능 관련 이론 공부에 집중하고 있으며, 이전에는 광학 측정 장비 소프트웨어 개발 프로젝트 및 각종 Contest에 참가한 경험을 가지고 있습니다. 
 
 📌 기술 스택: Python, C++, MEL, SQL \\
 📌 관심 분야: Computer Vision, AI, Data Science, Software Engineering\\
