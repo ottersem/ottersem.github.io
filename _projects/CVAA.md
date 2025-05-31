@@ -11,5 +11,7 @@ category: study
 
 ## Ch.2 Image Formation
 [2.1 Geometric primitives and transformations](https://ottersem.github.io/blog/2025/GPaT/)
+[2.2 Photometric image formation]()
+[2.3The digital camera]()
 
 ## Ch.3
