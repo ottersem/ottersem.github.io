@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-geometric-primitives-and-transformations",
+        },{id: "post-analytic-geomatry",
+      
+        title: "Analytic Geomatry",
+      
+      description: "Analytic Geomatry from MML",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/analytic-geomatry/";
+        
+      },
+    },{id: "post-geometric-primitives-and-transformations",
       
         title: "Geometric primitives and transformations",
       
