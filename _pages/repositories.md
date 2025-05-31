@@ -9,6 +9,15 @@ nav_order: 4
 
 {% if site.data.repositories.github_users %}
 
+## BOJ badge
+<div class="boj-badge mt-2">
+  <a href="https://www.acmicpc.net/user/pda0503" target="_blank">
+    <img src="https://bojstat.vulcan.site/v2/en/pda0503" alt="BOJ profile badge for pda0503">
+  </a>
+</div>
+
+---
+
 ## GitHub users
 
 <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
