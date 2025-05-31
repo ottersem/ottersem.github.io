@@ -12,4 +12,5 @@ category: study
 ## Ch.2 Linear Algebra
 [Linear Algebera](https://ottersem.github.io/blog/2025/Linear-Algebra/)
 
-## Ch.3
+## Ch.3 Analytic Geomatry
+[Analytic Geomatry](https://ottersem.github.io/blog/2025/analytic-geomatry/)
