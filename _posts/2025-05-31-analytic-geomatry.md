@@ -288,3 +288,81 @@ $$
 $$
 
 위 정의는 **투영 행렬(_projection matrices_)**$P_\pi$에 적용된다.
+
+## 일차원 부분공간(직선)으로의 정사영
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.4.jpg" title="3.4" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.4
+</div>
+
+직선은 $b$에 의해 스팬되는 일차원 부분공간 $U \subseteq \mathbb{R}^n$이다. $x \in \mathbb{R}^n$을 $U$위로 정사영한다면 $x$에 가장 가까운 벡터 $\pi_U(x)\in U$를 구할 수 있다.(Figure3.4(a))
+
+$\pi_U(x) \in U$의 특성은 다음과 같다.
+- $\pi_U(x)$는 $x$와 가장 가까운 위치에 있다. '가까운'은 $\lVert x-\pi_U(x)\rVert$의 최소값을 가짐을 의미한다. 그 말인 즉슨, $\pi_U(x)$에서 $x$를 잇는 선분은 $U$에 직교함을 의미한다. 따라서 $\pi_U(x)$에서 $x$로의 벡터 $\pi_U(x)-x$는 $U$와 그 기저 벡터 $b$에 직교한다. 이는 $\langle \pi_U(x)-x, b\rangle=0$임을 의미한다.
+- $x$의 $U$위로의 정사영 $\pi_U(x)$는 항상 $U$의 공간 안에 위치한다. 만약 $U$가 한 개의 기저 벡터 $b$로 생성된 1차원 부분공간이라면, $\pi_U(x)$는 $b$의 스칼라배 형태를 가진다.
+
+### 정사영 과정
+1. 계수 $\lambda$ 를 찾아보자. 직교 조건은 다음을 도출한다.
+
+$$
+\langle x - \pi_U(x),b)\rangle = 0 \Leftrightarrow \langle x - \lambda b, b \rangle = 0
+$$
+
+내적의 쌍선형성을 활용하여 다음 결과를 도출할 수 있다.
+
+$$
+\langle x,b \rangle - \lambda \langle b,b \rangle \Leftrightarrow \lambda = \frac{\langle x,b \rangle}{\langle b,b \rangle} = \frac{\langle b,x \rangle}{\lVert b \rVert^2}
+$$
+
+최종적으로 내적이 대칭적이라는 사실을 이용하면 다음 결과를 얻을 수 있다.
+
+$$
+\lambda = \frac{b^\top x}{b^\top b} = \frac{b^\top x}{\lVert b \rVert^2}
+$$
+
+이 때 $\lVert b \rVert=1$라면 계수 $\lambda$는 단순히 $b^\top x$로 주어진다.
+
+2. 정사영점 $\pi_U(x) \in U$를 찾아보자. $\pi_U(x)=\lambda b$이기 때문에 바로 다음 수식을 얻을 수 있다.
+
+$$
+\pi_U(x) = \lambda b = \frac{\langle x,b \rangle}{\lVert b \rVert^2}b = \frac{b^\top x}{\lVert b\rVert^2}b
+$$
+
+또한 노름의 정의에 의해 $\pi_U(x)$의 길이를 계산할 수 있다.
+
+$$
+\lVert \pi_U(x) \rVert = \lVert \lambda b \rVert = \lvert \lambda \rvert \lVert b \rVert
+$$
+
+따라서 정사영은 $\lvert \lambda \rvert \lVert b \rVert$ 만큼의 길이를 가지게 되고, 이는 직관적으로 $\lambda$가 1차원 부분공간 $U$를 생성하는 기저벡터 $b$에 대해 정사영 $\pi_U(x)$가 갖는 좌표값임을 알 수 있다.
+
+$$
+\lVert \pi_U(x) \rVert = \frac{\lvert b^\top x}{\lVert b \rVert^2} = \lvert \cos{\omega} \lVert x \rVert \lVert b \rVert \frac{\lVert b \rVert}{\lVert b \rVert^2} = \lvert \cos{\omega} \rvert \lVert x \rVert
+$$
+
+이때 $\omega$는 $x,b$ 사이의 각을 의미한다. 이 수식은 삼각함수에서도 매우 익숙한 형태인데, 만약 $\lVert x \rVert = 1$이라면 $x$는 단위 원 위에 놓이게 된다. 따라서 $x$를 $b$가 생성하는 수평축 방향으로 정사영 한 결과는 $\cos{\omega}$가 되며 그 벡터의 길이도 $\lvert \cos{\omega} \rvert$가 된다. (Figure 3.10(b))
+
+3. 투영행렬 $P_\pi$를 찾아보자. 투영은 정의에 따르면 선형 사상이므로, $\pi_U(x)=P_\pi x$와 같은 투영행렬이 존재한다.
+
+$$
+\pi_U(x) = \lambda b = b \lambda = b\frac{b^\top x}{\lVert b \rVert^2} = \frac{bb^\top}{\lVert b \rVert^2}x
+$$
+
+이므로 다음이 성립함을 알 수 있다.
+
+$$
+P_\pi = \frac{bb^\top}{\lVert b \rVert ^2}
+$$
+
+이 때, $bb^\top$은 (결과적으로는 $P_\pi$) 랭크가 1인 대칭 행렬이며, $\lVert b \rVert^2 = \langle b,b \rangle$은 스칼라 값이다. 또한 행렬 $P_\pi$는 $x \in \mathbb{R}^n$에 속하는 모든 벡터를 원점을 지나고 $b$의 방향인 선분 위로 투영한다.
+
+#### 알아둘 점 1
+정사영 $\pi_U(x) \in \mathbb{R}^n$은 여전히 n차원 벡터이며 스칼라 값이 아니다. 반면에, 투영을 표현하기 위해 n개의 계수를 알 필요는 없어졌으며, 부분공간 $U$를 생성하는 기저벡터 $b$에 대해 표현하고자 할 때는, 단 하나의 좌표값 $\lambda$만으로 충분하다.
+
+#### 알아둘 점 2
+$\pi_U(x)$가 $P_\pi$의 **고유벡터(eigenvector)**임을 보일 수 있다. 그리고 그에 대응하는 **고윳값(eigenvalue)**은 1이다.
