@@ -366,3 +366,77 @@ $$
 
 #### 알아둘 점 2
 $\pi_U(x)$가 $P_\pi$의 **고유벡터(eigenvector)**임을 보일 수 있다. 그리고 그에 대응하는 **고윳값(eigenvalue)**은 1이다.
+
+## 임의의 부분공간으로의 정사영
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.5.png" title="3.5" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.5
+</div>
+
+벡터 $x\in \mathbb{R}^n$가 $\dim{(U)}= m \ge 1$을 만족하는 부분공간 $U \subseteq \mathbb{R}^n$으로의 정사영을 살펴보자. 이때, $(b_1, \ldots b_m)$은 $U$의 정렬된 기저이며, $U$로의 정사영 $\pi_U(x)$는 필연적으로 $U$의 요소이다. 따라서 정사영은 $\pi_U(x)=\sum_{i=1}^m\lambda_ib_i$와 같은 기저 벡터의 결합으로 나타낼 수 있다.
+이제 일차원 부분공간으로의 정사영때와 같은 삼단계 절차를 밟아 일반화 해보자.
+
+### 정사영 과정
+
+1. 정사영의 좌표 $\lambda_1, \ldots, \lambda_m$을 찾는다. 이때 다음 선형결합이 $x \in \mathbb{R}^n$에 가장 가깝도록 한다.
+
+$$\begin{gather}
+\pi_U(x)=\sum^m_{i=1}\lambda_ib_i=B\lambda, \\
+B = \begin{bmatrix} b_1, \ldots ,b_m\end{bmatrix} \in \mathbb{R}^{n\times m}, \qquad \lambda = \begin{bmatrix}\lambda_1, \ldots, \lambda_m \end{bmatrix} ^\top \in \mathbb{R}^m
+\end{gather}$$
+
+일차원에서와 마찬가지로 '가장 가깝다'의 의미는 '최소의 거리'를 가짐을 의미한다. 이는 $\pi_U(x) \in U$와 $x \in \mathbb{R}^n$을 연결하는 벡터가 모든 $U$의 기저벡터의 수직이어야 함을 의미한다. 따라서, $m$개의 동시 조건(simultaneous conditions)을 얻게된다.
+
+$$
+\begin{gather}
+\langle b_1, x-\pi_U(x)\rangle = b_1^\top(x-\pi_U(x)) = 0 \\
+\vdots \\
+\langle b_m, x-\pi_U(x)\rangle = b_m^\top(x-\pi_U(x)) = 0
+\end{gather}
+$$
+
+이 때, $\pi_U(x) = B\lambda$를 다음과 같이 적용할 수 있다.
+
+$$
+\begin{gather}
+b_1^\top(x-B\lambda) = 0 \\
+\vdots \\
+b_m^\top(x-B\lambda) = 0
+\end{gather}
+$$
+
+따라서 다음과 같이 동차 선형 방정식을 구할 수 있다.
+$$
+\begin{align}
+\begin{bmatrix}b_1^\top \\ \vdots \\ b_m^\top\end{bmatrix}\begin{bmatrix}x-B\lambda\end{bmatrix} = 0 & \Leftrightarrow B^\top(x-B\lambda) = 0 \\
+& \Leftrightarrow B^\top B\lambda = B^\top x
+\end{align}
+$$
+
+위 수식의 마지막 표현법을 **법선 방정식(normal equation)**이라고 한다. $U$의 기저벡터들은 선형 독립이기에 $B^\top B \in \mathbb{R}^{m\times m}$은 역행렬 계산이 가능한 가역행렬이다.
+
+$$
+\lambda = (B^\top B)^{-1}B^\top x
+$$
+
+행렬 $(B^\top B)^{-1}B^\top$은 $B$의 **유사 역행렬(_pseudo-inverse_)**이라고 부르며, 정방행렬이 아닌 행렬 $B$를 계산하는데 사용된다.
+
+2. 정사영 $\pi_U(x) \in U$를 찾는다. 이미 $\pi_U(x)=B\lambda$임을 알고있으므로 다음과 같다.
+
+$$
+\pi_U(x) = B(B^\top B)^{-1} B^\top x.
+$$
+
+3. 투영 행렬 $P_\pi$를 찾는다. 2번의 식에서 $P_\pi x = \pi_U(x)$를 풀 수 있는 투영 행렬은 다음만이 유일하게 존재한다.
+
+$$
+P_\pi = B(B^\top B)^{-1}B^\top
+$$
+
+#### 알아둘 점 1
+임의의 부분공간으로의 사영의 해는 일차원 공간의 경우를 특수한 경우로서 내포하고 있다. 만약 $\dim(U)=1$이라면 $B^\top B \in \mathbb{R}$은 상수이며 투영행렬을 $P_\pi = \frac{BB^\top}{B^\top B}$로 쓸 수 있으며 일차원 부분공간으로의 정사영과 정화하게 일치한다.
