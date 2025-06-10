@@ -411,6 +411,7 @@ b_m^\top(x-B\lambda) = 0
 $$
 
 따라서 다음과 같이 동차 선형 방정식을 구할 수 있다.
+
 $$
 \begin{align}
 \begin{bmatrix}b_1^\top \\ \vdots \\ b_m^\top\end{bmatrix}\begin{bmatrix}x-B\lambda\end{bmatrix} = 0 & \Leftrightarrow B^\top(x-B\lambda) = 0 \\
@@ -440,3 +441,139 @@ $$
 
 #### 알아둘 점 1
 임의의 부분공간으로의 사영의 해는 일차원 공간의 경우를 특수한 경우로서 내포하고 있다. 만약 $\dim(U)=1$이라면 $B^\top B \in \mathbb{R}$은 상수이며 투영행렬을 $P_\pi = \frac{BB^\top}{B^\top B}$로 쓸 수 있으며 일차원 부분공간으로의 정사영과 정화하게 일치한다.
+
+#### 알아둘 점 2
+정사영 $\pi_U(x)$는 m차원 부분공간 $U\subseteq\mathbb{R}^n$ 안에 속해있지만 동시에 $R^n$에 속해있는 벡터이기도 하다. 다만, 정사영된 벡터를 표현하기 위해서는 $U$의 기저 벡터 $b_1, \ldots, b_m$에 대한 m개의 좌표 $\lambda_1, \ldots, \lambda_m$만으로도 충분하다.
+
+#### 알아둘 점 3
+정사영은 해가 존재하지 않는 선형 시스템 $Ax = b$에 대해 문제를 해석하고 근사 해를 구하는 방법을 제공한다. 이 말인 즉슨, 벡터 $b$는 $A$의 열에 의해 스팬되는 부분공간 안에 위치하지 않음을 의미한다. 그 점을 감안할 때, 선형 방정식을 정확하게 풀 수는 없지만, **근사 해(_approximate solution_)**을 찾을 수는 있다. 그 방법은 $A$의 열에 의해 스팬된 부분공간의 벡터 중 $b$와 가장 가까운 것을 찾는것이다. 이때, $b$를 $A$의 열로 생성된 부분공간에 직교 투영한 벡터를 통해 구한 해를 **최소 제곱 해(_least-squares solution_)**라고 부른다. 
+
+#### 알아둘 점 4
+벡터 $x$의 기저 벡터 {$b_1, \ldots, b_k$}를 가지는 부분공간 $U$로의 정사영을 살표보았는데, 이때 이 기저는 **ONB(Orthonomal Basis, 정규직교 기저, 각과 직교의 적교성에 대한 정의 참고)**이다. 따라서 정사영 방정식은 다음과 같이 간단하게 작성할 수 있다.
+
+$$
+\pi_U(x) = BB^\top x
+$$
+
+이때, $B^\top B = I$는 좌표벡터를 포함하기 때문에 다음이 성립한다.
+
+$$
+\lambda = B^\top x
+$$
+
+그 말인 즉슨, 더이상 정사영 과정에서 정사영 $\pi_U(x) \in U$을 계산하는 대신, 단순한 행렬 곱으로 정사영을 구할 수 있어 계산량이 줄어듦을 의미한다.
+
+## 그람-슈미트 직교화(Gram-Schmidt Orthogonalization, 중요!!)
+그람-슈미트 직교화는 n차원 벡터 공간 $V$의 모든 기저 $(b_1, \ldots, b_n)$를 $V$의 직교 혹은 정규직교 기저 $(u_1, \ldots, u_n)$로 변환이 가능하다. 이 기저는 항상 존재하며, 동일한 부분공간을 생성한다$span\begin{bmatrix} b_1, \ldots, b_n\end{bmatrix} = span\begin{bmatrix} u_1, \ldots, u_n \end{bmatrix}$.  그람-슈미트 직교화는 $V$의 어떤 기저 $(b_1,\ldots,b_n)$에서든 직교 기저 $(u_1,\ldots,u_n)$을 반복적으로 구성할 수 있다.
+
+$$
+\begin{align}
+u_1 &:= b_1 \\
+u_k &:= b_k-\pi_{span\begin{bmatrix}u_1,\ldots,u_{k-1}\end{bmatrix}}(b_k), \qquad k=2,\ldots,n
+\end{align}
+$$
+
+위 수식에서는 $k$번째 기저벡터 $b_k$는 $k-1$번째로 구성된 직교 벡터 $u_1,\ldots,u_{k-1}$에 의해 스팬된 부분공간으로 투영되고있다. 이 투영을 기저 벡터 $b_k$에서 빼면, 기존 직교 벡터들과 수직인 새로운 벡터 $u_k$를 얻게 된다. 이 과정을 모든 $n$개의 기저 벡터 $b_1,\ldots,b_n$에 대해 반복하면 벡터 공간 $V$의 직교 기저 $u_1, \ldots, u_n$을 얻을 수 있다. 최종적으로 각 $u_k$를 정규화하여 $\lVert u_k \rVert=1$이 되도록 하면 ONB를 얻게 된다.
+
+### 예시
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.6.png" title="3.6" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.6
+</div>
+
+기저 $b_1, b_2 \in \mathbb{R}^2$이 다음과 같다고 가정하자.
+
+$$
+b_1 = \begin{bmatrix} 2 \\ 0\end{bmatrix}, \quad b_2=\begin{bmatrix} 1 \\ 1\end{bmatrix}
+$$
+
+(a)에 그람-슈미트 직교화를 적용하면 다음과 같은 직교 기저 $(u_1,u_2) \in \mathbb{R}^2$를 구성할 수 있다.
+
+$$
+\begin{align}
+u_1 &:= b_1 = \begin{bmatrix} 2 \\ 0\end{bmatrix}, \\
+u_2 &:= b_2-\pi_{span\begin{bmatrix}u_1\end{bmatrix}}(b_2) = b_2 - \frac{u_1u_1^\top}{\lVert u_1 \rVert^2}b_2 = \begin{bmatrix} 1 \\ 1\end{bmatrix} - \begin{bmatrix} 1 & 0 \\ 0 & 0\end{bmatrix}\begin{bmatrix} 1 \\ 1\end{bmatrix} = \begin{bmatrix} 0 \\ 1\end{bmatrix}
+\end{align}
+$$
+
+위 과정은 그림의 (b), (c)와 같고 $u_1,u_2$가 직교함을 알 수 있다.
+
+## 아핀 부분공간으로의 정사영
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.7.png" title="3.7" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.7
+</div>
+
+$b_1, b_2$를 기저 벡터로 가지는 $U$의 아핀 공간 $L=x_0+U$가 있다고 하자. $x$의 $L$로의 투영 $\pi_L(x)$를 정의하기 위해서 벡터 부분공간으로의 투영을 거칠 수 있다(Figure b.). 기준점 $x_0$를 벡터 $x$와 공간 $L$에서 각각 빼줌으로써, $L-x_0=U$가 정확히 벡터 부분공간 $U$가 되도록 만들 수 있다.
+
+이제 상술하였던 부분공간으로의 정사영을 활용해서 $\pi_U(x-x_0)$를 얻을 수 있고, 이 정사영은 $x_0$를 더해줌으로써 아핀 부분공간 $L$로 다시 변환할 수 있다.
+
+$$
+\pi_L(x) = x_0 + \pi_U(x-x_0)
+$$
+
+이때 $\pi_u(\cdot)$은 부분공간 $U$로의 직교 투영이다.
+
+위 그림에서 알 수 있듯 아핀 공간 $L$과 $x$의 사이의 거리는 벡터 $x-x_0$와 부분공간 $U$ 사이의 거리와 동일함이 자명하다.
+
+$$\begin{align}
+d(x,L) &= \lVert x - \pi_L(x)\rVert = \lVert x-(x_0+\pi_u(x-x_0))\rVert \\
+&= d(x-x_0, \pi_U(x-x_0)) = d(x-x_0, U)
+\end{align}$$
+
+# 회전 (Rotations)
+
+거리와 각의 보존은 직교 변환 행렬을 사용하는 선형 사상의 주요한 특징 중 하나이다.
+
+**회전(_rotation_, 더 정확하게는 유클리드 벡터 공간의 자기 동형 사상)**은 원점으로부터 $\theta$만큼 평면을 회전시킨다. 추가로, 양의 회전각 $\theta > 0$는 일반적으로 반시계 방향으로의 회전이다.
+
+## 2차원 공간($\mathbb{R}^2$)에서의 회전
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.8.png" title="3.8" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.8
+</div>
+
+$\mathbb{R}^2$의 표준 좌표 공간을 정의하는 표준 기저 $\left\lbrace e_1 = \begin{bmatrix}1 \\ 0\end{bmatrix} ,e_2=\begin{bmatrix}0 \\ 1 \end{bmatrix} \right\rbrace$가 있다고 하자. 위 그림에서 보듯이 좌표계를 $\theta$만큼 회전하는 방법을 알아보자. 이때, 회전된 벡터는 여전히 선형독립이므로, $\mathbb{R}^2$의 기저이며, 이는 회전이 기저 변환을 수행함을 의미한다.
+
+회전 사상 $\Phi$는 선형 변환이므로 회전 행렬 $R(\theta)$를 통해 표현할 수 있다. 삼각함수를 통해 회전된 축들의 좌표를 표준 기저에 대한 성분으로 계산할 수 있다.
+
+$$
+\Phi(e_1)=\begin{bmatrix}\cos{\theta} \\ \sin{\theta}\end{bmatrix}, \quad \Phi(e_2)=\begin{bmatrix}-\sin{\theta} \\ \cos{\theta}\end{bmatrix}
+$$
+
+따라서, 기저 변환을 수행하는 회전 행렬 $R(\theta)$는 다음과 같다.
+
+$$
+R(\theta)=\begin{bmatrix} \Phi(e_1) \quad \Phi(e_2) \end{bmatrix} = \begin{bmatrix} \cos{\theta} & -\sin{\theta} \\ \sin{\theta} & \cos{\theta} \end{bmatrix}
+$$
+
+## 3차원 공간($\mathbb{R}^3$)에서의 회전
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/MML/3.9.png" title="3.9" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3.9
+</div>
+
+
+## $n$차원 공간에서의 회전
+
+## 회전의 성질
