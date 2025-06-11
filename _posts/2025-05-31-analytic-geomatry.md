@@ -8,20 +8,93 @@ categories: Math
 pretty_table: true
 ---
 
-| **섹션**                             | **꼭 챙길 핵심식·키워드**                      | **왜 중요한가?**                      | **읽기 강도** |
+<!-- | **섹션**                             | **꼭 챙길 핵심식·키워드**                      | **왜 중요한가?**                      | **읽기 강도** |
 | ---------------------------------- | ------------------------------------- | -------------------------------- | --------- |
 | **3.1 Norms**                      | ‖x‖₁, ‖x‖₂, 삼각부등식                     | 입력 스케일링·정규화, L1/L2 규제 직관         | ★★☆       |
 | **3.2 Inner Products**             | ⟨x,y⟩, dot, positive-definite, SPD 행렬 | SVM 커널, GP 커널, 거리·유사도 모든 정의의 출발점 | ★★★       |
 | **3.3 Lengths & Distances**        | d(x,y)=‖x−y‖, Cauchy-Schwarz          | KNN·군집·거리기반 손실                   | ★★☆       |
 | **3.4 Angles & Orthogonality**     | cos ω=⟨x,y⟩/(‖x‖‖y‖)                  | SVM margin, cosine-sim 검색        | ★★☆       |
-| **3.5 Orthonormal Basis**          | Gram-Schmidt 전까지 예습                   | PCA·SVD 직관 “축 바꾸기”               | ★☆☆       |
+| **3.5 Orthonormal Basis**          |                                       | PCA·SVD 직관 “축 바꾸기”               | ★☆☆       |
 | **3.6 Orthogonal Complement**      | U⊥, normal vector                     | 하이퍼플레인, 제약 조건 투영                 | ★☆☆       |
-| **3.7 Inner Product of Functions** | ∫ u(x)v(x)dx                          | 커널(무한 차원 Φ) 개념 맛보기               | ☆☆☆ (스킴)  |
+| **3.7 Inner Product of Functions** | ∫ u(x)v(x)dx                          | 커널(무한 차원 Φ) 개념 맛보기               | ☆☆☆   |
 | **3.8 Orthogonal Projections**     | P= B(BᵀB)⁻¹Bᵀ , LS 해                  | Linear Reg.(Ch 9), PCA 재구성 오차    | ★★★       |
 | **3.8.3 Gram–Schmidt**             | uₖ = bₖ − π_{span(u₁…uₖ₋₁)}(bₖ)       | QR분해·CG·좌표정규화                    | ★★☆       |
-| **3.9 Rotations**                  | 2D, 3D Givens                         | CNN weight 공유 해석, 증강변환           | ★☆☆       |
+| **3.9 Rotations**                  | 2D, 3D Givens                         | CNN weight 공유 해석, 증강변환           | ★☆☆       | -->
 
-# 노름(Norms)
+<table>
+  <thead>
+    <tr>
+      <th>섹션</th>
+      <th>꼭 챙길 핵심식·키워드</th>
+      <th>왜 중요한가?</th>
+      <th>읽기 강도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="#section-3.1">3.1 Norms</a></td>
+      <td>‖x‖₁, ‖x‖₂, 삼각부등식</td>
+      <td>입력 스케일링·정규화, L1/L2 규제 직관</td>
+      <td>★★☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.2">3.2 Inner Products</a></td>
+      <td>⟨x,y⟩, dot, SPD 행렬</td>
+      <td>SVM/GP 커널, 거리·유사도 출발점</td>
+      <td>★★★</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.3">3.3 Lengths & Distances</a></td>
+      <td>d(x,y)=‖x−y‖, Cauchy–Schwarz</td>
+      <td>KNN·군집·거리기반 손실</td>
+      <td>★★☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.4">3.4 Angles & Orthogonality</a></td>
+      <td>cos ω=⟨x,y⟩/(‖x‖‖y‖)</td>
+      <td>SVM margin, cosine-sim 검색</td>
+      <td>★★☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.5">3.5 Orthonormal Basis</a></td>
+      <td> </td>
+      <td>PCA·SVD 직관 "축 바꾸기"</td>
+      <td>★☆☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.6">3.6 Orthogonal Complement</a></td>
+      <td>U⊥, normal vector</td>
+      <td>하이퍼플레인, 제약 조건 투영</td>
+      <td>★☆☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.7">3.7 Inner Product of Functions</a></td>
+      <td>∫ u(x)v(x)dx</td>
+      <td>커널(무한 차원 Φ) 개념 맛보기</td>
+      <td>☆☆☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.8">3.8 Orthogonal Projections</a></td>
+      <td>P= B(BᵀB)⁻¹Bᵀ, LS 해</td>
+      <td>Linear Reg., PCA 재구성 오차</td>
+      <td>★★★</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.8.3">3.8.3 Gram–Schmidt</a></td>
+      <td>uₖ = bₖ − π<sub>span(u₁…uₖ₋₁)</sub>(bₖ)</td>
+      <td>QR분해·CG·좌표정규화</td>
+      <td>★★☆</td>
+    </tr>
+    <tr>
+      <td><a href="#section-3.9">3.9 Rotations</a></td>
+      <td>2D, 3D, Givens</td>
+      <td>CNN weight 공유 해석, 증강변환</td>
+      <td>★☆☆</td>
+    </tr>
+  </tbody>
+</table>
+
+# 노름(Norms) {#section-3.1}
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -72,7 +145,7 @@ $$
 
 유클리드 노름은 원점으로부터 $x$까지의 유클리드 거리를 계산한다. 상단 그림의 우측 이미지는 $\lVert x \rVert_2 = 1$을 만족하는 모든 $x \in \mathbb{R}^2$들을 시각화 한 것이다.
 
-# 내적(Inner product)
+# 내적(Inner product) {#section-3.2}
 ## 정의
 벡터 공간 $V$에서 함수 $\Omega : V \times V \rightarrow \mathbb{R}$는 두 벡터를 입력받아 실수로 대응시키는 쌍선형(_bilinear_) 함수라고 하자. 이때 다음을 따른다.
 - 모든 $x, y \in V$에 대해 $\Omega(x,y) = \Omega(y,x)$를 만족하면 $\Omega$는 대칭적(_symmetric_)이다.
@@ -124,7 +197,7 @@ $$
 - **$A$의 널 공간은 오직 0으로 구성된다.** 왜냐하면 모든 $x \ne 0$에 대해 $x^\top Ax>0$이기 때문이며, 이는 $x \ne 0$일때 $Ax \ne 0$임을 의미한다.
 - **$A$의 대각성분 $a_{ij}$는 양수이다.** 왜냐하면 $a_{ii}=e_i^\top A e_i$이기 때문이다. 이때는 $e_i$는  $\mathbb{R}^n$에 속한 표준 기저벡터 중 $i$번째 벡터이다.
 
-# 길이와 거리(Lengths & Distances)
+# 길이와 거리(Lengths & Distances) {#section-3.3}
 
 일반적으로 모든 내적은 노름 $\lVert x\rVert := \sqrt{\langle x,x \rangle}$을 유도할 수 있고, 이를 통해 벡터 간의 거리를 계산할 수 있다. 그러나 모든 노름이 내적을 통해 유도되지는 않는다.
 
@@ -179,7 +252,7 @@ $$
 ## Remark
 벡터의 길이와 마찬가지로 벡터간의 거리도 내적 없이 노름만으로 정의할 수 있다. 하지만 그 노름이 내적에 의해 유도되었다고 가정하면 거리는 어떤 내적을 사용하는지에 의존적이다.
 
-# 각과 직교 (Angles & Orthogonality)
+# 각과 직교 (Angles & Orthogonality) {#section-3.4}
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -233,7 +306,7 @@ $$
 \cos \omega = \frac{(Ax)^\top (Ay)}{\|Ax\| \cdot \|Ay\|} = \frac{x^\top y}{\|x\| \cdot \|y\|}
 $$
 
-# 정규직교 기저(Orthonormal Basis)
+# 정규직교 기저(Orthonormal Basis) {#section-3.5}
 ## 정의
 n차원 벡터 공간 $V$의 기저 $\{b_1, \ldots,b_n\}$이 다음 조건을 만족하면 이 기저는 **정규 직교 기저(_Orthonormal Basis, ONB_)**라고 부른다.
 
@@ -257,7 +330,7 @@ $$
 - $b_1^\top b_2 = 0 \ \rightarrow$ 직교
 - $\lVert b_1\rVert=\lVert b_2\rVert = 1 \rightarrow$ 정규
 
-# 직교 여공간 (Orthogonal Complement)
+# 직교 여공간 (Orthogonal Complement) {#section-3.6}
 D차원 벡터 공간 $V$와 M차원 벡터 부분 공간 $U \subseteq V$가 있을때, 직교 여공간 $U^\bot$은 $V$의 (D-M)차원 부분공간이며, $V$의 벡터 중 $U$의 벡터에 직교하는 모든 벡터를 포함한다. 더 나아가 $U \cap U^\bot = \{0\}$ 이므로 공간 $V$에 포함된 모든 벡터는 다음과 같이 유일하게 분해할 수 있다.
 
 $$x \;=\; \underbrace{\sum_{m=1}^{M}\lambda_m\,b_m}_{\text{U 성분}}
@@ -279,7 +352,7 @@ $$x \;=\; \underbrace{\sum_{m=1}^{M}\lambda_m\,b_m}_{\text{U 성분}}
 
 직교 여공간은 (이차원 부분 공간에 속하는) 평면 $U$를 삼차원 벡터 공간에서 표현할 수 있도록 한다. 부연 설명하자면, 평면 $U$에 직교하는 벡터 $w(\lVert w \rVert=1)$는 $U^\bot$의 유일 기저벡터이며 부호($\pm$)만 다르다. $w$에 직교하는 모든 벡터는 평면 $U$에 평행하며, 벡터 $w$는 $U$의 **법선벡터 (_normal vector_)**라고 부른다.
 
-# 직교 투영 (Orthogonal Projections)
+# 직교 투영 (Orthogonal Projections) {#section-3.8}
 ## 정의(투영, Projections)
 벡터 공간 $V$와 그 부분공간 $U\in V$가 있다고 하자. 선형 사상 $\pi : V \rightarrow U$가 다음 조건을 만족시키면 **투영(_projections_)**이라고 한다.
 
@@ -463,7 +536,7 @@ $$
 
 그 말인 즉슨, 더이상 정사영 과정에서 정사영 $\pi_U(x) \in U$을 계산하는 대신, 단순한 행렬 곱으로 정사영을 구할 수 있어 계산량이 줄어듦을 의미한다.
 
-## 그람-슈미트 직교화(Gram-Schmidt Orthogonalization, 중요!!)
+## 그람-슈미트 직교화(Gram-Schmidt Orthogonalization, 중요!!) {#section-3.8.3}
 그람-슈미트 직교화는 n차원 벡터 공간 $V$의 모든 기저 $(b_1, \ldots, b_n)$를 $V$의 직교 혹은 정규직교 기저 $(u_1, \ldots, u_n)$로 변환이 가능하다. 이 기저는 항상 존재하며, 동일한 부분공간을 생성한다$span\begin{bmatrix} b_1, \ldots, b_n\end{bmatrix} = span\begin{bmatrix} u_1, \ldots, u_n \end{bmatrix}$.  그람-슈미트 직교화는 $V$의 어떤 기저 $(b_1,\ldots,b_n)$에서든 직교 기저 $(u_1,\ldots,u_n)$을 반복적으로 구성할 수 있다.
 
 $$
@@ -531,7 +604,7 @@ d(x,L) &= \lVert x - \pi_L(x)\rVert = \lVert x-(x_0+\pi_u(x-x_0))\rVert \\
 &= d(x-x_0, \pi_U(x-x_0)) = d(x-x_0, U)
 \end{align}$$
 
-# 회전 (Rotations)
+# 회전 (Rotations) {#section-3.9}
 
 거리와 각의 보존은 직교 변환 행렬을 사용하는 선형 사상의 주요한 특징 중 하나이다.
 
@@ -573,7 +646,47 @@ $$
     Figure 3.9
 </div>
 
+2차원 공간의 경우와는 대조적으로, 3차원 공간에서는 어떤 2차원 평면이드 1차원 축을 중심으로 회전시킬 수 있다. 가장 쉬운 방법은 표준 기저 $e_1,e_2,e_3$를 가지는 상이 어떻게 회전되는지 정의하고, 이 이미지들 $Re_1, Re_2, Re_3$가 각각 서로에게 정규 직교 하는지를 확인하는 것이다. 이 과정을 거친 후 표준 기저를 가지는 이미지들을 합쳐 표준 회전 행렬 $R$을 구할 수 있다.
+
+의미 있는 회전 각을 가지기 위해서는, 2차원 이상의 공간에서 작업할 때 '반시계 방향'이 무엇을 의미하는지를 정의해야 하며, 관례적으로 반시계 방향의 회전은 **축을 "끝에서 원점 방향으로" 바라보았을 때** 그 축을 중심으로 하는 회전을 의미한다.
+
+- $e_1$축의 회전
+
+$$
+R_1(\theta) = \begin{bmatrix} \Phi(e_1) & \Phi(e_2) & \Phi(e_3) \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos{\theta} & -\sin{\theta} \\ 0 & \sin{\theta} & \cos{\theta} \end{bmatrix}
+$$
+
+위 회전에서 $e_1$ 좌표는 고정되어 있고, $e_2e_3$ 평면에 대한 반시계 방향으로의 회전이 수행되고 있다.
+
+- $e_2$축의 회전
+
+$$
+R_2(\theta) = \begin{bmatrix} \cos{\theta} & 0 & \sin{\theta} \\ 0 & 1 & 0 \\ -\sin{\theta} & 0 & \cos{\theta} \end{bmatrix}
+$$
+
+$e_1e_3$ 평면을 $e_2$ 축에 대해 회전시키려면, $e_2$ 축을 끝점에서 시작해 원점을 향해 바라보는 시점에서 바라보아야 한다.
+
+- $e_3$축의 회전
+
+$$
+R_3(\theta) = \begin{bmatrix} \cos{\theta} & -\sin{\theta} & 0  \\ \sin{\theta} & \cos{\theta} & 0 \\ 0 & 0 & 1 \end{bmatrix}
+$$
+
+그림 3.9와 같다.
 
 ## $n$차원 공간에서의 회전
+2차원과 3차원 회전을 $n$차원 유클리드 벡터 공간으로 일반화하는 것은, 직관적으로 '$n-2$'개의 차원을 고정시키고, $n$차원 공간 내의 2차원 평면에서만 회전을 수행하는 것으로 설명할 수 있다. 
+
+### 정의(Givens Rotation)
+$V$를 $n$차원 유클리드 벡터 공간, 사상 $\Phi : V \rightarrow V$를 자기동형사상이라고 하자. 이때, 회전 행렬은 다음과 같은 구조를 가지며 $1\le i < j \le n$이며, $\theta \in \mathbb{R}$이다.
+
+$$
+R_{ij}(\theta) := \begin{bmatrix} I_{i-1} & 0 & \cdots & \cdots & 0 \\ 0 & \cos\theta & 0 & -\sin\theta & 0 \\ 0 & 0 & I_{j-i-1} & 0 & 0 \\ 0 & \sin\theta & 0 & \cos\theta & 0 \\ 0 & \cdots & \cdots & 0 & I_{n-j} \end{bmatrix} \in \mathbb{R}^{n \times n}
+$$
+
+위 조건을 만족하는 행렬 $R_{ij}(\theta)$를 **기븐스 회전 행렬(_Givens rotation_)**라고 한다. 본질적으로 $R_{ij}(\theta)$는 $r_{ii}=\cos{\theta}, \quad r_{ij} = -\sin{\theta}, \quad r_{ji}=\sin{\theta}, \quad r_{jj} = \cos{\theta}$와 결합된 항등행렬 $I_n$이다. 특수한 경우로, 2차원 공간에서의 기븐스 회전은 상술한 일반적은 2차원 회전 행렬과 같아진다.
 
 ## 회전의 성질
+- 회전은 거리를 보존한다.
+- 회전은 회전각을 보존한다.
+- **3 이상의 차원에서의 회전은 교환법칙이 성립하지 않는다.** 예외적으로 오직 2차원 벡터의 회전만이 교환법칙이 성립한다. 모든 $\phi, \theta \in [0,2\pi)$에 대해 $R(\phi)R(\theta) = R(\theta)R(\phi)$ 이다. 또한 이들이 같은 점을 중심으로 회전할 때만, 곱셈에 대해 아벨리안 군을 이룬다.
