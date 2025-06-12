@@ -12,6 +12,12 @@ category: study
 ## Ch.2 Image Formation
 [2.1 Geometric primitives and transformations](https://ottersem.github.io/blog/2025/GPaT/)
 [2.2 Photometric image formation]()
-[2.3The digital camera]()
+[2.3 The digital camera]()
 
-## Ch.3
+## Ch.5 Deep Learning
+
+## Ch.6 Recognition
+
+## Ch.11 Structure from motion and SLAM
+
+## Ch.12 Depth estimation
