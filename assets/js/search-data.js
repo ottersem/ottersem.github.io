@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-analytic-geomatry",
+        },{id: "post-digital-camera",
+      
+        title: "Digital Camera",
+      
+      description: "Digital Camera from CVAA ch.2",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Digital-Camera/";
+        
+      },
+    },{id: "post-analytic-geomatry",
       
         title: "Analytic Geomatry",
       
