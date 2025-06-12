@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Digital Camera
-date: 2025-05-29 20:37:00
+date: 2025-06-10 20:37:00
 description: Digital Camera from CVAA ch.2
 tags: CV, Digital_camera, Image
 categories: CV
@@ -93,3 +93,51 @@ ADC 해상도는 센서에서 수집한 아날로그 신호를 디지털 값으�
 - **White Point Setting**: 백색 균형 조정
 - **Gamma Mapping**: 감마 함수로 동적 범위 향상
 
+# Sampling and aliasing
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/2.15.png" title="2.15" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 2.15 1차원 신호의 얼라이어싱 : 파란 사인파와 붉은 사인파는 샘플링 주파수 f=2에서 동일한 디지털 샘플을 갖는다. 필 팩터가 100%인 박스 필터로 컨볼루션 한 이후에도, 두 신호는 크기는 다르지만 여전히 얼라이어싱 상태에 있다. 이는 샘플링된 붉은 신호가 파란 신호를 반전시키고 크기를 줄인 형태처럼 보이기 때문이다.
+</div>
+
+이미지 센서에 입사하는 빛의 장(_field of light_)이 영상 칩의 활성 감지 영역(_active sense areas_)에 떨어지면 각 활성 셀에 도달한 광자들은 통합(_integrated_)된 후 디지털화된다. 그러나 칩 위의 충전율이 작고, 신호의 대역이 다른 방식으로 제한(_band-limited_)되지 않는다면, 얼라이어싱이 발생할 수 있다.
+
+얼라이어싱 현상을 이해하기 위해 두 개의 사인파를 가지는 일차원 신호를 살펴보자(그림 2.15). 만약 $f=2$의 파장으로 두 신호를 샘플링 한다면, 동일한 샘플로 귀결됨을 알 수 있으며(그림 2.15의 좌측) 이런 현상을 **얼라이어싱되었다(_aliased_)**고 표현한다.
+
+얼라이어싱이 발생하면 두 원본 주파수 중 어느 것이 실제로 존재했는지를 알 수 없기 때문에 원래의 신호를 복원할 수 없다. 구체적으로는 어떤 신호를 순간(_instantaneous_) 샘플로부터 재구성하기 위해 필요한 최소 샘플링 비율은 그 신호의 가장 높은 주파수의 두 배 이상이어야만 한다.
+
+$$
+f_2 \ge 2f_{\text{max}}
+$$
+
+이때 최대 주파수를 **_Nyquist frequency_**, 샘플링 주파수의 최소값의 역 $r_s=\frac{1}{f_s}$를 **_Nyquist rate_**라고 부른다.
+
+그런데, 이미지 센서는 실제로 제한된 영역엥 걸쳐 빛을 평균으로 계산하기에 **점 단위 샘플링(_point sampling_)** 이론이 여전히 유효한지에 대해 검증해볼 필요가 있다. 우선, 센서 영역 전체에서의 평균은 일반적으로 고주파 성분을 일부 줄여주는 효과가 있다. 하지만, 그림 2.15의 우측 처럼 충전율이 100%라고 하더라도, **Nyquist limit(샘플링 주파수의 절반)**를 넘는 주파수 성분은 여전히 얼라이어싱 현상을 유발한다. 다만, 그 신호의 세기는 대역 제한된 신호에 비해 더 작게 나타날 수 있다.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/2.16.png" title="2.16" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 2.16 2차원 신호의 얼라이어싱 : (a) 원래의 전체 해상도 이미지; (b) 25% 필 팩터 박스 필터로 4배 다운샘플링 된 이미지 ; (c) 100% 필 팩터 박스 필터로 4배 다운샘플링된 이미지 ; (d) 고품질 9-탭 필터로 4배 다운샘플링 된 이미지 ;
+</div>
+
+얼라이어싱이 왜 문제가 되는지 더 확실히 이해하고자 한다면, 박스 필터와 같은 저품질 필터를 사용해 다운샘플링 한 경우를 확인해보면 된다. 그림 2.16에서는 시간에 따라 주파수가 점점 증가하는 고주파 chirp 이미지와 함께, 이를 25% 충전율 센서, 100% 충전율 센서, 그리고 고품질 9-탭 필터로 샘플링한 결과를 보여준다.
+
+이미 처리 알고리즘이 만들어내는 얼라이어싱의 양을 예측하는 가장 적합한 방법은 **점 확산 함수(_point spread function, PSF_)**을 측정하는 것이다. 점 확산 함수는 이상적인 점 광원으로부터의 특정 픽셀이 반응하는 정도를 나타낸다. PSF는 광학 시스템에서 유도된 흐림효과(_blur_)와 센서의 유한한 통합 면적(_finite integration area_)이 결합되어 형성된다.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/2.17.png" title="2.17" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 2.17 PSF : (a)에서 블러 디스크(파란색)의 지름은 픽셀 간격의 절반이다. 반면, (c)에서는 그 지름이 픽센 간격의 두 배이다. 센서 칩의 수평 필 팩터는 80%이며, 갈색으로 표시되어 있다. 이 두 커널을 컨볼루션하면 PSF가 계산되며, 초록색으로 표시되어 있다. PSF의 푸리에 응답은 (b), (d)에 그래프로 나타나있다. Nyquist 주파수를 초과하여 얼라이어싱이 발생하는 영역은 빨간색으로 표시되어 있다.
+</div>
+
+렌즈의 블러 함수와 영상 칩의 필 팩터를 알고 있다면 이들을 결합해 PSF를 구할 수 있다.(3.2장 바로가기 추가) 그림 2.27a는 렌즈의 블러 함수가 반지름 s인 원형이고, 수평 필 팩터가 80%인 센서 칩을 사용하는 경우를 보인다. 이 PSF에 푸리에 변환을 적용하면, **변조 전달 함수(_modulation transfer function, MTF_)**를 얻을 수 있다.(3.4장 바로가기 추가). 이렇게 얻은 MTF를 통해 $f \le f_s$ Nyquist 주파수 바깥의 푸리에 스펙트럼 크기 면적을 계산함으로써 얼라이어싱의 양을 추정할 수 있다. 이 때, 렌즈를 디포커싱해서 블러 함수의 반지름이 $2s$가 되면 얼라이어싱은 확연히 줄어들지만, 동시에 고주파 정보의 손실도 동시에 일어난다.
