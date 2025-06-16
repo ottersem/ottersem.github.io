@@ -17,6 +17,15 @@ category: study
 [2.3 The digital camera](https://ottersem.github.io/blog/2025/Digital-Camera/)
 
 ## Ch.5 Deep Learning
+[5.1 Supervised Learning](https://ottersem.github.io/blog/2025/Supervised-Learning/)
+
+[5.2 Unspervised Learning]()
+
+[5.3 Deep neural networks]()
+
+[5.4 Convolutional neural networks]()
+
+[5.5 More complex models]()
 
 ## Ch.6 Recognition
 
