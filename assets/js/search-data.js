@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-digital-camera",
+        },{id: "post-supervised-learning",
+      
+        title: "Supervised Learning",
+      
+      description: "Supervised Learning from CVAA ch.5 Deep Learning",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Supervised-Learning/";
+        
+      },
+    },{id: "post-digital-camera",
       
         title: "Digital Camera",
       
