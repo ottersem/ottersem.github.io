@@ -62,3 +62,131 @@ $$
 </div>
 
 그림 5.3은 $k$의 변화가 미치는 다른 영향을 보여준다. 그림의 좌측은 샘플의 초깃값을 보여주는데, 보면 알 수 있듯이 파란색과 주황색이 구분없이 굉장히 뒤섞여있음을 알 수 있다. 그림의 우측은 1 부터 50까지의 $k$ 값에 따른 $k$-NN 분류기의 **결정 경계(_decision boundaries_)**을 보여준다.$k$ 값이 너무 작으면, 분류기는 훈련 데이터에 오버피팅되어 예측 결과가 불안정하고 무작위적인 경향을 보인다. 반대로, $k$값이 커지면, 분류 경계가 지나치게 부드러워지며 소규모 영역이 축소되는 등 데이터의 언더피팅 문제가 발생한다. 따라서, $k$는 분류기의 성능을 좌우하는 중요한 하이퍼파라미터로, 적절한 값을 선택하는 것이 핵심임을 알 수 있다.
+
+# Bayesian Classification
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.4.png" title="5.4" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.4 두 개의 클래스 조건부 확률 밀도 함수와, 이에 대응하는 후험 클래스 확률를 함께 나타낸 예를 생각해보자. 이 후험 확률은 베이즈 정리를 이용해 계산할 수 있으며, 이는 두 곡선의 합으로 나눈 값을 의미한다. 녹색 수직선은 오분류율을 최소화하는 최적의 결정 경계선이다.
+</div>
+
+일부 단순한 머신러닝 문제에서는, 각 클래스에 대한 특성 벡터의 조건부 확률 분포 $p(\mathbf{x} \vert C_k)$뿐만 아니라, 클래스의 사전 우도 $p(C_k)$ 역시 결정할 수 있다. Bayes' rule에 의해 특성 벡터 $\mathbf{x}$가 주어졌을 때 클래스 $C_k$의 우도(그림 5.4)는 다음과 같이 주어진다.
+
+$$\begin{align}
+p_k = p(C_k\vert \mathbf{x}) &= \frac{p(\mathbf{x}\vert C_k)p(C_k)}{\sum_jp(x\vert C_j)p(C_j)} \tag{5.1} \\
+&= \frac{\exp l_k}{\sum_j \exp l_j} \tag{5.2}
+\end{align}$$
+
+> $P(A\vert B)$ : 조건부 확률, B가 주어졌을 때 A가 일어날 확률
+
+이 때, $\frac{\exp l_k}{\sum_j \exp l_j}$는 **정규화된 지수 함수(_normalized exponential_)** 또는 **소프트 맥스 함수(_softmax function_)**라고 부른다. $l_k$에 대해
+
+$$
+l_k=\log p(\mathbf{x}\vert C_k)+ \log p(C_k)
+$$
+
+는 샘플 $\mathbf{x}$가 클래스 $C_k$에 속할 때의 **로그-우도(_log-likelihood_)**를 의미한다.
+
+소프트 맥스 함수는 벡터에서 벡터로의 함수 형태로 나타내기도 하며, 이때는 다음과 같이 표기한다.
+
+$$
+\mathbf{P}=\text{softmax}(\mathbf{l})
+$$
+
+**소프트 맥스 함수**는 최댓값 지시 함수(maximum indicator function)의 부드러운 형태로 볼 수 있다. 이 함수는 $l_k$가 다른 값들에 비해 큰 값일 때, 해당 $l_k$에 대해 1을 반환한다.
+
+특성 벡터 $\mathbf{x}$가 주어졌을 때 클래스 $C_k$의 우도를 결정할 때 사용되는 공식(5.1)을 이용하는 방법을 **베이즈 분류(_Bayesian classification_)**라고 한다. 왜냐하면 이 방법은 베이즈 정리를 이용해 조건부 특성 우도 $p(\mathbf{x} \vert C_k)$와 클래스에 대한 사전 분포 $p(C_k)$를 결합함으로써, 후험(posterior) 클래스의 확률을 결정하기 때문이다. 
+
+또한, 다음과 같이 특성 벡터의 각 구성 요소들이 독립적으로 생성된다고 가정하는 경우에는 **나이브 베이스 분류(_naïve Bayes classifier)**라고 한다.
+
+$$
+p(\mathbf{x}\vert C_k) = \prod_i p(x_i \vert C_k)
+$$
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.5.png" title="5.5" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.5 붉은색은 로지스틱 시그모이드 함수, 파란색은 수정된 오차함수
+</div>
+
+이진 분류 문제에서는 공식(5.2)를 다음과 같이 쓸 수 있다.
+
+$$
+p(C_0 \vert \mathbf{x}) = \frac{1}{1+\exp(-l)}=\sigma(l)
+$$
+
+이때 $l=l_0-l_1$은 두 클래스 로그-우도의 차이이며 로그 오즈**(_log odds_)** 또는 **로짓(_logit_)**라고 한다.
+
+$\sigma(l)$함수는 **로지스틱 시그모이드 함수(_logistic sigmoid function_)** 또는 **로지스틱 함수**라고 부르며, 시그모이드는 S자 커브를 의미한다.
+
+## LDA(Linear Discriminant Analysis)와 QDA(Quadratic Discriminant Analysis)
+### LDA
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.6.png" title="5.6" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.6 두 개의 유일하게 분포된 가우스 클래스의 로지스틱 회귀. (a) 두 개의 가우스 분포가 파랑/빨강으로 표현되어있다. (b) 후험 확률은 함수의 높이와 붉은색 잉크의 비율로 표현되어있다. 
+</div>
+
+소프트맥스 함수와 시그모이드 함수에 기반한 확률적 생성 분류 모델은 모든 로그-우도 집합에 적용할 수 있지만, 분포가 다변량 가우스 형태를 띌 경우 수식이 훨씬 간단해진다. 공분산 행렬 $\Sigma$가 동일한 가우스 분포에 대해서는 다음 수식을 적용할 수 있다.
+
+$$
+p(\mathbf{x}\vert C_k)=\frac{1}{(2\pi)^{D/2}}\frac{1}{\lVert\Sigma\rVert^{1/2}}\exp \left\lbrace -\frac{1}{2}(\mathbf{x}-\mu_k)^\top\Sigma^{-1}(\mathbf{x}-\mu_k)\right\rbrace
+$$
+
+이진 분류 문제에서는 다음과 같이 쓸 수 있다.
+
+$$\begin{align}
+&p(C_0 \vert \mathbf{x}) = \sigma(\mathbf{w^\top x}+b)) \tag{5.3}\\
+&\mathbf{w}=\Sigma^{-1}(\mu_0-\mu_1), \tag{5.4} \\
+&b = \frac{1}{2}\mu_0^\top\Sigma^{-1}\mu_0 +\frac{1}{2}\mu_1^\top\Sigma^{-1}\mu_1 + \log\frac{p(C_0)}{p(C_1)}
+\end{align}$$
+
+수식 5.3은 비생성형 기반 분류에서 사용되는 **로지스틱 회귀(_logistic regression_)**이다. 로지스틱 회귀 라고 불리는 이유는 **선형 회귀 식(logit function)**
+
+$$
+l(\mathbf{x}) = \mathbf{w^\top x} + b \tag{5.5}
+$$
+
+의 출력을 로지스틱 함수에 통과시켜 클래스 확률을 얻기 때문이다. 이때, 선형 회귀 식 (5.4)에서 $\mathbf{w}$는 가중치 벡터를, $b$는 편향을 의미하며 이 둘은 분류 경계를 결정한다.
+
+가중치 벡터 방향(5.4)은 좌표계를 공분산 행렬의 역행렬 $\Sigma^{-1}$에 의해 회전한 뒤, 두 분포의 평균 벡터를 연결하는 방향과 일치함에 주목하자. 또한, 편향항은 평균 제곱 모먼트들과 클래스 사전 확률의 로그 비율 $\log(p(C_0)/p(C_1))$에 비례한다.
+
+### QDA
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.7.png" title="5.7" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.7 QDA. 클래스 공분산이 다를 때, 가우스 분포간의 결정 평면은 이차곡선평면의 형태를 띈다.
+</div>
+
+클래스가 2개 이상인 경우에 소프트 맥스 함수(5.2)는 선형 로그 우도에 다음과 같이 적용될 수 있다.
+
+$$\begin{align}
+&l_k(\mathbf{x})=\mathbf{w}_k^\top\mathbf{x}+b_k \\
+&w_k=\Sigma^{-1}\mu_k\\
+&b_k = -\frac{1}{2}\mu_k^\top\Sigma^{-1}\mu_k + \log p(C_k)
+\end{align}$$
+
+분류가 한 클래스에서 다른 클래스로 전환되는 결정 경계가 선형이기 때문에 결정 기준을 다음과 같이 표현할 수 있다.
+
+$$
+\mathbf{w}_k \mathbf{x} + b_k > \mathbf{w}_l\mathbf{x}+b_l
+$$
+
+이러한 기준을 사용하여 데이터를 분류하는 기법은 **선형 판별 분석(_linear discriminant analysis, LDA_)**라고 한다.
+
+지금까지 살펴본 경우들은 모두 클래스의 공분산 행렬 $\Sigma_k$가 유일한 경우이며, 그렇지 않을 경우 결정 평면은 선형을 유지하지 않으며 quadratic함을 (그림5.7)을 통해 보인다. 이런 이차 결정 평면을 사용하는 기법은 **이차 판별 분석(_quadratic discriminant analysis, QDA_)**라고 한다.
