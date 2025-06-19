@@ -8,7 +8,6 @@ categories: CV
 pretty_table: true
 ---
 
-
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/CVAA/5.1.png" title="5.1" class="img-fluid rounded z-depth-1" %}
@@ -81,7 +80,7 @@ p_k = p(C_k\vert \mathbf{x}) &= \frac{p(\mathbf{x}\vert C_k)p(C_k)}{\sum_jp(x\ve
 &= \frac{\exp l_k}{\sum_j \exp l_j} \tag{5.2}
 \end{align}$$
 
-> $P(A\vert B)$ : 조건부 확률, B가 주어졌을 때 A가 일어날 확률
+> Remark. $P(A\vert B)$ : 조건부 확률, B가 주어졌을 때 A가 일어날 확률
 
 이 때, $\frac{\exp l_k}{\sum_j \exp l_j}$는 **정규화된 지수 함수(_normalized exponential_)** 또는 **소프트 맥스 함수(_softmax function_)**라고 부른다. $l_k$에 대해
 
@@ -135,7 +134,7 @@ $\sigma(l)$함수는 **로지스틱 시그모이드 함수(_logistic sigmoid fun
     </div>
 </div>
 <div class="caption">
-    Figure 5.6 두 개의 유일하게 분포된 가우스 클래스의 로지스틱 회귀. (a) 두 개의 가우스 분포가 파랑/빨강으로 표현되어있다. (b) 후험 확률은 함수의 높이와 붉은색 잉크의 비율로 표현되어있다. 
+    Figure 5.6 두 개의 유일하게 분포된 가우스 클래스의 로지스틱 회귀. (a) 두 개의 가우스 분포가 파랑/빨강으로 표현되어있다. (b) 후험 확률은 함수의 높이와 붉은색 잉크의 비율로 표현되어있다.
 </div>
 
 소프트맥스 함수와 시그모이드 함수에 기반한 확률적 생성 분류 모델은 모든 로그-우도 집합에 적용할 수 있지만, 분포가 다변량 가우스 형태를 띌 경우 수식이 훨씬 간단해진다. 공분산 행렬 $\Sigma$가 동일한 가우스 분포에 대해서는 다음 수식을 적용할 수 있다.
@@ -147,7 +146,7 @@ $$
 이진 분류 문제에서는 다음과 같이 쓸 수 있다.
 
 $$\begin{align}
-&p(C_0 \vert \mathbf{x}) = \sigma(\mathbf{w^\top x}+b)) \tag{5.3}\\
+&p(C_0 \vert \mathbf{x}) = \sigma(\mathbf{w^\top x}+b) \tag{5.3}\\
 &\mathbf{w}=\Sigma^{-1}(\mu_0-\mu_1), \tag{5.4} \\
 &b = \frac{1}{2}\mu_0^\top\Sigma^{-1}\mu_0 +\frac{1}{2}\mu_1^\top\Sigma^{-1}\mu_1 + \log\frac{p(C_0)}{p(C_1)}
 \end{align}$$
@@ -190,3 +189,69 @@ $$
 이러한 기준을 사용하여 데이터를 분류하는 기법은 **선형 판별 분석(_linear discriminant analysis, LDA_)**라고 한다.
 
 지금까지 살펴본 경우들은 모두 클래스의 공분산 행렬 $\Sigma_k$가 유일한 경우이며, 그렇지 않을 경우 결정 평면은 선형을 유지하지 않으며 quadratic함을 (그림5.7)을 통해 보인다. 이런 이차 결정 평면을 사용하는 기법은 **이차 판별 분석(_quadratic discriminant analysis, QDA_)**라고 한다.
+
+# Logistic Regression
+
+클래스 분포 문제를 해결하는 가장 쉬운 방법 중 하나는 **로지스틱 회귀(_logistic regression_)**이다. 베이시안 분류에서 사용되었던 것과 동일하게 가중치 벡터에 선형 투영을 적용하는 개념을 사용한다.
+
+$$
+l_i = \mathbf{w\cdot x}_i + b
+$$
+
+이 선형 투영 결과를 로지스틱 함수에 적용하면
+
+$$
+p_i=p(C_0\vert \mathbf{x}_i)=\sigma(l_i)=\sigma(\mathbf{w^\top x}_i+b) \tag{5.6}
+$$
+
+를 사용하여 이진 클래스 확률을 얻을 수 있다.
+
+로지스틱 함수는 미지의 변수들에 대한 사전 확률 분포를 따로 구성하거나 가정하지 않기 때문에 **판별(_discriminative_) 모델**의 간단한 예시 중 하나라고 볼 수 있다.
+
+따라서 클래스 평균과 공분산을 추정하여 분석할 수 없기 때문에 가중치 $\mathbf{w}$와 편향 $b$를 구하는 새로운 방법이 필요한데, 정답 클래스의 로그 후험 확률을 최대화 함으로써 구할 수 있다.
+
+이진 분류 문제에서, 각 훈련 샘플 $x_i$에 대한 클래스 레이블이  $t_i \in \lbrace 0,1 \rbrace$라고 하자. 또한, $p_i = p(C_0\vert \mathbf{x})$는 주어진 가중치와 편향 $(\mathbf{w}, b)$에 대해 로지스틱 함수(5.6)에 따라 계산된 클래스 $C_0$의 추정 확률이라고 하자. 이때, 로그 우도의 음수를 최소화 하는 방법으로 추정된 올바른 라벨에 대한 우도를 최대화 할 수 있으며, 이를 **크로스-엔트로피 손실(_cross-entropy loss_)** 또는 **오류 함수(_error function_)**라고 한다. 이는 모델이 정답 클래스에 대해 높은 확률을 출력하도록 유도하는 손실 함수로, 확률적 해석과 최적화 모두에서 직관적이며 널리 사용된다.
+
+$$
+E_{CE}(\mathbf{w},b) = - \sum_i \lbrace t_i\log p_i+(1-t_i)\log(1-p_i)\rbrace
+$$
+
+라벨이 $t_i=0$일 경우, 모델이 예측한 확률 $p_i = p(C_0\vert \mathbf{x}_i)$가 가장 높아야 하며, 반대로, $t_i=1$일 경우에는 이 값이 낮게 나와야 한다는 점에 주목하자.
+
+이 수식은 클래스 마다 수행된 선형 회귀 결과에 정규화된 지수 함수를 적용하여 후험 확률을 정의함으로써,  **다중 클래스 손실(_multi-class loss_)**로 확장될 수 있다.
+
+$$
+p_{ik} = p(C_k\vert \mathbf{x}_i) = \frac{\exp l_{ik}}{\sum_j \exp l_{ij}} = \frac{1}{Z_i}\exp l_{ik}
+$$
+
+이때, $l_{ik} = \mathbf{w}_k^\top\mathbf{x}_i + b_k$이다.
+
+수식 $Z_i = \sum_j \exp l_{ij}$는 **정규화 상수(_partition function_)**로 소프트맥스 함수의 분모에 해당하며 확률 분포로 정규화하는 역할을 한다. 위 형태에서 일부 전개 과정을 거치면 이에 대응하는 **다중 클래스 크로스 엔트로피 손실 함수(_multi-class cross-entropy loss_)**를 다음과 같이 구할 수 있다.
+
+$$
+E_{MCCE}(\lbrace\mathbf{w}_k,b_k\rbrace) = - \sum_i\sum_k\tilde{t}_{ik}\log{p_{ik}}
+$$
+
+여기서 $\tilde{t}_{ik}$는 **원-핫 인코딩**을 의미하며, 샘플 $i$가 클래스 $k$에 속할 경우 1, 그렇지 않으면 0이 된다. 클래스 레이블을 원-핫 벡터 대신 정수형 값 $t_i \in \lbrace 0,1, \ldots, K-1\rbrace$로 표현하면 손실 함수는 다음과 같이 더욱 간결하게 쓸 수 있다.
+
+$$
+E(\lbrace \mathbf{w}_k, b_k) = -\sum_i \log{p_{it_i}}
+$$
+
+또한 소프트맥스 확률 정의를 손실 함수에 직접 대입하면, 각 샘플 $i$에 대해 다음과 같이 정리할 수 있다.
+
+$$
+E(\lbrace \mathbf{w}_k, b_k) = -\sum_i(\log Z_i - l_{it_i})
+$$
+
+최적의 가중치와 편향값을 결정하기 위해서 **경사 하강법(_gradient descent_)**를 사용할 수 있다.
+
+$$
+\mathbf{w \leftarrow w -H^{-1}}\nabla E(\mathbf{w})
+$$
+
+이 때, $\nabla E$는 손실함수 $E$를 가중치 변수 $\mathbf{w}$에 대해 편미분한 경사(_gradient_)를 의미하고, $\mathbf{H}$는 이차 편미분으로 구성된 **헤세 행렬(_Hessian matrix_, 곡률 정보를 담고 있다.)**이다. 크로스-엔트로피 함수는 미지의 가중치 변수에 비선형이기 때문에, 반복해서 위 수식을 전개하면 최적의 해를 찾을 수 있다.
+
+이 방법은 손실 함수의 이차 근사를 통해 반복적으로 가중 최소제곱(_weighted least squares_) 문제를 푸는 방식이며, 각 반복 단계에서 헤세 행렬이 갱신된다는 점에서 **반복 가중 최소제곱법(_iteratively reweighted least squares, IRLS_)**이라고 불린다.
+
+많은 비선형 최적화 문제들은 다수의 **국소 한계점(_local minima_)**을 가지지만, 크로스-엔트로피 함수는 그렇지 않기 때문에, 유일 해에 도달할 수 있음을 보장받는다.
