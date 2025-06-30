@@ -3,7 +3,7 @@ layout: post
 title: Supervised Learning
 date: 2025-06-15 20:37:00
 description: Supervised Learning from CVAA ch.5 Deep Learning
-tags: CV, ML, DL
+tags: SupervisedLearning, LogisticRegression, SVM, HingeLoss, DecisionTree, RandomForest, Softmax, CrossEntropy, BayesianClassification, KernelMethods
 categories: CV
 pretty_table: true
 ---
