@@ -4,7 +4,7 @@ title: GameEngine Team Assignment
 description: Focusing on Unity's C# scripting
 img: assets/img/GE_project/Thumbnail.jpeg
 importance: 1
-category: work
+category: personal
 toc:
   - name: Team up
   - name: Before we start...
