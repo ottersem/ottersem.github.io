@@ -17,8 +17,8 @@ ninja.data = [{
             window.location.href = "/blog/";
           },
         },{id: "nav-projects",
-          title: "projects",
-          description: "A growing collection of my cool projects.",
+          title: "Projects",
+          description: "Collection of my work",
           section: "Navigation",
           handler: () => {
             window.location.href = "/projects/";
@@ -38,6 +38,17 @@ ninja.data = [{
             window.location.href = "/cv/";
           },
         },{id: "post-supervised-learning",
+      
+        title: "Supervised Learning",
+      
+      description: "Unsupervised Learning from CVAA ch.5 Deep Learning",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Unsupervised-Learning/";
+        
+      },
+    },{id: "post-supervised-learning",
       
         title: "Supervised Learning",
       
