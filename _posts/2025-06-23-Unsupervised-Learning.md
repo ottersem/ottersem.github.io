@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Supervised Learning
+title: Unsupervised Learning
 date: 2025-06-22 20:37:00
 description: Unsupervised Learning from CVAA ch.5 Deep Learning
 tags: CV, ML, DL
@@ -98,3 +98,67 @@ N_k &= \sum_i z_{ik}
 \end{align}$$
 
 이 때, $N_k$는 각 클러스터에 할당된 샘플 포인트의 수를 추정한다.
+
+# Principal component analysis
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.15.png" title="5.15" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.15 얼굴 모델링과 고유얼굴 사용의 비교 예시 (a) 입력 이미지 (b) 첫 여덟 개의 고유 얼굴 (c) 이 기저로의 정사영을 통해 이미지를 재구성하고 85바이토 압축한 결과 이미지 (d) JPEG으로 재구성된 이미지
+</div>
+
+앞서 혼합 모델 분석에서 보았듯이 클러스터 내의 샘플들을 다변량 가우스(_multivariate Gaussian_) 모델은 분포의 포착에 효과적이지만, 샘플 공간의 차원이 상승할수록 전체 공분산을 추정하는 것은 불가능에 가까워진다.
+
+그림 5.15을 예로 들어보자. 이미지가 $P$개의 픽셀로 이루어져 있다면 공분산 행렬은 $P \times P$의 크기를 가진다. 이때 다행히도 전체 공분산을 모델링할 필요가 없는 경우가 많다. 왜냐하면, **주성분 분석(_Principal Component Analysis, PCA_)**를 사용하면 더 낮은 랭크의 근사치 추정이 가능하기 때문이다.
+
+## Eigenface(고유얼굴)
+
+**고유얼굴(_Eigenface_)** 기법은 임의의 얼굴 이미지 $\mathbf{x}$는 평균 얼굴 이미지 $\mathbf{m}$을 시작점으로 하고, 적은 수의 부호가 있는 기저 이미지 $\mathbf{u}_i$를 스케일링하여 더함으로써 압축 및 재구성이 가능하다는 사실에 기반한다.
+
+$$
+\tilde{\mathbf{x}} = \mathbf{m} + \sum_{i=0}^{M-1}a_i\mathbf{u}_i \tag{5.7}
+$$
+
+이 때, 기저 이미지 $\mathbf{u}_i$(그림 5.15(a))는 학습 이미지 집합으로부터 주성분 분석을 통해 추출된다. 이 기법은 **고유값 분해(_Eigenvalue Analysis_)**라고 불린다. 연구에 따르면고유얼굴의 계수 $a_i$는 그 자체로 빠른 이미지 매칭 알고리즘을 구성하는 데 사용할 수 있다.
+
+세부적으로 들어가면, 훈련 이미지의 집합$\lbrace \mathbf{x}_j \rbrace$로부터 시작해 이 집합으로부터 평균 이미지 $\mathbf{m}$과 **산포 행렬(_scatter matrix_)** 또는 **공분산 행렬**을 계산한다.
+
+$$
+\mathbf{C} = \frac{1}{N}\sum^{N-1}_{j=0}(\mathbf{x}_j-\mathbf{m})(\mathbf{x}_j-\mathbf{m})^\top
+$$
+
+고유값 분해를 적용하여 공분산 행렬을 다음처럼 표현할 수 있다.
+
+$$
+\mathbf{C=UAU^\top}=\sum^{N-1}_{i=1}\lambda_i\mathbf{u}_i\mathbf{u}_i^\top
+$$
+
+이 때, $\lambda_i$는 $\mathbf{C}$의 고유값, $\mathbf{u}_i$는 **고유벡터(_eigenvectors_)**이다. 
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.16.png" title="5.16" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.16 고유 얼굴 이미지들이 생성하는 선형 부분공간으로의 정사영. DFFS는 해당 이미지가 얼굴 공간에서 벗어난 수직 거리를 의미하며, DIFS는 평균 이미지로부터 얼굴 공간 내에서의 이동 거리를 나타낸다. 이 두 거리 모두 Mahalanobis 거리로 변환할 수 있으며, 이를 기반으로 한 확률론적 해석도 가능하다.
+</div>
+
+고유값 분해는 두가지 중요한 성질을 가지고 있다. 첫 번째는 새로운 이미지 $\mathbf{x}$의 최적(최근사)의 계수 $a_i$는 다음과 같이 계산할 수 있다는 것이다.
+
+$$
+a_i = (\mathbf{x-m})\cdot\mathbf{u}_i
+$$
+
+두 번째는 고유값$\lbrace \lambda_i \rbrace$가 내림차 순으로 정렬되어 있다고 가정하면 식 (5.7)의 근사를 어느 지점 $M$에서 잘라(_truncate_)서 사용하더라도, 그 근사는 $\mathbf{\tilde{x}, x}$ 사이의 오차가 최소가 되는 **최적의 근사(_best possible approximation_)**를 제공한다. 얼굴 이미지의 고유 얼굴 분해를 $M$개의 성분까지만 사용하여 잘라내는 것은, 해당 이미지를 선형 부분공간 $F$ 위로 정사영 하는 것과 동일하며, 이 부분공간을 **얼굴 공간(_face space_)**라고 부를 수 있다.
+
+왜냐하면 고유벡터(고유얼굴)은 직교하며 단위 노름이고, 정사영된 평면 $\tilde{\mathbf{x}}$로부터 평균 이미지 $\mathbf{m}$으로의 정사영 거리는 다음과 같이 작성 할 수 있다.
+
+$$
+\text{DIFS}=\lVert \mathbf{\tilde{x}-m}\rVert = \left\lbrack \sum_{i=0}^{M-1}a_i^2 \right\rbrack ^{\frac{1}{2}}
+$$
+
+DIFS는 **얼굴 공간의 거리(_Distance In Face Space_)**를 의미한다. 원본 이미지 $\mathbf{x}$의 이미지의 얼굴 공간 $\tilde{\mathbf{x}}$로의 정사영 거리(Distance From Face Space, DFFS)는 픽셀 공간에서 바로 계산할 수 있으며, 이는 특정 이미지가 얼마나 얼굴 같은지를 나타낸다. 또한, 얼굴 공간 안의 각각 다른 두 얼굴은 각각의 고유얼굴 계수차의 노름을 계산함으로써 거리를 거리를 계산할 수 있다.
