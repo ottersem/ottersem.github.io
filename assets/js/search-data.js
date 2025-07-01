@@ -37,9 +37,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-supervised-learning",
+        },{id: "post-unsupervised-learning",
       
-        title: "Supervised Learning",
+        title: "Unsupervised Learning",
       
       description: "Unsupervised Learning from CVAA ch.5 Deep Learning",
       section: "Posts",
