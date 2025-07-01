@@ -162,3 +162,27 @@ $$
 $$
 
 DIFS는 **얼굴 공간의 거리(_Distance In Face Space_)**를 의미한다. 원본 이미지 $\mathbf{x}$의 이미지의 얼굴 공간 $\tilde{\mathbf{x}}$로의 정사영 거리(Distance From Face Space, DFFS)는 픽셀 공간에서 바로 계산할 수 있으며, 이는 특정 이미지가 얼마나 얼굴 같은지를 나타낸다. 또한, 얼굴 공간 안의 각각 다른 두 얼굴은 각각의 고유얼굴 계수차의 노름을 계산함으로써 거리를 거리를 계산할 수 있다.
+
+# Manifold learning
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.17.png" title="5.17" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.17
+</div>
+
+우리가 분석하는 데이터는 전역적으로 선형적인 부분공간에 존재하지 않지만, **더 낮은 차원의 매니폴드** 위에는 존재한다. 이러한 경우에는 **비선형 차원 축소(_non-linear dimensionality reduction_)** 기법을 사용할 수 있다. 이러한 시스템들은 고차원 공간 내에서 저차원의 매니폴드를 추출하므로 **매니폴드 학습 기법(_manifold learning techniques_)**라고도 불린다. 그림 5.17은 3차원 S자형 리본 구조로부터 추출한 2차원 매니폴드 예시이다.
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.18.png" title="5.18" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.18
+</div>
+
+차원 축소는 데이터를 정규화하거나 유사도 탐색을 가속화하는데 유용하다. 뿐만 아니라 매니폴드 학습 알고리즘은 입력 데이터의 분포나 신경망 층의 활성값을 시각화하는 데에도 활용될 수 있다. 그림 5.18은 매니폴드 학습 알고리즘 중 UMAP과 t-SNE를 서로 다른 CV 데이터셋에 적용한 예시를 보여준다.
