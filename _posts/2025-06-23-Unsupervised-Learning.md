@@ -186,3 +186,23 @@ DIFS는 **얼굴 공간의 거리(_Distance In Face Space_)**를 의미한다. �
 </div>
 
 차원 축소는 데이터를 정규화하거나 유사도 탐색을 가속화하는데 유용하다. 뿐만 아니라 매니폴드 학습 알고리즘은 입력 데이터의 분포나 신경망 층의 활성값을 시각화하는 데에도 활용될 수 있다. 그림 5.18은 매니폴드 학습 알고리즘 중 UMAP과 t-SNE를 서로 다른 CV 데이터셋에 적용한 예시를 보여준다.
+
+
+# Semi-supervised learning
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/CVAA/5.19.png" title="5.18" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 5.19 반지도 학습의 예. (a) 두 라벨된 샘플과 모든 샘플을 잇고 있는 그래프 (b) harmonic 함수를 이용해 이진 분류 문제를 푸는 방법 (c) semi-supervised support vector machine의 사용 예
+</div>
+
+ImageNet과 같은 데이터셋은 수십만개의 라벨링된 이미지를 제공하지만 웹에서 수집할 수 있는 대부분의 이미지들은 라벨링이 전혀 되어있지 않는 경우가 많다. 이런 상황에서 학습과 더불어 추후에 올 입력값들의 특성을 제대로 파악해서 더 효과적으로 분류/예측 모델을 만들려면 어떤 방식으로 접근해야 할까?
+
+그림 5.19의 다이어그램을 살펴보면, 소수의 표본만이 정확한 클래스로 라벨링 되어있다. 이러한 라벨 정보를 근처의 표본들로 확장함으로써, 모든 데이터에 라벨을 부여하는 수고를 줄일 수 있으며, 동시에 미래 입력값에 대한 결정 경계를 학습할 수 있다.
+
+이런 종류의 학습법을 **반지도 학습(_semi_supervised learning_)**이라고 부른다. 반지도 학습은 크게 두가지 갈래로 나뉜다. 첫 번째는 **_transductive learning_**이다. transductive learning은 한 배치 안에 라벨링 된 샘플과 그렇지 않은 샘플을 함께 투입해 라벨링 되지 않은 샘플들을 분류하는 것이 목표이다. 두 번째는 **_inductive learning_**으로, 이 방식은 모델이 학습 데이터 외의 미래에 주어질 입력값에 대해서도 일반화된 예측을 수행할 수 있도록 훈련하는 것을 목표로 한다. 일반적으로 inductive learning을 주로 사용하며, 자율 주행이나 새로운 컨텐츠에 대한 분류 등의 분야에서 사용된다.
+
+반지도 학습은 **약지도 학습(_weakly supervised learning_)**의 한 갈래라고 볼 수 있다. 약지도 학습은 레이블이 **없거나, 불완전하거나, 부정확**할 수 있는 데이터를 다룬다.
