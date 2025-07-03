@@ -3,7 +3,7 @@ layout: post
 title: Unsupervised Learning
 date: 2025-06-22 20:37:00
 description: Unsupervised Learning from CVAA ch.5 Deep Learning
-tags: CV, ML, DL
+tags: Unsupervised-Learning, Clustering, K-means, Gaussian Mixture Model, Semi-supervised Learning
 categories: CV
 pretty_table: true
 ---
