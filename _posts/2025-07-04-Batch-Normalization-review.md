@@ -3,7 +3,7 @@ layout: post
 title: REVIEW - Batch Normalization
 date: 2025-07-02 20:37:00
 description: Review and implementation of 'Batch Normalization(2015)'
-tags: BatchNorm, Internal_Covariate_Shift
+tags: BatchNorm, Internal_Covariate_Shift, review, Gradient_Vanishing, Normalization
 categories: review
 pretty_table: true
 ---
@@ -106,5 +106,3 @@ $$
 ## **Weakness / To-Try** 
 BN은 미니 배치의 크기에 크게 의존성을 가진다. 미니 배치의 평균과 분산으로 정규화를 하기에 미니 배치의 사이즈가 작을수록 평균과 분산은 학습 데이터의 전체 평균, 분산과는 다른 값이 계산될 가능성이 크고, 따라서 각 배치의 정규화때마다 데이터들의 방향이 모델 수렴 방향을 불규칙하게 만들어 학습 성능 저하를 초래할 수 있다. 
 상술한 문제점은 이후 LayerNorm (Ba et al., 2016), GroupNorm 등의 후속 연구로 이어진다.
-
-# Implementation
