@@ -37,11 +37,22 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-review-batch-normalization",
+        },{id: "post-implementation-batch-normalization",
+      
+        title: "IMPLEMENTATION - Batch Normalization",
+      
+      description: "Implementation of &#39;Batch Normalization(2015)&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Batch-Normalization-Implementation/";
+        
+      },
+    },{id: "post-review-batch-normalization",
       
         title: "REVIEW - Batch Normalization",
       
-      description: "Review and implementation of &#39;Batch Normalization(2015)&#39;",
+      description: "Review of &#39;Batch Normalization(2015)&#39;",
       section: "Posts",
       handler: () => {
         
@@ -554,7 +565,7 @@ ninja.data = [{
               window.location.href = "/projects/MML/";
             },},{id: "projects-reviews",
           title: 'Reviews',
-          description: "All sort of reviewed papers",
+          description: "All sort of reviewed papers and its implementations.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/Reviews/";
             },},{
