@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-unsupervised-learning",
+        },{id: "post-review-batch-normalization",
+      
+        title: "REVIEW - Batch Normalization",
+      
+      description: "Review and implementation of &#39;Batch Normalization(2015)&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Batch-Normalization-review/";
+        
+      },
+    },{id: "post-unsupervised-learning",
       
         title: "Unsupervised Learning",
       
@@ -541,6 +552,11 @@ ninja.data = [{
           description: "Summerize MML",
           section: "Projects",handler: () => {
               window.location.href = "/projects/MML/";
+            },},{id: "projects-reviews",
+          title: 'Reviews',
+          description: "All sort of reviewed papers",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/Reviews/";
             },},{
       id: 'light-theme',
       title: 'Change theme to light',
