@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Reviews
-description: All sort of reviewed papers
+description: All sort of reviewed papers and its implementations.
 img: assets/img/doggy.png
 importance: 1
 category: study

@@ -2,7 +2,7 @@
 layout: post
 title: REVIEW - Batch Normalization
 date: 2025-07-02 20:37:00
-description: Review and implementation of 'Batch Normalization(2015)'
+description: Review of 'Batch Normalization(2015)'
 tags: BatchNorm, Internal_Covariate_Shift, review, Gradient_Vanishing, Normalization
 categories: review
 pretty_table: true

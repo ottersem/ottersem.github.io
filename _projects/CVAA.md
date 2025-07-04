@@ -19,7 +19,7 @@ category: study
 ## Ch.5 Deep Learning
 [5.1 Supervised Learning](https://ottersem.github.io/blog/2025/Supervised-Learning/)
 
-[5.2 Unspervised Learning]()
+[5.2 Unspervised Learning](https://ottersem.github.io/blog/2025/Unsupervised-Learning/)
 
 [5.3 Deep neural networks]()
 
