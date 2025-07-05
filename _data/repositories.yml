@@ -1,8 +1,9 @@
 github_users:
   - ottersem
 
-repo_description_lines_max: 2
+repo_description_lines_max: 4
 
 github_repos:
   - ottersem/ottersem.github.io
   - ottersem/BOJ
+  - ottersem/CS231n-answer
