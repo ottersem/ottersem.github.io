@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-implementation-batch-normalization",
+        },{id: "post-deep-neural-networks",
+      
+        title: "Deep Neural Networks",
+      
+      description: "Deep neural networks from CVAA ch.5 Deep Learning",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Deep-Neural-Networks/";
+        
+      },
+    },{id: "post-implementation-batch-normalization",
       
         title: "IMPLEMENTATION - Batch Normalization",
       
