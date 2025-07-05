@@ -13,6 +13,6 @@ category: study
 
 [Batch Normalization(2015) - Review](https://ottersem.github.io/blog/2025/Batch-Normalization-review/)
 
-[Batch Normalization(2015) - Implementation]()
+[Batch Normalization(2015) - Implementation](https://ottersem.github.io/blog/2025/Batch-Normalization-Implementation/)
 
 - - -

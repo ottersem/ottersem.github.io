@@ -5,5 +5,4 @@ repo_description_lines_max: 4
 
 github_repos:
   - ottersem/ottersem.github.io
-  - ottersem/BOJ
   - ottersem/CS231n-answer
