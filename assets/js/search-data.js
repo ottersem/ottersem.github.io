@@ -37,7 +37,40 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-deep-neural-networks",
+        },{id: "post-cs231n-exercise1-3-softmax",
+      
+        title: "[CS231n]Exercise1.3 - Softmax",
+      
+      description: "Softmax exercise.",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/softmax/";
+        
+      },
+    },{id: "post-cs231n-exercise1-2-support-vector-machine",
+      
+        title: "[CS231n]Exercise1.2 - Support Vector Machine",
+      
+      description: "SVM Exercise",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/svm/";
+        
+      },
+    },{id: "post-cs231n-exercise1-1-knn",
+      
+        title: "[CS231n]Exercise1.1 - kNN",
+      
+      description: "kNN Exercise",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/knn/";
+        
+      },
+    },{id: "post-deep-neural-networks",
       
         title: "Deep Neural Networks",
       
@@ -554,7 +587,12 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "projects-computer-vision-algorithms-and-applications",
+          section: "News",},{id: "projects-cs231n-exercise",
+          title: 'CS231n Exercise',
+          description: "Solved exercise from CS231n",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/CS231n/";
+            },},{id: "projects-computer-vision-algorithms-and-applications",
           title: 'Computer Vision Algorithms and Applications',
           description: "Summerize CVAA",
           section: "Projects",handler: () => {

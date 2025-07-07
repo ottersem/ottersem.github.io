@@ -1,0 +1,431 @@
+<!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> [CS231n]Exercise1.2 - Support Vector Machine | Techlog </title> <meta name="author" content="Seungmin Justin Park"> <meta name="description" content="SVM Exercise"> <meta name="keywords" content="Computer Vision, Machine Learning, Data Science"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;J&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://ottersem.github.io/blog/2025/svm/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Techlog </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">[CS231n]Exercise1.2 - Support Vector Machine</h1> <p class="post-meta"> Created in July 06, 2025 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/svm"> <i class="fa-solid fa-hashtag fa-sm"></i> SVM</a>   ·   <a href="/blog/category/cv"> <i class="fa-solid fa-tag fa-sm"></i> CV,</a>   <a href="/blog/category/dl"> <i class="fa-solid fa-tag fa-sm"></i> DL</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h1 id="before-begin">Before begin…</h1> <p>CS231n exercise1.2 : SVM에 대한 본인의 풀이이다. 자세한 코드는 <a href="https://github.com/ottersem/CS231n-answer/tree/main/assignment1" rel="external nofollow noopener" target="_blank">github</a>에서 확인 가능하다.</p> <h1 id="multiclass-support-vector-machine-exercise">Multiclass Support Vector Machine exercise</h1> <p><em>Complete and hand in this completed worksheet (including its outputs and any supporting code outside of the worksheet) with your assignment submission. For more details see the <a href="http://vision.stanford.edu/teaching/cs231n/assignments.html" rel="external nofollow noopener" target="_blank">assignments page</a> on the course website.</em></p> <p>In this exercise you will:</p> <ul> <li>implement a fully-vectorized <strong>loss function</strong> for the SVM</li> <li>implement the fully-vectorized expression for its <strong>analytic gradient</strong> </li> <li> <strong>check your implementation</strong> using numerical gradient</li> <li>use a validation set to <strong>tune the learning rate and regularization</strong> strength</li> <li> <strong>optimize</strong> the loss function with <strong>SGD</strong> </li> <li> <strong>visualize</strong> the final learned weights</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Run some setup code for this notebook.
+</span><span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">cs231n.data_utils</span> <span class="kn">import</span> <span class="n">load_CIFAR10</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># This is a bit of magic to make matplotlib figures appear inline in the
+# notebook rather than in a new window.
+</span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">figure.figsize</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span> <span class="c1"># set default size of plots
+</span><span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">image.interpolation</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">nearest</span><span class="sh">'</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">image.cmap</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gray</span><span class="sh">'</span>
+
+<span class="c1"># Some more magic so that the notebook will reload external python modules;
+# see http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython
+</span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+</code></pre></div></div> <h2 id="cifar-10-data-loading-and-preprocessing">CIFAR-10 Data Loading and Preprocessing</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load the raw CIFAR-10 data.
+</span><span class="n">cifar10_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cs231n/datasets/cifar-10-batches-py</span><span class="sh">'</span>
+
+<span class="c1"># Cleaning up variables to prevent loading data multiple times (which may cause memory issue)
+</span><span class="k">try</span><span class="p">:</span>
+   <span class="k">del</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span>
+   <span class="k">del</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span>
+   <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Clear previously loaded data.</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+   <span class="k">pass</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span>
+
+<span class="c1"># As a sanity check, we print out the size of the training and test data.
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Training data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Training labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Training data shape:  (50000, 32, 32, 3)
+Training labels shape:  (50000,)
+Test data shape:  (10000, 32, 32, 3)
+Test labels shape:  (10000,)
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualize some examples from the dataset.
+# We show a few examples of training images from each class.
+</span><span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">plane</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">car</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bird</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">deer</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">frog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">horse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ship</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">truck</span><span class="sh">'</span><span class="p">]</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+<span class="n">samples_per_class</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">cls</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">classes</span><span class="p">):</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">flatnonzero</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">idxs</span><span class="p">,</span> <span class="n">samples_per_class</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">idxs</span><span class="p">):</span>
+        <span class="n">plt_idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">num_classes</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="n">samples_per_class</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">plt_idx</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">idx</span><span class="p">].</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">uint8</span><span class="sh">'</span><span class="p">))</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">axis</span><span class="p">(</span><span class="sh">'</span><span class="s">off</span><span class="sh">'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/svm_files/svm_5_0-480.webp 480w,/assets/img/CS231n/svm_files/svm_5_0-800.webp 800w,/assets/img/CS231n/svm_files/svm_5_0-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/svm_files/svm_5_0.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="1" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Split the data into train, val, and test sets. In addition we will
+# create a small development set as a subset of the training data;
+# we can use this for development so our code runs faster.
+</span><span class="n">num_training</span> <span class="o">=</span> <span class="mi">49000</span>
+<span class="n">num_validation</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">num_test</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">num_dev</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># Our validation set will be num_validation points from the original
+# training set.
+</span><span class="n">mask</span> <span class="o">=</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">)</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c1"># Our training set will be the first num_train points from the original
+# training set.
+</span><span class="n">mask</span> <span class="o">=</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c1"># We will also make a development set, which is a small subset of
+# the training set.
+</span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_dev</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">X_dev</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">y_dev</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c1"># We use the first num_test points of the original test set as our
+# test set.
+</span><span class="n">mask</span> <span class="o">=</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Train data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Train labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Validation data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Validation labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_val</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Train data shape:  (49000, 32, 32, 3)
+Train labels shape:  (49000,)
+Validation data shape:  (1000, 32, 32, 3)
+Validation labels shape:  (1000,)
+Test data shape:  (1000, 32, 32, 3)
+Test labels shape:  (1000,)
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Preprocessing: reshape the image data into rows
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="p">(</span><span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">X_dev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_dev</span><span class="p">,</span> <span class="p">(</span><span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># As a sanity check, print out the shapes of the data
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Training data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Validation data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">dev data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Training data shape:  (49000, 3072)
+Validation data shape:  (1000, 3072)
+Test data shape:  (1000, 3072)
+dev data shape:  (500, 3072)
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Preprocessing: subtract the mean image
+# first: compute the image mean based on the training data
+</span><span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">mean_image</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span> <span class="c1"># print a few of the elements
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">mean_image</span><span class="p">.</span><span class="nf">reshape</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">3</span><span class="p">)).</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">uint8</span><span class="sh">'</span><span class="p">))</span> <span class="c1"># visualize the mean image
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+
+<span class="c1"># second: subtract the mean image from train and test data
+</span><span class="n">X_train</span> <span class="o">-=</span> <span class="n">mean_image</span>
+<span class="n">X_val</span> <span class="o">-=</span> <span class="n">mean_image</span>
+<span class="n">X_test</span> <span class="o">-=</span> <span class="n">mean_image</span>
+<span class="n">X_dev</span> <span class="o">-=</span> <span class="n">mean_image</span>
+
+<span class="c1"># third: append the bias dimension of ones (i.e. bias trick) so that our SVM
+# only has to worry about optimizing a single weight matrix W.
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+<span class="n">X_val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_val</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_test</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+<span class="n">X_dev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_dev</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[130.64189796 135.98173469 132.47391837 130.05569388 135.34804082
+ 131.75402041 130.96055102 136.14328571 132.47636735 131.48467347]
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/svm_files/svm_8_1-480.webp 480w,/assets/img/CS231n/svm_files/svm_8_1-800.webp 800w,/assets/img/CS231n/svm_files/svm_8_1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/svm_files/svm_8_1.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="2" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(49000, 3073) (1000, 3073) (1000, 3073) (500, 3073)
+</code></pre></div></div> <h2 id="svm-classifier">SVM Classifier</h2> <p>Your code for this section will all be written inside <code class="language-plaintext highlighter-rouge">cs231n/classifiers/linear_svm.py</code>.</p> <p>As you can see, we have prefilled the function <code class="language-plaintext highlighter-rouge">svm_loss_naive</code> which uses for loops to evaluate the multiclass SVM loss function.</p> \[\text{margin} = s_j-s_{y_i} + \delta\] <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Evaluate the naive implementation of the loss we provided for you:
+</span><span class="kn">from</span> <span class="n">cs231n.classifiers.linear_svm</span> <span class="kn">import</span> <span class="n">svm_loss_naive</span>
+<span class="kn">import</span> <span class="n">time</span>
+
+<span class="c1"># generate a random SVM weight matrix of small numbers
+</span><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">3073</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span>
+
+<span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">loss: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>loss: 9.025805
+</code></pre></div></div> <p>The <code class="language-plaintext highlighter-rouge">grad</code> returned from the function above is right now all zero. Derive and implement the gradient for the SVM cost function and implement it inline inside the function <code class="language-plaintext highlighter-rouge">svm_loss_naive</code>. You will find it helpful to interleave your new code inside the existing function.</p> <p>To check that you have correctly implemented the gradient, you can numerically estimate the gradient of the loss function and compare the numeric estimate to the gradient that you computed. We have provided code that does this for you:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Once you've implemented the gradient, recompute it with the code below
+# and gradient check it with the function we provided for you
+</span>
+<span class="c1"># Compute the loss and its gradient at W.
+</span><span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># Numerically compute the gradient along several randomly chosen dimensions, and
+# compare them with your analytically computed gradient. The numbers should match
+# almost exactly along all dimensions.
+</span><span class="kn">from</span> <span class="n">cs231n.gradient_check</span> <span class="kn">import</span> <span class="n">grad_check_sparse</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">grad_numerical</span> <span class="o">=</span> <span class="nf">grad_check_sparse</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+
+<span class="c1"># do the gradient check once again with regularization turned on
+# you didn't forget the regularization gradient did you?
+</span><span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">5e1</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">5e1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">grad_numerical</span> <span class="o">=</span> <span class="nf">grad_check_sparse</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>numerical: -36.292117 analytic: -36.292117, relative error: 1.297052e-11
+numerical: 7.943945 analytic: 7.943945, relative error: 7.680180e-11
+numerical: -19.932553 analytic: -19.932553, relative error: 2.671511e-11
+numerical: 6.113729 analytic: 6.113729, relative error: 3.142132e-11
+numerical: 14.408637 analytic: 14.408637, relative error: 2.021860e-14
+numerical: 12.440661 analytic: 12.440661, relative error: 1.954039e-11
+numerical: 19.977240 analytic: 19.977240, relative error: 8.951212e-12
+numerical: 14.810861 analytic: 14.810861, relative error: 9.910440e-12
+numerical: -25.557649 analytic: -25.557649, relative error: 6.744591e-12
+numerical: 11.938094 analytic: 11.938094, relative error: 5.122498e-12
+numerical: 2.564199 analytic: 2.564199, relative error: 1.760372e-11
+numerical: -1.984778 analytic: -1.984778, relative error: 7.631527e-12
+numerical: 29.909729 analytic: 29.909729, relative error: 1.782223e-11
+numerical: 15.048738 analytic: 15.048738, relative error: 1.613970e-11
+numerical: 23.186077 analytic: 23.186077, relative error: 1.203446e-11
+numerical: 4.419457 analytic: 4.419457, relative error: 2.345793e-11
+numerical: 27.798558 analytic: 27.798558, relative error: 6.669991e-13
+numerical: -25.815624 analytic: -25.815624, relative error: 2.155509e-11
+numerical: 13.017248 analytic: 13.017248, relative error: 4.785510e-12
+numerical: 15.317591 analytic: 15.317591, relative error: 1.288972e-11
+</code></pre></div></div> <p><strong>Inline Question 1</strong></p> <p>It is possible that once in a while a dimension in the gradcheck will not match exactly. What could such a discrepancy be caused by? Is it a reason for concern? What is a simple example in one dimension where a gradient check could fail? How would change the margin affect of the frequency of this happening? <em>Hint: the SVM loss function is not strictly speaking differentiable</em></p> <p>$\color{blue}{\textit Your Answer:}$</p> <p>Gradient Checking? Numerical diffrerential과 역전파 계산한 analytic gradient를 비교하여 구현이 올바른지 검증하는 방법. 이 방식은 함수가 모든 지점에서 미분 가능할 때만 정확한 값을 찾을 수 있음.</p> \[\frac{\partial f}{\partial x} \approx \frac{f(x+h)-f(x-h}{2h}\] <p>SVM의 hinge loss 함수는 $max(0,x)$를 포함하므로 $x=0$에서 미분이 정의되지 않음</p> \[L_i = \sum_{j\ne y_i}\max(0,s_j-s_{y_i}+Δ)\] <p>종합하면</p> <ol> <li>SVM loss는 입력값이 $s_j-s_{y_i}+Δ=0$인 포인트 근처에 있을 경우 수치 미분이 일치하지 않을 수 있음</li> <li>심각한 문제는 아니지만 오차가 일관되고 크면 구현 오류 가능성 상승</li> <li>상술했듯이 $x=0$에서 미분 불가능</li> <li>마진 $\delta$ 값을 크게 늘리면 더 많은 표본이 힌지 로스 함수에 걸리게 되무로 미분이 정의되지 않는 지점이 많아짐. 따라서 gradient check가 실패할 가능성이 높아지고 vice versa.</li> </ol> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Next implement the function svm_loss_vectorized; for now only compute the loss;
+# we will implement the gradient in a moment.
+</span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">loss_naive</span><span class="p">,</span> <span class="n">grad_naive</span> <span class="o">=</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Naive loss: %e computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_naive</span><span class="p">,</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="n">cs231n.classifiers.linear_svm</span> <span class="kn">import</span> <span class="n">svm_loss_vectorized</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">loss_vectorized</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">svm_loss_vectorized</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Vectorized loss: %e computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_vectorized</span><span class="p">,</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="c1"># The losses should match but your vectorized implementation should be much faster.
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">difference: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_naive</span> <span class="o">-</span> <span class="n">loss_vectorized</span><span class="p">))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Naive loss: 9.025805e+00 computed in 0.045247s
+Vectorized loss: 9.025805e+00 computed in 0.011504s
+difference: 0.000000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Complete the implementation of svm_loss_vectorized, and compute the gradient
+# of the loss function in a vectorized way.
+</span>
+<span class="c1"># The naive implementation and the vectorized implementation should match, but
+# the vectorized version should still be much faster.
+</span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">grad_naive</span> <span class="o">=</span> <span class="nf">svm_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Naive loss and gradient: computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">grad_vectorized</span> <span class="o">=</span> <span class="nf">svm_loss_vectorized</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Vectorized loss and gradient: computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="c1"># The loss is a single number, so it is easy to compare the values computed
+# by the two implementations. The gradient on the other hand is a matrix, so
+# we use the Frobenius norm to compare them.
+</span><span class="n">difference</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">grad_naive</span> <span class="o">-</span> <span class="n">grad_vectorized</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="sh">'</span><span class="s">fro</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">difference: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">difference</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Naive loss and gradient: computed in 0.044702s
+Vectorized loss and gradient: computed in 0.010179s
+difference: 0.000000
+</code></pre></div></div> <h3 id="stochastic-gradient-descent">Stochastic Gradient Descent</h3> <p>We now have vectorized and efficient expressions for the loss, the gradient and our gradient matches the numerical gradient. We are therefore ready to do SGD to minimize the loss. Your code for this part will be written inside <code class="language-plaintext highlighter-rouge">cs231n/classifiers/linear_classifier.py</code>.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># In the file linear_classifier.py, implement SGD in the function
+# LinearClassifier.train() and then run it with the code below.
+</span><span class="kn">from</span> <span class="n">cs231n.classifiers</span> <span class="kn">import</span> <span class="n">LinearSVM</span>
+<span class="n">svm</span> <span class="o">=</span> <span class="nc">LinearSVM</span><span class="p">()</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">loss_hist</span> <span class="o">=</span> <span class="n">svm</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">2.5e4</span><span class="p">,</span>
+                      <span class="n">num_iters</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">That took %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iteration 0 / 1500: loss 792.462188
+iteration 100 / 1500: loss 287.882125
+iteration 200 / 1500: loss 108.275734
+iteration 300 / 1500: loss 42.543002
+iteration 400 / 1500: loss 18.790975
+iteration 500 / 1500: loss 10.428685
+iteration 600 / 1500: loss 7.067637
+iteration 700 / 1500: loss 6.056839
+iteration 800 / 1500: loss 5.041565
+iteration 900 / 1500: loss 5.522890
+iteration 1000 / 1500: loss 5.026256
+iteration 1100 / 1500: loss 5.669200
+iteration 1200 / 1500: loss 5.354353
+iteration 1300 / 1500: loss 5.160691
+iteration 1400 / 1500: loss 5.656526
+That took 12.223492s
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># A useful debugging strategy is to plot the loss as a function of
+# iteration number:
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">loss_hist</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Iteration number</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss value</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/svm_files/svm_19_0-480.webp 480w,/assets/img/CS231n/svm_files/svm_19_0-800.webp 800w,/assets/img/CS231n/svm_files/svm_19_0-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/svm_files/svm_19_0.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="3" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Write the LinearSVM.predict function and evaluate the performance on both the
+# training and validation set
+</span><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">svm</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">training accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">y_train_pred</span><span class="p">),</span> <span class="p">))</span>
+<span class="n">y_val_pred</span> <span class="o">=</span> <span class="n">svm</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">validation accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_val</span> <span class="o">==</span> <span class="n">y_val_pred</span><span class="p">),</span> <span class="p">))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>training accuracy: 0.364714
+validation accuracy: 0.370000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Use the validation set to tune hyperparameters (regularization strength and
+# learning rate). You should experiment with different ranges for the learning
+# rates and regularization strengths; if you are careful you should be able to
+# get a classification accuracy of about 0.39 (&gt; 0.385) on the validation set.
+</span>
+<span class="c1"># Note: you may see runtime/overflow warnings during hyper-parameter search.
+# This may be caused by extreme values, and is not a bug.
+</span>
+<span class="c1"># results is dictionary mapping tuples of the form
+# (learning_rate, regularization_strength) to tuples of the form
+# (training_accuracy, validation_accuracy). The accuracy is simply the fraction
+# of data points that are correctly classified.
+</span><span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">best_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>   <span class="c1"># The highest validation accuracy that we have seen so far.
+</span><span class="n">best_svm</span> <span class="o">=</span> <span class="bp">None</span> <span class="c1"># The LinearSVM object that achieved the highest validation rate.
+</span>
+<span class="c1">################################################################################
+# TODO:                                                                        #
+# Write code that chooses the best hyperparameters by tuning on the validation #
+# set. For each combination of hyperparameters, train a linear SVM on the      #
+# training set, compute its accuracy on the training and validation sets, and  #
+# store these numbers in the results dictionary. In addition, store the best   #
+# validation accuracy in best_val and the LinearSVM object that achieves this  #
+# accuracy in best_svm.                                                        #
+#                                                                              #
+# Hint: You should use a small value for num_iters as you develop your         #
+# validation code so that the SVMs don't take much time to train; once you are #
+# confident that your validation code works, you should rerun the validation   #
+# code with a larger value for num_iters.                                      #
+################################################################################
+</span>
+<span class="c1"># Provided as a reference. You may or may not want to change these hyperparameters
+# 확인할 하이퍼 파라미터들 추가
+</span><span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-7</span><span class="p">,</span> <span class="mf">5e-5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">regularization_strengths</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5e4</span><span class="p">,</span> <span class="mf">5e4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">]</span>
+
+<span class="c1"># *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+</span><span class="kn">import</span> <span class="n">itertools</span> <span class="c1"># for문 네 개 쓰는것보다 itertools 쓰는게 더 직관적
+</span>
+<span class="k">for</span> <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">iters</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="nf">product</span><span class="p">(</span>
+    <span class="n">learning_rates</span><span class="p">,</span> <span class="n">regularization_strengths</span><span class="p">,</span><span class="n">iterations</span><span class="p">,</span> <span class="n">batch_size</span>
+    <span class="p">):</span>
+  <span class="n">svm</span> <span class="o">=</span> <span class="nc">LinearSVM</span><span class="p">()</span> <span class="c1"># 모델 객체 생성
+</span>  <span class="n">svm</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span>
+      <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">iters</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch</span>
+      <span class="p">)</span> <span class="c1"># 훈련
+</span>  <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">svm</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+  <span class="n">y_val_pred</span> <span class="o">=</span> <span class="n">svm</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+
+  <span class="n">train_acc</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">y_train_pred</span><span class="p">)</span>
+  <span class="n">val_acc</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_val</span> <span class="o">==</span> <span class="n">y_val_pred</span><span class="p">)</span>
+
+  <span class="n">results</span><span class="p">[(</span><span class="n">lr</span><span class="p">,</span><span class="n">reg</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_acc</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">best_val</span> <span class="o">&lt;</span> <span class="n">val_acc</span><span class="p">:</span>
+    <span class="n">best_val</span> <span class="o">=</span> <span class="n">val_acc</span>
+    <span class="n">best_svm</span> <span class="o">=</span> <span class="n">svm</span>
+
+<span class="c1"># *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+</span>
+<span class="c1"># Print out results.
+</span><span class="k">for</span> <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">train_accuracy</span><span class="p">,</span> <span class="n">val_accuracy</span> <span class="o">=</span> <span class="n">results</span><span class="p">[(</span><span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="p">)]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">lr %e reg %e train accuracy: %f val accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">train_accuracy</span><span class="p">,</span> <span class="n">val_accuracy</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best validation accuracy achieved during cross-validation: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">best_val</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.11/dist-packages/numpy/_core/fromnumeric.py:86: RuntimeWarning: overflow encountered in reduce
+  return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_svm.py:96: RuntimeWarning: overflow encountered in multiply
+  loss += reg * np.sum(W*W)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_svm.py:119: RuntimeWarning: overflow encountered in multiply
+  dW += 2 * reg * W
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_classifier.py:88: RuntimeWarning: overflow encountered in multiply
+  self.W -= learning_rate * grad # Vanilla Gradient Descent 응용 step size == learning rate
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_classifier.py:88: RuntimeWarning: invalid value encountered in subtract
+  self.W -= learning_rate * grad # Vanilla Gradient Descent 응용 step size == learning rate
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_svm.py:96: RuntimeWarning: overflow encountered in scalar multiply
+  loss += reg * np.sum(W*W)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_svm.py:92: RuntimeWarning: overflow encountered in subtract
+  margins = np.maximum(0, scores-correct_scores + 1)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_svm.py:92: RuntimeWarning: invalid value encountered in subtract
+  margins = np.maximum(0, scores-correct_scores + 1)
+
+
+lr 1.000000e-07 reg 3.000000e+00 train accuracy: 0.204694 val accuracy: 0.228000
+lr 1.000000e-07 reg 5.000000e+00 train accuracy: 0.211918 val accuracy: 0.227000
+lr 1.000000e-07 reg 2.500000e+04 train accuracy: 0.219327 val accuracy: 0.233000
+lr 1.000000e-07 reg 5.000000e+04 train accuracy: 0.244939 val accuracy: 0.257000
+lr 5.000000e-05 reg 3.000000e+00 train accuracy: 0.260531 val accuracy: 0.248000
+lr 5.000000e-05 reg 5.000000e+00 train accuracy: 0.246571 val accuracy: 0.251000
+lr 5.000000e-05 reg 2.500000e+04 train accuracy: 0.064061 val accuracy: 0.072000
+lr 5.000000e-05 reg 5.000000e+04 train accuracy: 0.048245 val accuracy: 0.050000
+lr 3.000000e+00 reg 3.000000e+00 train accuracy: 0.043041 val accuracy: 0.042000
+lr 3.000000e+00 reg 5.000000e+00 train accuracy: 0.042531 val accuracy: 0.039000
+lr 3.000000e+00 reg 2.500000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 5.000000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 3.000000e+00 train accuracy: 0.063000 val accuracy: 0.047000
+lr 5.000000e+00 reg 5.000000e+00 train accuracy: 0.060878 val accuracy: 0.062000
+lr 5.000000e+00 reg 2.500000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 5.000000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+best validation accuracy achieved during cross-validation: 0.297000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualize the cross-validation results
+</span><span class="kn">import</span> <span class="n">math</span>
+<span class="kn">import</span> <span class="n">pdb</span>
+
+<span class="c1"># pdb.set_trace()
+</span>
+<span class="n">x_scatter</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="p">.</span><span class="nf">log10</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+<span class="n">y_scatter</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="p">.</span><span class="nf">log10</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+<span class="c1"># plot training accuracy
+</span><span class="n">marker_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">x_scatter</span><span class="p">,</span> <span class="n">y_scatter</span><span class="p">,</span> <span class="n">marker_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">coolwarm</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">log learning rate</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">log regularization strength</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">CIFAR-10 training accuracy</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># plot validation accuracy
+</span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span> <span class="c1"># default size of markers is 20
+</span><span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">x_scatter</span><span class="p">,</span> <span class="n">y_scatter</span><span class="p">,</span> <span class="n">marker_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">coolwarm</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">log learning rate</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">log regularization strength</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">'</span><span class="s">CIFAR-10 validation accuracy</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/svm_files/svm_22_0-480.webp 480w,/assets/img/CS231n/svm_files/svm_22_0-800.webp 800w,/assets/img/CS231n/svm_files/svm_22_0-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/svm_files/svm_22_0.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="4" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Evaluate the best svm on test set
+</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">best_svm</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">y_test_pred</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">linear SVM on raw pixels final test set accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">test_accuracy</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>linear SVM on raw pixels final test set accuracy: 0.272000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualize the learned weights for each class.
+# Depending on your choice of learning rate and regularization strength, these may
+# or may not be nice to look at.
+</span><span class="n">w</span> <span class="o">=</span> <span class="n">best_svm</span><span class="p">.</span><span class="n">W</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> <span class="c1"># strip out the bias
+</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">w_min</span><span class="p">,</span> <span class="n">w_max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">plane</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">car</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bird</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">deer</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">frog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">horse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ship</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">truck</span><span class="sh">'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Rescale the weights to be between 0 and 255
+</span>    <span class="n">wimg</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">].</span><span class="nf">squeeze</span><span class="p">()</span> <span class="o">-</span> <span class="n">w_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">w_max</span> <span class="o">-</span> <span class="n">w_min</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">wimg</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">uint8</span><span class="sh">'</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">axis</span><span class="p">(</span><span class="sh">'</span><span class="s">off</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">classes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/svm_files/svm_24_0-480.webp 480w,/assets/img/CS231n/svm_files/svm_24_0-800.webp 800w,/assets/img/CS231n/svm_files/svm_24_0-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/svm_files/svm_24_0.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="5" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <p><strong>Inline question 2</strong></p> <p>Describe what your visualized SVM weights look like, and offer a brief explanation for why they look the way they do.</p> <p>$\color{blue}{\textit Your Answer:}$</p> <ol> <li>선형 SVM은 픽셀 간의 공간적 구조를 고려하지 않음</li> <li>RGB 채널 간 간섭</li> <li>복잡한 데이터를 선형으로 분리하기 어려움</li> </ol> <p>선형 SVM이 픽셀 단위로만 학습하기 때문에 노이즈에 가깝게 출력된다. SVM은 다른 특성은 배제하고 클래스 간 구분을 위한 가중치 텐서를 학습하기 때문에 시각적으로 해석하기 어려운 무작위에 가까운 패턴으로 보이게 된다.</p> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/softmax/">[CS231n]Exercise1.3 - Softmax</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/knn/">[CS231n]Exercise1.1 - kNN</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/Deep-Neural-Networks/">Deep Neural Networks</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/Batch-Normalization-Implementation/">IMPLEMENTATION - Batch Normalization</a> </li> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Seungmin Justin Park. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: July 07, 2025. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script defer src="/assets/js/google-analytics-setup.js?12374742c4b1801ba82226e617af7e2d"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T1KYNCMYPR');
+</script> </body> </html>

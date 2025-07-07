@@ -1,0 +1,276 @@
+<!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> [CS231n]Exercise1.3 - Softmax | Techlog </title> <meta name="author" content="Seungmin Justin Park"> <meta name="description" content="Softmax exercise."> <meta name="keywords" content="Computer Vision, Machine Learning, Data Science"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;J&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://ottersem.github.io/blog/2025/softmax/"> <script src="/assets/js/theme.js?9a0c749ec5240d9cda97bc72359a72c0"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> Techlog </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">Projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">[CS231n]Exercise1.3 - Softmax</h1> <p class="post-meta"> Created in July 06, 2025 </p> <p class="post-tags"> <a href="/blog/2025"> <i class="fa-solid fa-calendar fa-sm"></i> 2025 </a>   ·   <a href="/blog/tag/softmax"> <i class="fa-solid fa-hashtag fa-sm"></i> Softmax</a>   ·   <a href="/blog/category/cv"> <i class="fa-solid fa-tag fa-sm"></i> CV,</a>   <a href="/blog/category/ml"> <i class="fa-solid fa-tag fa-sm"></i> ML</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <h1 id="before-begin">Before begin…</h1> <p>CS231n exercise1.3 : softmax에 대한 본인의 풀이이다. 자세한 코드는 <a href="https://github.com/ottersem/CS231n-answer/tree/main/assignment1" rel="external nofollow noopener" target="_blank">github</a>에서 확인 가능하다.</p> <h1 id="softmax-exercise">Softmax exercise</h1> <p><em>Complete and hand in this completed worksheet (including its outputs and any supporting code outside of the worksheet) with your assignment submission. For more details see the <a href="http://vision.stanford.edu/teaching/cs231n/assignments.html" rel="external nofollow noopener" target="_blank">assignments page</a> on the course website.</em></p> <p>This exercise is analogous to the SVM exercise. You will:</p> <ul> <li>implement a fully-vectorized <strong>loss function</strong> for the Softmax classifier</li> <li>implement the fully-vectorized expression for its <strong>analytic gradient</strong> </li> <li> <strong>check your implementation</strong> with numerical gradient</li> <li>use a validation set to <strong>tune the learning rate and regularization</strong> strength</li> <li> <strong>optimize</strong> the loss function with <strong>SGD</strong> </li> <li> <strong>visualize</strong> the final learned weights</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">cs231n.data_utils</span> <span class="kn">import</span> <span class="n">load_CIFAR10</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">figure.figsize</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span> <span class="c1"># set default size of plots
+</span><span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">image.interpolation</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">nearest</span><span class="sh">'</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="sh">'</span><span class="s">image.cmap</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gray</span><span class="sh">'</span>
+
+<span class="c1"># for auto-reloading extenrnal modules
+# see http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython
+</span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_CIFAR10_data</span><span class="p">(</span><span class="n">num_training</span><span class="o">=</span><span class="mi">49000</span><span class="p">,</span> <span class="n">num_validation</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num_test</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num_dev</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">
+    Load the CIFAR-10 dataset from disk and perform preprocessing to prepare
+    it for the linear classifier. These are the same steps as we used for the
+    SVM, but condensed to a single function.
+    </span><span class="sh">"""</span>
+    <span class="c1"># Load the raw CIFAR-10 data
+</span>    <span class="n">cifar10_dir</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cs231n/datasets/cifar-10-batches-py</span><span class="sh">'</span>
+
+    <span class="c1"># Cleaning up variables to prevent loading data multiple times (which may cause memory issue)
+</span>    <span class="k">try</span><span class="p">:</span>
+       <span class="k">del</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span>
+       <span class="k">del</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span>
+       <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Clear previously loaded data.</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+       <span class="k">pass</span>
+
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="nf">load_CIFAR10</span><span class="p">(</span><span class="n">cifar10_dir</span><span class="p">)</span>
+
+    <span class="c1"># subsample the data
+</span>    <span class="n">mask</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_training</span> <span class="o">+</span> <span class="n">num_validation</span><span class="p">))</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">))</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">))</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">num_training</span><span class="p">,</span> <span class="n">num_dev</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">X_dev</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_dev</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c1"># Preprocessing: reshape the image data into rows
+</span>    <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="p">(</span><span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">X_dev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">X_dev</span><span class="p">,</span> <span class="p">(</span><span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># Normalize the data: subtract the mean image
+</span>    <span class="n">mean_image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">X_train</span> <span class="o">-=</span> <span class="n">mean_image</span>
+    <span class="n">X_val</span> <span class="o">-=</span> <span class="n">mean_image</span>
+    <span class="n">X_test</span> <span class="o">-=</span> <span class="n">mean_image</span>
+    <span class="n">X_dev</span> <span class="o">-=</span> <span class="n">mean_image</span>
+
+    <span class="c1"># add bias dimension and transform into columns
+</span>    <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_val</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_test</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+    <span class="n">X_dev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">hstack</span><span class="p">([</span><span class="n">X_dev</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nf">ones</span><span class="p">((</span><span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))])</span>
+
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span>
+
+
+<span class="c1"># Invoke the above function to get our data.
+</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span> <span class="o">=</span> <span class="nf">get_CIFAR10_data</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Train data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Train labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Validation data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_val</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Validation labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_val</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Test labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_test</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">dev data shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">dev labels shape: </span><span class="sh">'</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Train data shape:  (49000, 3073)
+Train labels shape:  (49000,)
+Validation data shape:  (1000, 3073)
+Validation labels shape:  (1000,)
+Test data shape:  (1000, 3073)
+Test labels shape:  (1000,)
+dev data shape:  (500, 3073)
+dev labels shape:  (500,)
+</code></pre></div></div> <h2 id="softmax-classifier">Softmax Classifier</h2> <p>Your code for this section will all be written inside <code class="language-plaintext highlighter-rouge">cs231n/classifiers/softmax.py</code>.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># First implement the naive softmax loss function with nested loops.
+# Open the file cs231n/classifiers/softmax.py and implement the
+# softmax_loss_naive function.
+</span>
+<span class="kn">from</span> <span class="n">cs231n.classifiers.softmax</span> <span class="kn">import</span> <span class="n">softmax_loss_naive</span>
+<span class="kn">import</span> <span class="n">time</span>
+
+<span class="c1"># Generate a random softmax weight matrix and use it to compute the loss.
+</span><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">3073</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span>
+<span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># As a rough sanity check, our loss should be something close to -log(0.1).
+</span><span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">loss: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">loss</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">sanity check: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>loss: 2.356826
+sanity check: 2.302585
+</code></pre></div></div> <p>gradient 벡터 계산</p> \[\begin{align} \frac{\partial L}{\partial W_j} &amp;= (\text{prob}[j] - \mathbf{1}_{j=y}) \cdot x^{(i)} \\ \text{Answer Class} &amp;: (\text{prob}[j]-1) \cdot x^{(i)} \\ \text{Other Class} &amp;: \text{prob}[j] \cdot x^{(i)} \end{align}\] <p>왜냐하면 $\frac{\partial L}{\partial W_j}=(p_j-\delta_{}j,y)\cdot x \qquad \delta_{j,y} = 1 \ \text{if} j=y, \text{else} 0$</p> <p><strong>Inline Question 1</strong></p> <p>Why do we expect our loss to be close to -log(0.1)? Explain briefly.**</p> <p>$\color{blue}{\textit Your Answer:}$ 소프트 맥스의 로스 계산은 다음과 같다. \(L_i = -\log(\frac{e^{f_{yi}}}{\sum_je^{f_j}})\) 여기서 $f_j$는 클래스 점수 벡터 $f$의 $j$번째 원소로, 입력 샘플에 대한 클래스 $j$의 점수이다. 만약 모델이 모든 클래스에 대해 동일한 확률 $\frac{1}{C}$을 예측한다면, 손실은 다음과 같이 단순화된다. \(L_i = -\log\left(\frac{1}{C}\right) = \log(C)\) CIFAR-10과 같이 클래스 수가 10개인 경우, 이 값은 $-\log(0.1) = \log(10) \approx 2.302$에 해당한다.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Complete the implementation of softmax_loss_naive and implement a (naive)
+# version of the gradient that uses nested loops.
+</span><span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># As we did for the SVM, use numeric gradient checking as a debugging tool.
+# The numeric gradient should be close to the analytic gradient.
+</span><span class="kn">from</span> <span class="n">cs231n.gradient_check</span> <span class="kn">import</span> <span class="n">grad_check_sparse</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">grad_numerical</span> <span class="o">=</span> <span class="nf">grad_check_sparse</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">End of numeric gradient check. reg = 0.0</span><span class="se">\n</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># similar to SVM case, do another gradient check with regularization
+</span><span class="n">loss</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">5e1</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">5e1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">grad_numerical</span> <span class="o">=</span> <span class="nf">grad_check_sparse</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">grad</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">End of numeric gradient check. reg = 5e1</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>numerical: 1.664401 analytic: 1.664401, relative error: 4.367385e-08
+numerical: 3.735496 analytic: 3.735496, relative error: 1.282187e-08
+numerical: -0.727268 analytic: -0.727268, relative error: 7.609598e-08
+numerical: 1.459336 analytic: 1.459336, relative error: 2.002898e-08
+numerical: 0.331639 analytic: 0.331639, relative error: 6.909905e-08
+numerical: 0.296508 analytic: 0.296508, relative error: 2.724084e-08
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Now that we have a naive implementation of the softmax loss function and its gradient,
+# implement a vectorized version in softmax_loss_vectorized.
+# The two versions should compute the same results, but the vectorized version should be
+# much faster.
+</span><span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">loss_naive</span><span class="p">,</span> <span class="n">grad_naive</span> <span class="o">=</span> <span class="nf">softmax_loss_naive</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">naive loss: %e computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_naive</span><span class="p">,</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="n">cs231n.classifiers.softmax</span> <span class="kn">import</span> <span class="n">softmax_loss_vectorized</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="n">loss_vectorized</span><span class="p">,</span> <span class="n">grad_vectorized</span> <span class="o">=</span> <span class="nf">softmax_loss_vectorized</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">X_dev</span><span class="p">,</span> <span class="n">y_dev</span><span class="p">,</span> <span class="mf">0.000005</span><span class="p">)</span>
+<span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">time</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">vectorized loss: %e computed in %fs</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_vectorized</span><span class="p">,</span> <span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">))</span>
+
+<span class="c1"># As we did for the SVM, we use the Frobenius norm to compare the two versions
+# of the gradient.
+</span><span class="n">grad_difference</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">norm</span><span class="p">(</span><span class="n">grad_naive</span> <span class="o">-</span> <span class="n">grad_vectorized</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="sh">'</span><span class="s">fro</span><span class="sh">'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Loss difference: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">np</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="n">loss_naive</span> <span class="o">-</span> <span class="n">loss_vectorized</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">Gradient difference: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">grad_difference</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>naive loss: 2.356826e+00 computed in 0.382285s
+vectorized loss: 2.356826e+00 computed in 0.106798s
+Loss difference: 0.000000
+Gradient difference: 0.000000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Use the validation set to tune hyperparameters (regularization strength and
+# learning rate). You should experiment with different ranges for the learning
+# rates and regularization strengths; if you are careful you should be able to
+# get a classification accuracy of over 0.35 on the validation set.
+</span>
+<span class="kn">from</span> <span class="n">cs231n.classifiers</span> <span class="kn">import</span> <span class="n">Softmax</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">best_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">best_softmax</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1">################################################################################
+# TODO:                                                                        #
+# Use the validation set to set the learning rate and regularization strength. #
+# This should be identical to the validation that you did for the SVM; save    #
+# the best trained softmax classifer in best_softmax.                          #
+################################################################################
+</span>
+<span class="c1"># Provided as a reference. You may or may not want to change these hyperparameters
+</span><span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-7</span><span class="p">,</span> <span class="mf">5e-7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">regularization_strengths</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5e4</span><span class="p">,</span> <span class="mf">5e4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span> <span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1"># *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+</span><span class="kn">import</span> <span class="n">itertools</span>
+
+<span class="k">for</span> <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="nf">product</span><span class="p">(</span><span class="n">learning_rates</span><span class="p">,</span> <span class="n">regularization_strengths</span><span class="p">):</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="nc">Softmax</span><span class="p">()</span>
+  <span class="n">model</span><span class="p">.</span><span class="nf">train</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span><span class="p">,</span> <span class="n">num_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+
+  <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+  <span class="n">y_val_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
+
+  <span class="n">train_acc</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="n">y_train_pred</span><span class="p">)</span>
+  <span class="n">val_acc</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_val_pred</span> <span class="o">==</span> <span class="n">y_val</span><span class="p">)</span>
+
+  <span class="n">results</span><span class="p">[(</span><span class="n">lr</span><span class="p">,</span><span class="n">reg</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_acc</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">best_val</span> <span class="o">&lt;</span> <span class="n">val_acc</span><span class="p">:</span>
+    <span class="n">best_val</span> <span class="o">=</span> <span class="n">val_acc</span>
+    <span class="n">best_softmax</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="c1"># *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+</span>
+<span class="c1"># Print out results.
+</span><span class="k">for</span> <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">train_accuracy</span><span class="p">,</span> <span class="n">val_accuracy</span> <span class="o">=</span> <span class="n">results</span><span class="p">[(</span><span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="p">)]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">lr %e reg %e train accuracy: %f val accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">lr</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">train_accuracy</span><span class="p">,</span> <span class="n">val_accuracy</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">best validation accuracy achieved during cross-validation: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="n">best_val</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:96: RuntimeWarning: divide by zero encountered in log
+  loss = -np.sum(np.log(correct_class_probs))/num_train
+/usr/local/lib/python3.11/dist-packages/numpy/_core/fromnumeric.py:86: RuntimeWarning: overflow encountered in reduce
+  return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:97: RuntimeWarning: overflow encountered in multiply
+  loss += reg * np.sum(W * W)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:102: RuntimeWarning: overflow encountered in multiply
+  dW += 2 * reg * W
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:97: RuntimeWarning: overflow encountered in scalar multiply
+  loss += reg * np.sum(W * W)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:89: RuntimeWarning: overflow encountered in subtract
+  scores -= np.max(scores, axis=1, keepdims=True)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/softmax.py:89: RuntimeWarning: invalid value encountered in subtract
+  scores -= np.max(scores, axis=1, keepdims=True)
+/content/drive/My Drive/cs231n/assignments/assignment1/cs231n/classifiers/linear_classifier.py:88: RuntimeWarning: overflow encountered in multiply
+  self.W -= learning_rate * grad # Vanilla Gradient Descent 응용 step size == learning rate
+
+
+lr 1.000000e-07 reg 1.000000e+00 train accuracy: 0.227816 val accuracy: 0.223000
+lr 1.000000e-07 reg 3.000000e+00 train accuracy: 0.221816 val accuracy: 0.210000
+lr 1.000000e-07 reg 5.000000e+00 train accuracy: 0.229306 val accuracy: 0.232000
+lr 1.000000e-07 reg 2.500000e+04 train accuracy: 0.329143 val accuracy: 0.340000
+lr 1.000000e-07 reg 5.000000e+04 train accuracy: 0.307000 val accuracy: 0.319000
+lr 5.000000e-07 reg 1.000000e+00 train accuracy: 0.299776 val accuracy: 0.310000
+lr 5.000000e-07 reg 3.000000e+00 train accuracy: 0.299429 val accuracy: 0.309000
+lr 5.000000e-07 reg 5.000000e+00 train accuracy: 0.303020 val accuracy: 0.289000
+lr 5.000000e-07 reg 2.500000e+04 train accuracy: 0.322020 val accuracy: 0.345000
+lr 5.000000e-07 reg 5.000000e+04 train accuracy: 0.293918 val accuracy: 0.312000
+lr 1.000000e+00 reg 1.000000e+00 train accuracy: 0.083204 val accuracy: 0.073000
+lr 1.000000e+00 reg 3.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 1.000000e+00 reg 5.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 1.000000e+00 reg 2.500000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 1.000000e+00 reg 5.000000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 1.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 3.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 5.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 2.500000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 3.000000e+00 reg 5.000000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 1.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 3.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 5.000000e+00 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 2.500000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+lr 5.000000e+00 reg 5.000000e+04 train accuracy: 0.100265 val accuracy: 0.087000
+best validation accuracy achieved during cross-validation: 0.345000
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evaluate on test set
+# Evaluate the best softmax on test set
+</span><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">best_softmax</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">test_accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">y_test_pred</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">softmax on raw pixels final test set accuracy: %f</span><span class="sh">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">test_accuracy</span><span class="p">,</span> <span class="p">))</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>softmax on raw pixels final test set accuracy: 0.334000
+</code></pre></div></div> <p><strong>Inline Question 2</strong> - <em>True or False</em></p> <p>Suppose the overall training loss is defined as the sum of the per-datapoint loss over all training examples. It is possible to add a new datapoint to a training set that would leave the SVM loss unchanged, but this is not the case with the Softmax classifier loss.</p> <p>$\color{blue}{\textit Your Answer:}$ True</p> <p>$\color{blue}{\textit Your Explanation:}$</p> <p>SVM의 데이터 포인트 별 손실은 다음과 같다.</p> \[L_i = \sum_{j\ne y_i}\max(0,f_j - f_{y_i} + \Delta)\] <p>새로운 데이터 포인트가 추가되었을때 이 포인트에서 정답클래스가 다른 클래스보타 최소한 델타 만큼 더 크다면 해당 데이터의 손실은 0, 전체 손실은 그대로 유지된다.</p> <p>Softmax의 데이터 포인트 별 손실은 다음과 같다.</p> \[L_i = -\log(\frac{e^{f_{y_i}}}{\sum_je^{f_i}})\] <p>Softmax의 손실 함수는 1에 가까울수록 작아지지만 확률이 완전히 1이 되지 않는 한 항상 양수값을 가진다. 따라서 아무리 정답 클래스 확률이 높아도 손실은 0보다 크며, 새로운 포인트를 추가하면 언제나 손실이 증가한다.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualize the learned weights for each class
+</span><span class="n">w</span> <span class="o">=</span> <span class="n">best_softmax</span><span class="p">.</span><span class="n">W</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> <span class="c1"># strip out the bias
+</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">w_min</span><span class="p">,</span> <span class="n">w_max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">plane</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">car</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">bird</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">cat</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">deer</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">dog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">frog</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">horse</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">ship</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">truck</span><span class="sh">'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Rescale the weights to be between 0 and 255
+</span>    <span class="n">wimg</span> <span class="o">=</span> <span class="mf">255.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">].</span><span class="nf">squeeze</span><span class="p">()</span> <span class="o">-</span> <span class="n">w_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">w_max</span> <span class="o">-</span> <span class="n">w_min</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">wimg</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">uint8</span><span class="sh">'</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">axis</span><span class="p">(</span><span class="sh">'</span><span class="s">off</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">classes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div> <div class="row"> <div class="col-sm mt-3 mt-md-0"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/CS231n/softmax_files/softmax_13_0-480.webp 480w,/assets/img/CS231n/softmax_files/softmax_13_0-800.webp 800w,/assets/img/CS231n/softmax_files/softmax_13_0-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/CS231n/softmax_files/softmax_13_0.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" title="1" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div> </div> </article> <br> <hr> <br> <ul class="list-disc pl-8"></ul> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/svm/">[CS231n]Exercise1.2 - Support Vector Machine</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/knn/">[CS231n]Exercise1.1 - kNN</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/Deep-Neural-Networks/">Deep Neural Networks</a> </li> <li class="my-2"> <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/blog/2025/Batch-Normalization-Implementation/">IMPLEMENTATION - Batch Normalization</a> </li> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2025 Seungmin Justin Park. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: July 07, 2025. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?12775fdf7f95e901d7119054556e495f" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script defer src="/assets/js/google-analytics-setup.js?12374742c4b1801ba82226e617af7e2d"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T1KYNCMYPR');
+</script> </body> </html>
