@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-cs231n-exercise1-4-two-layer-net",
+        },{id: "post-cs231n-exercise1-5-features",
+      
+        title: "[CS231n]Exercise1.5 - Features",
+      
+      description: "Features Exercise",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/features/";
+        
+      },
+    },{id: "post-cs231n-exercise1-4-two-layer-net",
       
         title: "[CS231n]Exercise1.4 - Two Layer Net",
       
