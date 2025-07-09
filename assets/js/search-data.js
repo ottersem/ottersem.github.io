@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-cs231n-exercise1-3-softmax",
+        },{id: "post-cs231n-exercise1-4-two-layer-net",
+      
+        title: "[CS231n]Exercise1.4 - Two Layer Net",
+      
+      description: "Two layer net Exercise",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/tln/";
+        
+      },
+    },{id: "post-cs231n-exercise1-3-softmax",
       
         title: "[CS231n]Exercise1.3 - Softmax",
       
