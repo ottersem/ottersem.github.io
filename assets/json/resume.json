@@ -27,6 +27,15 @@
       "score": "3.3",
       "courses": ["Advanced Visual Effects Technique (4.0)","Object Oriented Programming (4.0)", "Data Representation and Algorithm (4.0)",  
       "Image Processing and Vision (4.0)","Advanced Programming (4.5)", "Intelligent Vision (4.5)"]
+    },
+    {
+      "institution" : "Chung-Ang University, Seoul, South Korea",
+      "location": "Seoul, South Korea",
+      "area": "Visual Intelligence Lab",
+      "studyType": "Undergraduate Research Intern",
+      "startDate": "2025-09-01",
+      "endDate": "2026-03-01",
+      "courses": "Pursuing a Master of Engineering in Computer Vision following the completion of the internship."
     }
   ],
   "certificates": [
@@ -92,6 +101,11 @@
     {
       "language": "English",
       "fluency": ["TOEIC : 880"],
+      "icon": ""
+    },
+    {
+      "language": "Japanese",
+      "fluency": ["Beginner"],
       "icon": ""
     }
   ],
