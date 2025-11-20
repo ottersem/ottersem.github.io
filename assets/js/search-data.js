@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-cs231n-exercise1-5-features",
+        },{id: "post-algorithm-union-find",
+      
+        title: "[Algorithm] Union-Find",
+      
+      description: "Union-Find Algorithm",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2025/Union_Find/";
+        
+      },
+    },{id: "post-cs231n-exercise1-5-features",
       
         title: "[CS231n]Exercise1.5 - Features",
       
