@@ -218,3 +218,113 @@ ul.timeline li::before {
      color: var(--global-text-color);
 }
 */
+
+/*****************************
+ * CV custom resume sections
+ *****************************/
+
+.cv {
+  .experience-list {
+    .experience-item {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .experience-date {
+      min-width: 94px;
+      letter-spacing: 0.01em;
+    }
+
+    .experience-location {
+      margin-top: 0.35rem;
+      margin-bottom: 0;
+      white-space: normal;
+      line-height: 1.35;
+    }
+
+    .experience-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .experience-position {
+      margin-bottom: 0.1rem;
+      font-size: 1.02rem;
+      line-height: 1.35;
+    }
+
+    .experience-institution {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+      color: var(--global-text-color);
+
+      a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+      }
+
+      a:hover {
+        color: var(--global-theme-color);
+        border-bottom-color: var(--global-theme-color);
+      }
+    }
+
+    .experience-area {
+      margin-bottom: 0;
+      font-size: 0.86rem;
+      font-style: italic;
+      color: var(--global-text-color-light);
+    }
+
+    .experience-description {
+      margin-bottom: 0;
+      margin-top: 0.4rem;
+      max-width: 68ch;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--global-text-color-light);
+    }
+  }
+
+  .relevant-coursework-grid {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 0.75rem;
+  }
+
+  .relevant-coursework-item {
+    background-color: var(--global-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .relevant-coursework-text {
+    font-size: 0.9rem;
+    line-height: 1.35;
+    color: var(--global-text-color);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cv {
+    .experience-list {
+      .date-column {
+        transform: translateX(-8px) translateY(0);
+      }
+
+      .experience-description {
+        max-width: 100%;
+      }
+    }
+
+    .relevant-coursework-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
