@@ -44,6 +44,15 @@
       "startDate": "2025-09-01",
       "endDate": "2026-02-28",
       "description": "Undergraduate research intern at the Visual Intelligence Lab working on machine learning and computer vision research."
+    },
+    {
+      "institution" : "Asem",
+      "location" : "Seoul, South Korea",
+      "area" : "Software Development",
+      "position" : "IT Consultant",
+      "startDate" : "2024-06-10",
+      "endDate" : "2025-05-15",
+      "description" : "Software development intern at Asem, an optical metrology engineering company, working on application modernization and integration projects."
     }
   ],
   "relevantCoursework": [
@@ -102,7 +111,7 @@
       "icon": "fa-solid fa-hashtag",
       "keywords": [
         "Pandas",
-        "Scikit-Learn",
+        "Pytorch",
         "Seaborn",
         "Matplotlib"
       ]
@@ -132,7 +141,7 @@
       "keywords": [
         "Deep Learning Algorithm",
         "Computer Vision",
-        "Problem Solving"
+        "Multimoal AI focused on medical and scientific applications"
       ]
     }
   ],
