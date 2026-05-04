@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-algorithm-union-find",
+        },{id: "post-paper-generative-adversarial-networks",
+      
+        title: "[Paper] Generative Adversarial Networks",
+      
+      description: "Review of paper &#39;Generative Adversarial Networks&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/GAN/";
+        
+      },
+    },{id: "post-paper-auto-encoding-variational-bayes",
+      
+        title: "[Paper] Auto-Encoding Variational Bayes",
+      
+      description: "Review of paper &#39;Auto-Encoding Variational Bayes&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/VAE/";
+        
+      },
+    },{id: "post-algorithm-union-find",
       
         title: "[Algorithm] Union-Find",
       
