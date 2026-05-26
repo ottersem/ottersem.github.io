@@ -37,7 +37,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-paper-generative-adversarial-networks",
+        },{id: "post-paper-emerging-properties-in-self-supervised-vision-transformers",
+      
+        title: "[Paper] Emerging Properties in Self-Supervised Vision Transformers",
+      
+      description: "Review of paper &#39;DINOv1&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/DINOv1/";
+        
+      },
+    },{id: "post-paper-medic-ad-towards-medical-vision-language-model-s-clinical-intelligence",
+      
+        title: "[Paper] MEDIC-AD Towards Medical Vision-Language Model’s Clinical Intelligence",
+      
+      description: "Review of paper &#39;MEDIC-AD&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/Medic-AD/";
+        
+      },
+    },{id: "post-paper-generative-adversarial-networks",
       
         title: "[Paper] Generative Adversarial Networks",
       
