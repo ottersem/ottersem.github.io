@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-paper-emerging-properties-in-self-supervised-vision-transformers",
+        },{id: "post-paper-rt-2-vision-language-action-models-transfer-web-knowledge-to-robotic-control",
+      
+        title: "[Paper] RT-2:Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      
+      description: "Review of paper &#39;RT-2&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/RT-2/";
+        
+      },
+    },{id: "post-paper-emerging-properties-in-self-supervised-vision-transformers",
       
         title: "[Paper] Emerging Properties in Self-Supervised Vision Transformers",
       
