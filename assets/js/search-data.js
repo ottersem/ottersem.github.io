@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-paper-rt-2-vision-language-action-models-transfer-web-knowledge-to-robotic-control",
+        },{id: "post-paper-multitask-active-learning-for-graph-anomaly-detection",
+      
+        title: "[Paper] Multitask Active Learning for Graph Anomaly Detection",
+      
+      description: "Review of paper &#39;MITIGATE&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/Multitask-AL4Graph-AD/";
+        
+      },
+    },{id: "post-paper-rt-2-vision-language-action-models-transfer-web-knowledge-to-robotic-control",
       
         title: "[Paper] RT-2:Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
       
