@@ -201,10 +201,20 @@ $$
     Overall performance comparison in AUC-ROC(%) and AUC-PR(%) on four dataset
 </div>
 
-### Experiments Settings
+## Supplement
 
-### Evaluation Results
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/paper_review/MITIGATE/Informativeness.png" title="Explanation about Confidence difference focusing on Entropy" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Explanation about Confidence difference focusing on Entropy
+</div>
 
-### Parameter Analysis
+그래프를 보면 파란색 네모 쳐져있는곳이 Informativeness가 높다고 정의한다.
+좌에서 우로 갈수록 Classification Entropy가 높아지고, 아래에서 위로 갈수록 Anomaly Score가 높아진다. 결국, 박스 쳐져있는 곳은 Entropy와 Anomaly Score간의 간극이 큰 지점이라고 볼 수 있다.
 
-### Ablation Study
+더 자세히 설명하면, 우하단은 Entropy가 높고 Anomaly Score가 낮다. 논문에 의하면 엔트로피가 높은 노드는 이 노드가 어느 클래스인지 확신하지 못함을 의미하고, Anomaly Score가 낮다는 것은 일반적인 패턴을 가지는 정상 노드일 가능성이 높음을 의미한다. 반대로 Entropy가 낮고 Anomaly Score가 높으면 이는 이 노드가 어느 클래스인지 확신하는 정도가 높지만 정상 분포에서 많이 벗어나 있음을 의미한다.
+
+따라서 우하단의 경우엔 classification은 이 노드가 Normal인지 Abnomal인지 확신하지 못하지만 Anomaly는 정상 노드임이 확실하다고 판단한 경우이고,  좌상단의 경우엔 어떤 노드인지 확신하지만 Anomaly head가 이상하다고 판단하는 경우이기 때문에 Informativeness가 높다고 판단한다.
