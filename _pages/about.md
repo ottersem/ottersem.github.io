@@ -14,9 +14,9 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-Hi! My name is Seungmin Justin Park. I studied Art & Technology at Chung-Ang University, and I am currently conducting research in machine learning and computer vision at the university’s VIlab.\\
-Recently, I have been particularly interested in apdation AI on robotics and Graph structure. My research interests include image processing, deep learning, and data analysis, and I aim to explore these areas to develop practical research outcomes.\\
-My primary programming languages are Python and C++. I am also interested in GUI development using the Qt framework and VFX automation through Maya MEL scripting.
+Hi! My name is Seungmin Justin Park. I studied Art & Technology at Chung-Ang University, and I am currently conducting research in machine learning and computer vision at the university’s [VIlab](https://www.vilab.cau.ac.kr/home). \\
+
+Recently, I have been particularly interested in apdation AI on robotics and Graph structure. My research interests include image processing, deep learning, and data analysis, and I aim to explore these areas to develop practical research outcomes. \\
 
 Through this blog, I plan to document and share what I learn, the projects I work on, and the problems I struggle with while studying. \\
 Currently, I am focusing on theoretical foundations of computer vision and artificial intelligence, and previously I worked on software development for optical measurement systems and participated in several technical contests and competitions.
