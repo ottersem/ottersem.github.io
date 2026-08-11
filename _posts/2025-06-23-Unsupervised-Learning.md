@@ -21,14 +21,17 @@ pretty_table: true
     Figure 5.12
 </div>
 
-**클러스터링**은 유사성에 기반하여 데이터를 **유사한 집합으로 나누는 방법**이다. 통계학에서는 이를 **군집 분석(_cluster analysis_)이라고 하며, Affinity propagation, spectral clustering 등 다양한 알고리즘이 연구되어있다. 초창기에는 히스토그램 기반 분할이나 병합 방식이 주로 사용되었으며, 최근에는 거리 기반 연결, 확률 모델(K-means, GMM), 비모수 방식(Mean-shift) 등이 영상 분할에 적용되고 있다.
+**클러스터링**은 유사성에 기반하여 데이터를 **유사한 집합으로 나누는 방법**이다. 통계학에서는 이를 \*\*군집 분석(_cluster analysis_)이라고 하며, Affinity propagation, spectral clustering 등 다양한 알고리즘이 연구되어있다. 초창기에는 히스토그램 기반 분할이나 병합 방식이 주로 사용되었으며, 최근에는 거리 기반 연결, 확률 모델(K-means, GMM), 비모수 방식(Mean-shift) 등이 영상 분할에 적용되고 있다.
 
 ## Classical way
+
 클래식한 클러스터링 기밥으로는 **분할(_divisive_)** 접근과 **병합(_region merging_)** 접근을 꼽을 수 있다. 분할 접근은 이미지를 점점 더 작은 영역으로 나누는 방식이다. 이미지 조각의 히스토그램을 분석해 임계값을 기준으로 이미지를 반복적으로 세분화하며, 비슷한 영역은 나누고 다르면 유지한다. 병합 접근은 **작은 영역을 유사도 기반으로 병합**해 큰 영역을 만드는 방식이다.
+
 ## Modernized way
+
 **연결 기반(_Linkage-based_)** 클러스터링은 거리 기반 연결 방식이다. 고전적인 방식에 추가적으로 확률 모델을 도입해 더 유연한 클러스터링을 수행한다.
 
-**_Mean-shift_**는 대표적인 비모수(_non-parametric_)방식이며, 데이터 분포를 부드럽게 만들어 피크 지점을 탐색한다. 
+**_Mean-shift_**는 대표적인 비모수(_non-parametric_)방식이며, 데이터 분포를 부드럽게 만들어 피크 지점을 탐색한다.
 
 **K-means / Gaussian Mixture**는 **모수적(_parametric_)** 방식이며 데이터를 소수의 정규분포로 가정하고 각 클러스터를 중심화하고 분산을 추정한다.
 
@@ -78,7 +81,7 @@ $$
 \mathcal{N}(\mathbf{x}\vert\mu_k,\Sigma_k) = \frac{1}{\lvert\Sigma_k\rvert}e^{-d(\mathbf{x},\mu_k;\Sigma_k)}
 $$
 
-미지의 혼합 모델의 파라미터 $\lbrace\pi_k,\mu_k,\Sigma_k\rbrace$에 대한 최우도 추정값(_maximum likely estimate_)을 반복적으로 계산하기 위해 _**EM(Expectation Maximization)**_알고리즘을 수행할 수 있다.
+미지의 혼합 모델의 파라미터 $\lbrace\pi_k,\mu_k,\Sigma_k\rbrace$에 대한 최우도 추정값(_maximum likely estimate_)을 반복적으로 계산하기 위해 **_EM(Expectation Maximization)_**알고리즘을 수행할 수 있다.
 
 1. **_expectation(E step)_**에서는 확률을 추정한다.
 
@@ -90,12 +93,14 @@ $$
 
 2. **_maximization(M step)_**에서는 파라미터를 업데이트한다.
 
-$$\begin{align}
+$$
+\begin{align}
 \mu_k&=\frac{1}{N_k}\sum_iz_{ik}\mathbf{x} \\
 \Sigma_k &= \frac{1}{N_k} \sum_i z_{ik}(\mathbf{x}_i-\mu_k)(\mathbf{x}_i-\mu_k)^\top \\
 \pi_k &= \frac{N_k}{N} \\
 N_k &= \sum_i z_{ik}
-\end{align}$$
+\end{align}
+$$
 
 이 때, $N_k$는 각 클러스터에 할당된 샘플 포인트의 수를 추정한다.
 
@@ -136,7 +141,7 @@ $$
 \mathbf{C=UAU^\top}=\sum^{N-1}_{i=1}\lambda_i\mathbf{u}_i\mathbf{u}_i^\top
 $$
 
-이 때, $\lambda_i$는 $\mathbf{C}$의 고유값, $\mathbf{u}_i$는 **고유벡터(_eigenvectors_)**이다. 
+이 때, $\lambda_i$는 $\mathbf{C}$의 고유값, $\mathbf{u}_i$는 **고유벡터(_eigenvectors_)**이다.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -186,7 +191,6 @@ DIFS는 **얼굴 공간의 거리(_Distance In Face Space_)**를 의미한다. �
 </div>
 
 차원 축소는 데이터를 정규화하거나 유사도 탐색을 가속화하는데 유용하다. 뿐만 아니라 매니폴드 학습 알고리즘은 입력 데이터의 분포나 신경망 층의 활성값을 시각화하는 데에도 활용될 수 있다. 그림 5.18은 매니폴드 학습 알고리즘 중 UMAP과 t-SNE를 서로 다른 CV 데이터셋에 적용한 예시를 보여준다.
-
 
 # Semi-supervised learning
 

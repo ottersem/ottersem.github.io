@@ -6,7 +6,8 @@
     "email": "smtm050390@gmail.com",
     "phone": "",
     "url": "https://ottersem.github.io",
-"summary": "Research interests in computer vision, machine learning, and multimodal AI, with a focus on integrating visual data into medical and scientific applications. Background in industrial optical measurement software development.",    "location": {
+    "summary": "Research interests in computer vision, machine learning, and multimodal AI, with a focus on integrating visual data into medical and scientific applications. Background in industrial optical measurement software development.",
+    "location": {
       "address": "Seoul, South Korea",
       "postalCode": "04019",
       "city": "Seoul",
@@ -26,10 +27,10 @@
       "score": "3.5"
     },
     {
-      "institution" : "Chung-Ang University",
+      "institution": "Chung-Ang University",
       "location": "Seoul, South Korea",
       "area": "Visual Intelligence Lab",
-      "url" : "https://www.vilab.cau.ac.kr/",
+      "url": "https://www.vilab.cau.ac.kr/",
       "studyType": "M.S. in Artificial Intelligence",
       "startDate": "2026-03-01"
     }
@@ -46,13 +47,13 @@
       "description": "Undergraduate research intern at the Visual Intelligence Lab working on machine learning and computer vision research."
     },
     {
-      "institution" : "Asem",
-      "location" : "Seoul, South Korea",
-      "area" : "Software Development",
-      "position" : "IT Consultant",
-      "startDate" : "2024-06-10",
-      "endDate" : "2025-05-15",
-      "description" : "Software development intern at Asem, an optical metrology engineering company, working on application modernization and integration projects."
+      "institution": "Asem",
+      "location": "Seoul, South Korea",
+      "area": "Software Development",
+      "position": "IT Consultant",
+      "startDate": "2024-06-10",
+      "endDate": "2025-05-15",
+      "description": "Software development intern at Asem, an optical metrology engineering company, working on application modernization and integration projects."
     }
   ],
   "relevantCoursework": [
@@ -98,23 +99,13 @@
       "name": "Language",
       "level": "Intermediate",
       "icon": "fa-solid fa-hashtag",
-      "keywords": [
-        "Python",
-        "SQL",
-        "MEL(Maya Embedded Language)",
-        "C++"
-      ]
+      "keywords": ["Python", "SQL", "MEL(Maya Embedded Language)", "C++"]
     },
     {
       "name": "Data Analysis",
       "level": "Novice",
       "icon": "fa-solid fa-hashtag",
-      "keywords": [
-        "Pandas",
-        "Pytorch",
-        "Seaborn",
-        "Matplotlib"
-      ]
+      "keywords": ["Pandas", "Pytorch", "Seaborn", "Matplotlib"]
     }
   ],
   "languages": [
@@ -138,11 +129,7 @@
     {
       "name": "Computer Science",
       "icon": "fa-solid fa-desktop",
-      "keywords": [
-        "Deep Learning Algorithm",
-        "Computer Vision",
-        "Multimoal AI focused on medical and scientific applications"
-      ]
+      "keywords": ["Deep Learning Algorithm", "Computer Vision", "Multimoal AI focused on medical and scientific applications"]
     }
   ],
   "projects": [
@@ -161,5 +148,4 @@
       "endDate": "2025-05-15"
     }
   ]
-  
 }

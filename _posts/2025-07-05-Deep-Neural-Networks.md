@@ -9,6 +9,7 @@ pretty_table: true
 ---
 
 **심층 신경망(_Deep Neural Networks, DNN_)**은 일관적이고 미분 가능한 계산 구조를 제공하면서, 유용한 내부 표현을 자동으로 학습한다.
+
 # Weights and layers
 
 <div class="row">
@@ -31,12 +32,14 @@ pretty_table: true
 
 DNN은 수천개의 서로 연결된 **뉴런(_Neurons_)**으로 구성된 **순방향(_feedforward_)** 계산 그래프이다. 각 뉴런은 로지스틱 회귀와 유사하게 입력값의 가중 합을 계산한 뒤, 비선형 **활성화 함수(_activation function_)**로 다시 매핑한다.
 
-$$\begin{align}
+$$
+\begin{align}
 s_i &= \mathbf{w}_i^\top\mathbf{x}_i+b_i \\
 y_i &= h(s_i)
-\end{align}$$
+\end{align}
+$$
 
-각각 $\mathbf{x}_i$는 i 번째 뉴런의 입력값, $\mathbf{w}_i, b_i$는 학습 가능한 **가중치(weights)**와 **편향값(_bias_)**, $s_i$는 **가중선형합(_weighted linear sum_)**의 출력값, $y_i$는 $s_i$를 활성화 함수 $h$에 입력하였을때 출력되는 최종 출력값을 의미한다. 
+각각 $\mathbf{x}_i$는 i 번째 뉴런의 입력값, $\mathbf{w}_i, b_i$는 학습 가능한 **가중치(weights)**와 **편향값(_bias_)**, $s_i$는 **가중선형합(_weighted linear sum_)**의 출력값, $y_i$는 $s_i$를 활성화 함수 $h$에 입력하였을때 출력되는 최종 출력값을 의미한다.
 
 **활성값(_activations_)**이라고 불리는 각 단계의 출력값은 그림5.21에 묘사된 것 처럼 다음 단계의 입력값으로 주어진다.
 
@@ -65,7 +68,7 @@ $$
 \mathbf{x}_{l+1} = \mathbf{y}_l = \mathbf{h}(\mathbf{s}_l)
 $$
 
-선형 결합시에 완전 **연결 가중치 행렬(_full weight matrix_)**을 사용한 레이어는 레이어의 모든 입력이 레이어의 모든 출력으로 연결되어 있기에 _**fully-connected(FC)**_레이어라고 한다. 또한 FC레이어로만 구성된 네트워크를 **_multi-layer perceptron(MLP)_**라고 한다.
+선형 결합시에 완전 **연결 가중치 행렬(_full weight matrix_)**을 사용한 레이어는 레이어의 모든 입력이 레이어의 모든 출력으로 연결되어 있기에 **_fully-connected(FC)_**레이어라고 한다. 또한 FC레이어로만 구성된 네트워크를 **_multi-layer perceptron(MLP)_**라고 한다.
 
 # Activation functions
 
@@ -100,8 +103,11 @@ $$
 입력이 최종 출력 클래스와 확률로 순방향으로 흐르기 때문에 순방향 네트워크는 **판별(_discriminative_)**모델이다. 즉, 이 모델은 클래스 간 경계를 구분할 수는 있지만, 클래스를 생성하거나 샘플링하는 능력은 없다.
 
 # Regularization and normalization
+
 앞으로 서술할 Reularization을 포함한 다른 기법들은 신경망의 오버피팅을 예방해 처음 보는 데이터에 대한 일반화 성능 향상을 도모한다.
+
 ## Regularization and weight decay
+
 > Regularizer
 
 $$
@@ -113,7 +119,9 @@ $$
 $p=2$는 $L_2$ 정규화를 적용시켜 큰 가중치를 작게 만드는 효과를 내며, $p=1$은 **LASSO(Least Absolute Shrinkage and Selction Operator)**라고 부르는 정규화를 적용시켜 일부 가중치를 완전히 0으로 만드는 효과를 가질 수 있다.
 
 이런 종류의 regularization을 통해 신경망의 가중치를 최적화 시킬 수 있으며, 이를 **_Weight decay_**라고 부른다.
+
 ## Dataset augmentaton
+
 미리 구해놓은 샘플의 입력값이나 출력값을 뒤섞어 훈련 샘플에 추가하는것도 오버 피팅을 방지하는 강력한 방법 중 하나다. 이런 기법을 **데이터셋 증강(_dataset augmentation_)**이라고 부르며 특히나 이미지 분류 문제에서 강력한 성능을 보인다.
 
 <div class="row">
@@ -150,7 +158,7 @@ Elastic distortion을 사용해 발생한 왜곡들은 입력값에 단순히 �
 
 나쁜 컨디셔닝 문제를 해결하기 위해서 단계를 밟기 전에 각 원소의 gradient를 scale 하는 것 과 같이 preconditioning 기법을 사용하는 것도 유용하다.
 
-> Poor conditioning이란? 
+> Poor conditioning이란?
 
 > 수치 최적화에서, 변수 방향마다 스케일이 너무 다르거나 일부 방향에서는 gradient가 거의 0에 가까워 수렴이 느려지는 문제를 말한다. 이 문제로 인해 학습 속도가 느려지거나, gradient descent가 지그재그로 수렴하거나 발산할 수 있다.
 
@@ -158,11 +166,13 @@ Elastic distortion을 사용해 발생한 왜곡들은 입력값에 단순히 �
 
 **배치 정규화(_Batch normalization_)**의 아이디어는 특정 뉴런의 활성화를 다시 스케일링 해서 뉴런들을 표준 정규 분포(분산이 1이고 평균이 0인, zero-mean unit-variance)로 만든다. Batch Normalizaton에서는 각 미니 배치 $\mathcal{B}$ 내의 데이터를 기준으로 각 뉴런 $i$의 평균과 분산을 계산하여 정규화를 수행한다.
 
-$$\begin{align}
+$$
+\begin{align}
 \mu_i &= \frac{1}{\lvert \mathcal{B} \rvert}\sum_{n\in\mathcal{B}}s_i^{(n)} \\
 \sigma_i^2 &= \frac{1}{\lvert \mathcal{B} \rvert}\sum_{n\in\mathcal{B}}(s_i^{(n)} - \mu_i)^2 \\
 \hat{s}_i^{(n)} &= \frac{s_i^{(n)}-\mu_i}{\sqrt{\sigma_i^2+\epsilon}}
-\end{align}$$
+\end{align}
+$$
 
 위 수식에서 $s_i^n$은 훈련 샘플 $n$의 뉴런 $i$의 가중합(weighted sum)을, $\hat{s}^{(n)}_i$는 그에 대응되는 배치 정규화된 합을, $\epsilon$은 0으로 나눠지는 것을 방지하기 위한 상수이다.
 
@@ -192,19 +202,19 @@ Batch Normalization을 컨볼루션 신경망에 적용할 때는, 공유되는 
     Figure 5.27
 </div>
 
-수식이 선형 형태를 띄기 때문에 파라미터들을 기존의 가중치와 바이어스에 흡수시켜 추론 과정에서 BN레이어를 제거하여 효율적으로 계선하는 방법도 있다. Batch Normalization 이후에는 다양한 변형이 등장했고, 일부는 배치가 아닌 다른 단위로 정규화 통계를 계산하는 방식을 사용한다. 
+수식이 선형 형태를 띄기 때문에 파라미터들을 기존의 가중치와 바이어스에 흡수시켜 추론 과정에서 BN레이어를 제거하여 효율적으로 계선하는 방법도 있다. Batch Normalization 이후에는 다양한 변형이 등장했고, 일부는 배치가 아닌 다른 단위로 정규화 통계를 계산하는 방식을 사용한다.
 
-
-| **정규화 방식**                 | **정규화 대상**               | **계산 범위**         |
-| -------------------------- | ------------------------ | ----------------- |
-| **Batch Normalization**    | 동일 채널, 미니배치 내 모든 위치      | (N, H, W)         |
-| **Layer Normalization**    | 한 샘플의 전체 뉴런              | (C, H, W) or (C,) |
-| **Instance Normalization** | 한 샘플, 한 채널 내 모든 위치       | (H, W)            |
-| **Group Normalization**    | 여러 채널을 그룹으로 묶어 정규화       | (G, H, W)         |
-| **Weight Normalization**   | 가중치 벡터의 방향과 크기를 분리하여 정규화 | 각 뉴런의 가중치 벡터      |
-| **Spectral Normalization** | 가중치 행렬의 스펙트럼 노름 제어       | 가중치 행렬 $W$        |
+| **정규화 방식**            | **정규화 대상**                             | **계산 범위**         |
+| -------------------------- | ------------------------------------------- | --------------------- |
+| **Batch Normalization**    | 동일 채널, 미니배치 내 모든 위치            | (N, H, W)             |
+| **Layer Normalization**    | 한 샘플의 전체 뉴런                         | (C, H, W) or (C,)     |
+| **Instance Normalization** | 한 샘플, 한 채널 내 모든 위치               | (H, W)                |
+| **Group Normalization**    | 여러 채널을 그룹으로 묶어 정규화            | (G, H, W)             |
+| **Weight Normalization**   | 가중치 벡터의 방향과 크기를 분리하여 정규화 | 각 뉴런의 가중치 벡터 |
+| **Spectral Normalization** | 가중치 행렬의 스펙트럼 노름 제어            | 가중치 행렬 $W$       |
 
 # Loss functions
+
 신경망의 가중치를 최적화하기 위해서는 학습 데이터를 기반으로 손실 함수를 정의한 뒤 이 손실을 최소화하도록 가중치를 조정해야한다.
 
 분류 문제에서 대부분의 신경망은 마지막 층을 소프트맥스 함수를 적용한다. 이 경우, 출력값이 총합이 1인 클래스 확률로 정의되기에 훈련 과정 중 손실을 최소화 하기 위해 크로스-엔트로피 로스를 적용한다. 순전파 네트워크의 경우 뉴런을 $i,j$로 작성했지만, 손실 함수를 설명하는 과정에서 특정한 뉴런(훈련 샘플)은 $n$으로 표기하겠다.
@@ -233,7 +243,7 @@ $$
 
 이 때 $\mathbf{y}_n$은 샘플 $n$의 신경망 출력값이고, $\mathbf{t}_n$은 상응하는 타겟 값이다. 이는 연속적인 변수들 사이의 오차를 측정하기에 자연스러운 척도라고 볼 수 있다.
 
-위 손실 함수들은, 사실상 정답에 대한 확률 가중치를 최대화 하도록 신경망을 유도할 뿐 신경망의 출력이 적절한 **신뢰도 보정(_confidence calibrated_)**을 하도록 만들지는 않는다. 신뢰도 보정 문제를 해결하기 위해 _temperature_에 로그 우도를 곱하는 간단한 방법들도 실제 확률과 분류기의 확률의 정확성 향상에 도움을 주며, 대표적으로 GrokNet을 들 수 있다.
+위 손실 함수들은, 사실상 정답에 대한 확률 가중치를 최대화 하도록 신경망을 유도할 뿐 신경망의 출력이 적절한 **신뢰도 보정(_confidence calibrated_)**을 하도록 만들지는 않는다. 신뢰도 보정 문제를 해결하기 위해 *temperature*에 로그 우도를 곱하는 간단한 방법들도 실제 확률과 분류기의 확률의 정확성 향상에 도움을 주며, 대표적으로 GrokNet을 들 수 있다.
 
 새로운 이미지를 생성하는 신경망이나 이미지 스타일 전이 작업을 수행하는 경우 **_perceptual loss_**를 사용하는 것이 더 적절할 수 있다. Perceptual loss는 목표 이미지와 출력 이미지 간의 비교 기준으로 은닉층의 반응을 사용한다.
 
@@ -266,6 +276,7 @@ $$
 위 수식의 $\tau$는 **_temperature_**를 의미하며 클러스터가 얼마나 가까이에 붙어있을지를 통제한다.
 
 ## 가중치 초기화
+
 신경망의 가중치를 최적화 하기 전에, 우선, 가중치를 초기화 해야 한다. 초기 신경망은 대칭성을 줄이기 위해 작은 랜덤 값의 가중치를 사용했는데, 이는 모든 뉴런이 동일하게 동작하지 않도록 하여 그래디언트가 0이 되는 상황을 방지하려는 목적이었다.
 
 다만 신경망의 층이 깊어질수록 활성값이 점점 작아지는 현상이 관찰되었고, 이를 해결하기 위해서는 연속된 층들의 활성값 분산이 일정하게 유지되도록 해야한다. 이를 위해 각 층의 **입력 연결 수(_fan-in_)**를 고려해야 한다. 이 입력 연결 수는 활성값이 가중치와 곱해지는 횟수로 해석할 수 있다.
@@ -284,7 +295,7 @@ $$
 \mathbb{E}\lbrack y_l^w \rbrack = \frac{1}{2} \text{Var}\lbrack s_i \rbrack = \frac{1}{2} n_l V_l \mathbb{E}\lbrack x_l^2 \rbrack
 $$
 
-이 결과로부터 깊은 층에서도 평균 활성값이 변화하는 현상을 피하려면 각 층의 활성값의 크기를 유지하도록 **가중치 분산$V_l$을 다음과 같이 설정해야 한다.
+이 결과로부터 깊은 층에서도 평균 활성값이 변화하는 현상을 피하려면 각 층의 활성값의 크기를 유지하도록 \*\*가중치 분산$V_l$을 다음과 같이 설정해야 한다.
 
 $$
 V_l = \frac{2}{n_l}

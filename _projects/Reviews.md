@@ -6,7 +6,9 @@ img: assets/img/doggy.png
 importance: 1
 category: study
 ---
+
 # 소개
+
 리뷰와 구현한 논문들을 정리해놓았습니다.
 
 # BatchNorm
@@ -15,4 +17,4 @@ category: study
 
 [Batch Normalization(2015) - Implementation](https://ottersem.github.io/blog/2025/Batch-Normalization-Implementation/)
 
-- - -
+---

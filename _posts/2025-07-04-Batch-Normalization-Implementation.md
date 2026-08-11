@@ -7,13 +7,17 @@ tags: BatchNorm, Internal_Covariate_Shift, Implementation, Gradient_Vanishing, N
 categories: implementation
 pretty_table: true
 ---
+
 # Batch Normalization : Accelerating Deep Network Training by reducing Internal Covariate Shift
+
 2015, Ioffe, Szegedy
 
 # Internal Covariate Shift
+
 E\[x]를 역전파와 분리한 L2 Normalization과 Batch Normalization의 Loss를 비교해보자
 
 ## Modul import
+
 ```python
 import torch
 import torch.nn as nn
@@ -23,8 +27,8 @@ import matplotlib.pyplot as plt
 torch.manual_seed(0)
 ```
 
-
 ## Dataset
+
 ```python
 N = 500
 x = torch.linspace(-1,1,N).unsqueeze(1)
@@ -32,6 +36,7 @@ y = 2 * x + 0.1 * torch.randn_like(x)
 ```
 
 ## L2Norm model
+
 ```python
 class L2(nn.Module):
     def __init__(self,eps=1e-6):
@@ -57,6 +62,7 @@ class L2(nn.Module):
 ```
 
 ## BatchNorm
+
 ```python
 class BN(nn.Module):
     def __init__(self, num_features, eps=1e-6, momentum=0.1):
@@ -101,6 +107,7 @@ class BN(nn.Module):
 ```
 
 ## Train
+
 ```python
 def train(model, name, epochs=100, lr=0.05):
     optimizer = optim.SGD(model.parameters(),lr=lr)
@@ -143,6 +150,7 @@ loss_BN = train(BN_model, "Batch Normalization")
 반면에 Batch Normalization은 평균의 제거와 더불어 분산의 정규화까지 포함하여 zero-mean, unit-variance에 가깝다. 따라서 출력값의 분포가 표준 정규분포와 유사하게 퍼지고 Gradient도 안정적이라고 볼 수 있다.
 
 # Learning Rate Scaling
+
 Learnning Rate를 각각 5배와 20배로 조정하여 Batch Normalization의 학습 안정성을 비교분석 하면 다음과 같은 결과를 가진다.
 
 <div class="row">
@@ -161,6 +169,7 @@ Learnning Rate를 각각 5배와 20배로 조정하여 Batch Normalization의 �
 이러한 현상은 Batch Normalization이 학습 안정화에 큰 도움이 되지만, LR이 지나치게 클 경우에는 모멘텀의 갱신이 왜곡되어 오히려 학습을 방해할 수 있음을 의미한다.
 
 # Parameter and Location of BN
+
 두 가지 실험을 동시에 진행하였다.
 
 <div class="row">
@@ -174,4 +183,5 @@ Learnning Rate를 각각 5배와 20배로 조정하여 Batch Normalization의 �
 두 번째로 모멘텀 전달 이전에 Batch Normalization을 적용했을 때 어떤 영향을 미치는지에 대해 실험을 진행하였다. 일반적인 순서(FC -> BN -> ReLU)를 변형(BN -> FC -> ReLU)하여 적용하였음에도 불구하고 성능이 좋다는 점에서 학습 초기 정규화의 위치가 학습 효과에 큰 영향을 줄 수 있음을 시사한다. 구체적으로 모든 모델 중에 가장 빠르고 매끄럽게 수렴했으며, BN이 입력 분포를 안정화시켜 파라미터 업데이트에 유리하게 작용한 것으로 해석된다.
 
 # Conclusion
+
 Batch Normalization은 단순한 정규화 기법이 아닌 딥러닝의 학습 안정성과 효율성에 근본적인 영향을 주는 핵심 구성 요소로 자리잡았다. 위 실험을 통해 논문의 구현을 넘어, 다양한 하이퍼 파라미터와 구조 실험을 통해 Batch Normalization의 작동 원리와 설계 시의 고려사항을 탐색해보았다는 점에 의의를 둔다.

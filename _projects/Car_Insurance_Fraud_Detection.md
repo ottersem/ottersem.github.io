@@ -8,9 +8,9 @@ category: personal
 toc:
   - name: Introduction
     subsections:
-    - name: Problem Statement
-    - name: Dataset
-    - name: Process
+      - name: Problem Statement
+      - name: Dataset
+      - name: Process
   - name: EDA
   - name: Feature Engineering
   - name: Modeling strategy
@@ -19,10 +19,13 @@ toc:
 ---
 
 # Introduction
+
 ## Problem Statement
+
 본 프로젝트는 DACON에서 주최한 차량 보험 사기 예측 해커톤의 일환으로 수행되었다. 주요 목표는 기존 보험 청구 데이터를 기반으로 사기 가능성이 높은 사례를 분류하는 것이며, 이진 분류 문제로 접근하였다. 특히, 사기 탐지(fraud detection) 문제의 특성 상 **특이도(Specificity)** 즉, 정상인 데이터를 얼마나 정확히 판별하는지가 중요하며, 이 지표를 최적화하는 방향으로 모델을 설계하였다.
 
 ## Dataset
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/EDA/DataInfo.png" title="DataInfo" class="img-fluid rounded z-depth-1" %}
@@ -32,35 +35,37 @@ toc:
 본 해커톤에서 제공한 학습 데이터 셋은 약 1만 3천개의 보험 청구 기록 데이터와 25개의 피처가 포함되었다. 이 중 수치형, 범주형 피처가 혼합되어 있으며. 일부 피처는 불균형 분포와 결측치를 포함하고 있다.
 
 > 피쳐 정보
-ID : 고유ID
-age_of driver : 운전자 나이
-gender : 운전자 성별
-marital_status : 결혼 상태
-safty_rating : 운전자의 안전점수
-annual_income : 연간소득(단위:달러)
-high_education_ind : 운전자의 학력
-address_change_ind : 운전자의 주소변경 여부
-living_status : 자동차 소유상태
-claim_day_of_week : 청구된 접수된 요일
-accident_site  : 사고 발생 지역
-past_num_of claims : 과거 청구 건수
-witness_present_ind : 목격자 여부
-liab_prct : 운전자 과실 비율(%)
-channel : 청구 접수 매체
-policy_report_filed_ind : 경찰 신고 접수 여부
-claim_est_payout : 보험금 지급 추정 비율(%)
-age_of_vehicle : 자동차 연식
-vehicle_category : 자동차 카테고리
-vehicle_price : 자동차 가격(단위:달러)
-vehicle_color : 자동차 색깔
-vehicle_weight : 자동차 무게(kg)
-fraud : 사기여부
-year : 청구(년)
-month : 청구(월)
-day : 청구(일)
+> ID : 고유ID
+> age_of driver : 운전자 나이
+> gender : 운전자 성별
+> marital_status : 결혼 상태
+> safty_rating : 운전자의 안전점수
+> annual_income : 연간소득(단위:달러)
+> high_education_ind : 운전자의 학력
+> address_change_ind : 운전자의 주소변경 여부
+> living_status : 자동차 소유상태
+> claim_day_of_week : 청구된 접수된 요일
+> accident_site : 사고 발생 지역
+> past_num_of claims : 과거 청구 건수
+> witness_present_ind : 목격자 여부
+> liab_prct : 운전자 과실 비율(%)
+> channel : 청구 접수 매체
+> policy_report_filed_ind : 경찰 신고 접수 여부
+> claim_est_payout : 보험금 지급 추정 비율(%)
+> age_of_vehicle : 자동차 연식
+> vehicle_category : 자동차 카테고리
+> vehicle_price : 자동차 가격(단위:달러)
+> vehicle_color : 자동차 색깔
+> vehicle_weight : 자동차 무게(kg)
+> fraud : 사기여부
+> year : 청구(년)
+> month : 청구(월)
+> day : 청구(일)
 
 ## Process
+
 본 프로젝트의 전체 수행 프로세스는 다음과 같다.
+
 1. EDA : 데이터의 구조, 분포, 이상치 및 결측치 파악
 2. Feature Engineering: 의미 있는 변수 생성, 범주형 인코딩, 스케일링 등
 3. Modeling Strategy: XGBoost, CatBoost, LightGBM 등 앙상블 기반 모델 적용
@@ -68,6 +73,7 @@ day : 청구(일)
 5. Evaluation & Analysis: Specificity 중심의 평가 지표 분석 및 중요 변수 해석
 
 # EDA
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/EDA/outlier.png" title="outlier" class="img-fluid rounded z-depth-1" %}
@@ -88,7 +94,7 @@ IQR, VIF를 포함해 Z-score 기반 정규화 후 분포를 확인한 결과 �
     Distribution of Numerical Features
 </div>
 
-age\_of\_driver, annual\_income, claim\_est\_payout 등 주요 연속형 변수들은 전반적으로 비대칭적 분포를 나타내며 liab\_prct는 0%, 50%, 100%와 같이 특정 값에 급격히 몰리는 경향이 있으며, age\_of\_vehicle 역시 5~7년 사이에 밀집되어 있다.
+age_of_driver, annual_income, claim_est_payout 등 주요 연속형 변수들은 전반적으로 비대칭적 분포를 나타내며 liab_prct는 0%, 50%, 100%와 같이 특정 값에 급격히 몰리는 경향이 있으며, age_of_vehicle 역시 5~7년 사이에 밀집되어 있다.
 이상치 및 왜도를 고려하여 스케일링과 변환이 필요한 변수들이 존재하며, 분포 기반 정규화 전처리 작업이 필요하다.
 
 <div class="row">
@@ -112,7 +118,7 @@ Target 피처인 fraud 레이블은 85:15의 불균형한 이진 분포를 보�
     수치형 변수별 Fraud 여부에 따른 분포 차이
 </div>
 
-age\_of\_driver, annual\_income, claim\_est\_payout에서 사기 건수는 약간 오른쪽으로 치우친 경향을 보인다. 플롯을 통해 일부 피처는 fraud와의 상관관계를 보이며, 특히나 보험료 추정액과 책임 비율이 타겟 변수와 강한 연관을 가진다.
+age_of_driver, annual_income, claim_est_payout에서 사기 건수는 약간 오른쪽으로 치우친 경향을 보인다. 플롯을 통해 일부 피처는 fraud와의 상관관계를 보이며, 특히나 보험료 추정액과 책임 비율이 타겟 변수와 강한 연관을 가진다.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -123,7 +129,7 @@ age\_of\_driver, annual\_income, claim\_est\_payout에서 사기 건수는 약�
     주요 범주형 변수의 비율 시각화
 </div>
 
-대부분의 범주형 변수들이 대체로 2~3개 수준의 고유값을 가지며 비교적 균형 잡힌 분포를 보여주지만, witness\_present\_ind, channel 등은 한 두 개의 값에 매우 치중된 분포를 갖는다.
+대부분의 범주형 변수들이 대체로 2~3개 수준의 고유값을 가지며 비교적 균형 잡힌 분포를 보여주지만, witness_present_ind, channel 등은 한 두 개의 값에 매우 치중된 분포를 갖는다.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -134,7 +140,7 @@ age\_of\_driver, annual\_income, claim\_est\_payout에서 사기 건수는 약�
     Fraud 비율에 따른 범주형 변수별 차이
 </div>
 
-marital\_status, address\_change\_ind, accident\_site, channel 등의 변수는 사기 비율 차이가 뚜렷하다. 따라서 범주형 변수는 단순 빈도보다 사기율 차이에 초점을 맞춰 파생 변수를 설계할 필요가 있다.
+marital_status, address_change_ind, accident_site, channel 등의 변수는 사기 비율 차이가 뚜렷하다. 따라서 범주형 변수는 단순 빈도보다 사기율 차이에 초점을 맞춰 파생 변수를 설계할 필요가 있다.
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -147,6 +153,7 @@ marital\_status, address\_change\_ind, accident\_site, channel 등의 변수는 
 
 해당 플롯은 모델로부터 얻어진 class=1 의 확률 분포를 히스토그램 형태로 나타낸 것이다.
 대다수의 샘플이 0.0 ~ 0.2 구간에 몰려 있으며, 사기라고 예측된 강한 신호는 상대적으로 드물며, 0.2, 0.3, 0.5의 세 가지 threshold를 기준으로 분포의 컷오프를 시각적으로 비교할 수 있도록 설정하였다.
+
 - 0.5: Precision은 높지만 Recall이 낮음
 - 0.3: 보다 균형 잡힌 전략
 - 0.2: Recall을 극대화할 수 있음 (false positive 위험 존재)
@@ -163,12 +170,13 @@ marital\_status, address\_change\_ind, accident\_site, channel 등의 변수는 
 </div>
 
 Threshold 변화에 따라 Precision과 Recall이 어떻게 변하는지를 나타낸 곡선이다.
+
 - Threshold가 낮아질수록 Recall은 증가, Precision은 감소하는 전형적인 양상
 - 대략 Threshold = 0.2~0.3 구간이 이상적인 F1 균형점
-- 
-이 결과는 단순히 0.5로 고정된 기준을 사용할 경우 모델이 과도하게 보수적으로 판단할 수 있다는 점을 시사하며, 특이도 중심의 평가(예: Specificity 최적화)와 함께 threshold 조정이 매우 중요함을 보여준다.
+- 이 결과는 단순히 0.5로 고정된 기준을 사용할 경우 모델이 과도하게 보수적으로 판단할 수 있다는 점을 시사하며, 특이도 중심의 평가(예: Specificity 최적화)와 함께 threshold 조정이 매우 중요함을 보여준다.
 
 # Preprocessing and Feature Engineering
+
 ## Data Cleansing
 
 ```python
@@ -213,7 +221,7 @@ def feature_engineering(df):
     df['claims_liab_interaction'] = df['past_num_of_claims'] * df['liab_prct']
     df['claims_vehicle_age_ratio'] = df['past_num_of_claims'] / (df['age_of_vehicle'] + 1e-3)
     df['driver_vehicle_age_diff'] = df['age_of_driver'] - df['age_of_vehicle']
-     
+
     # 조건 기반 이진 변수
     df['is_young_driver'] = (df['age_of_driver'] < 25).astype(int)
     df['is_elder_driver'] = (df['age_of_driver'] > 65).astype(int)
@@ -265,23 +273,27 @@ def feature_engineering(df):
 
 학습과 테스트 데이터 셋에 동일하게 적용할 수 있도록 모든 피처 엔지니어링 작업은 featureengineering() 함수로 구현하고 일괄로 적용하였다. 세부 작업 사항은 다음과 같다.
 
-| **항목**   | **적용 기법**                      |
-| -------- | ------------------------------ |
-| 결측치 처리   | 비정상 레코드 제거, 결측 플래그 생성          |
-| 이상치 대응   | 로그 변환 (log1p)                  |
-| 수치형 확장   | 비율 기반 피처, 조합 파생 변수             |
-| 범주형 확장   | 범주형 결합, 구간화 후 One-Hot Encoding |
-| 시간 기반 확장 | 요일, 월, 계절, 연말 플래그 등            |
+| **항목**       | **적용 기법**                           |
+| -------------- | --------------------------------------- |
+| 결측치 처리    | 비정상 레코드 제거, 결측 플래그 생성    |
+| 이상치 대응    | 로그 변환 (log1p)                       |
+| 수치형 확장    | 비율 기반 피처, 조합 파생 변수          |
+| 범주형 확장    | 범주형 결합, 구간화 후 One-Hot Encoding |
+| 시간 기반 확장 | 요일, 월, 계절, 연말 플래그 등          |
 
 단순한 변수 확장을 넘어 위험 행동 패턴, 조합 리스크, 경제적 비정상성을 드러낼 수 있는 다양한 설계 전략을 포괄하여 최종 모델의 예측 성능 향상에 지대하게 기여했다.
 
 # Modeling strategy
+
 ## Problem Characteristics and Metric Selection
+
 본 과제는 이진 분류(binary classification) 문제로, 보험 청구 건이 사기(fraud) 인지 아닌지를 예측하는 것이 목적이다. 그러나 일반적인 분류 문제와는 달리, 이 문제는 다음과 같은 특수성을 가진다.
+
 - 클래스 불균형(Class Imbalance): Fraud 비율이 약 15.6%에 불과하여, 단순 정확도(accuracy)만으로는 모델의 성능을 적절히 평가할 수 없다.
 - 실무적 요구: 보험사 입장에서 정상 청구를 잘 맞추는 것(Specificity) 또한 중요하며, 거짓 양성(False Positive)을 줄이려는 목적도 병행된다.
 
 따라서, 주요 평가 지표로는 다음을 사용하였다.
+
 - F1 Score (macro) : 전체 균형 성능
 - ROC-AUC : 전체적인 분류 민감도
 - Specificity : 정상 예측의 정확성
@@ -289,13 +301,14 @@ def feature_engineering(df):
 
 ## Model Selection and Justification
 
-| **모델**       | **설명**                         |
-| ------------ | ------------------------------ |
+| **모델**     | **설명**                                              |
+| ------------ | ----------------------------------------------------- |
 | **XGBoost**  | 강력한 앙상블 트리 모델로 불균형 데이터 대응에 효과적 |
-| **CatBoost** | 범주형 변수 자동 처리, GPU 최적화 가능       |
-| **LightGBM** | 대규모 데이터셋에 강하고 학습 속도 빠름         |
+| **CatBoost** | 범주형 변수 자동 처리, GPU 최적화 가능                |
+| **LightGBM** | 대규모 데이터셋에 강하고 학습 속도 빠름               |
 
 모델 선정의 주요 고려 사항은 다음과 같다:
+
 - 트리 기반 모델은 복잡한 비선형 관계를 잘 학습하며,
 - 결측치 및 범주형 처리에서 유리하고,
 - 불균형 클래스에 민감한 loss나 가중치 설정이 가능하다.
@@ -313,6 +326,7 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 전체 데이터셋은 8:2로 분할되었으며, 클래스 분포를 유지하기 위해 stratify 파라미터를 사용하였다. 이후 하이퍼파라미터 튜닝과 threshold 조정에는 검증 데이터셋을 기준으로 성능을 측정하였다.
 
 ## Class Imbalance Handling
+
 상술하였듯 별도의 오버샘플링은 사용하지 않고, 다음 전략을 활용하였다.
 
 1. Threshold 조정: Precision-Recall 그래프 기반으로 0.2~0.3 구간을 조정 대상으로 설정
@@ -320,8 +334,11 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
 3. F1-macro 최적화: Optuna 기반 튜닝에서 목적 함수를 F1 macro로 설정하여 균형 성능 확보
 
 ## Model Explainability (SHAP Values)
+
 모델의 예측 근거를 설명하기 위해 SHAP 값을 사용하여 변수 중요도를 시각화 하였다. 각 모델의 SHAP summary plot 및 decision plot을 도출하여, 전체 피처의 영향력과 개별 예측의 구성 요소를 분석하였다.
+
 ### XGBoost
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_1.png" title="SHAP_1" class="img-fluid rounded z-depth-1" %}
@@ -337,9 +354,10 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
     SHAP Summary : XGBoost
 </div>
 
-특정 예측에서는 accident\_site = Highway, claims\_liab\_interaction, low education, female, no\_witness\_moved 등 요소가 Fraud 방향으로 강하게 기여하였다.
+특정 예측에서는 accident_site = Highway, claims_liab_interaction, low education, female, no_witness_moved 등 요소가 Fraud 방향으로 강하게 기여하였다.
 
 ### CatBoost
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_4.png" title="SHAP_4" class="img-fluid rounded z-depth-1" %}
@@ -355,9 +373,10 @@ train_X, valid_X, train_y, valid_y = train_test_split(X, y, test_size=0.2, strat
     SHAP Summary : CatBoost
 </div>
 
-이 예측에서는 accident\_site = Highway, not married, safty\_rating = 매우 낮음 등의 특징이 Fraud 방향으로 강하게 기여하였다.
+이 예측에서는 accident_site = Highway, not married, safty_rating = 매우 낮음 등의 특징이 Fraud 방향으로 강하게 기여하였다.
 
 ### LightGBM
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/Car_Insurance/SHAP/SHAP_7.png" title="SHAP_7" class="img-fluid rounded z-depth-1" %}
@@ -380,6 +399,7 @@ SHAP 분석을 통해 모델이 단순한 패턴이 아닌 다차원적 피처 �
 최종적으로는 SHAP 분석을 통해 도출해낸 상위 30개의 피처 중 공통된 피처들만을 학습에 사용하였다.
 
 ## Voting Ensemble Strategy
+
 ```python
 def tune_threshold_xgb(model, X_val, y_val, thresholds=np.arange(0.1, 0.61, 0.02)):
     best_thresh = 0
@@ -389,17 +409,17 @@ def tune_threshold_xgb(model, X_val, y_val, thresholds=np.arange(0.1, 0.61, 0.02
         preds = (probs >= threshold).astype(int)
         macro_f1 = f1_score(y_val, preds, average='macro')
         print(f"Threshold = {threshold:.2f} | Macro F1-score = {macro_f1:.4f}")
-        
+
         if macro_f1 > best_f1:
             best_f1 = macro_f1
             best_thresh = threshold
-    
+
     print(f"\nBest Threshold: {best_thresh:.2f} | Best Macro F1-score: {best_f1:.4f}")
-    
+
     final_preds = (model.predict_proba(X_val)[:, 1] >= best_thresh).astype(int)
     print("\nClassification Report:")
     print(classification_report(y_val, final_preds))
-    
+
     return best_thresh, best_f1
 
 best_thresh_xgb, best_f1_xgb = tune_threshold_xgb(model_xgb, valid_X, valid_y)
@@ -413,9 +433,9 @@ def weighted_soft_voting_threshold(models, weights, thresholds, X_val, y_val):
     for name, model in models.items():
         p = model.predict_proba(X_val)[:, 1]
         t = thresholds[name]
-        probas += weights[name] * (p >= t).astype(float) 
+        probas += weights[name] * (p >= t).astype(float)
 
-    preds = (probas >= 0.5).astype(int)  
+    preds = (probas >= 0.5).astype(int)
     f1 = f1_score(y_val, preds, average='macro')
 
     print(f"\n[Weighted Soft Voting] Macro F1-score: {f1:.4f}")
@@ -447,6 +467,7 @@ final_preds, final_f1 = weighted_soft_voting_threshold(models, weights, threshol
 이 구조는 개별 모델의 예측 분산을 줄이고 전체적인 강건성을 확보하였다.
 
 # Fitting and Tuning
+
 ## Hyperparameter Optimization Strategy
 
 ```python
@@ -480,7 +501,7 @@ print("Best Macro F1:", study.best_value)
 ```
 
 모델 성능을 극대화하기 위해 Optuna 프레임워크를 활용하여 각 모델의 하이퍼파라미터를 최적화 하였다. 튜닝의 목적은 단순 성능 뿐 아니라, 불균형 데이터에 강인한 분류기 구조 설계와 과적합 억제를 목표로 하였다.
-모델 예측 후 확률값을 기준으로 사기 여부를 이진 분류할 때, 단순히 threshold=0.5를 사용하는 대신 검증 데이터셋 기반 Precision-Recall 곡선 분석을 통해 최적 임계값을 도출하였다. 
+모델 예측 후 확률값을 기준으로 사기 여부를 이진 분류할 때, 단순히 threshold=0.5를 사용하는 대신 검증 데이터셋 기반 Precision-Recall 곡선 분석을 통해 최적 임계값을 도출하였다.
 
 ```python
 probas = (
@@ -492,18 +513,21 @@ final_preds = (probas >= 0.5).astype(int)
 ```
 
 # Evaluation and Analysis
+
 ## Model Performance Evaluation Metrics
+
 최종 예측 결과에 대한 정량적 평가를 위해 다양한 성능 지표를 측정하였다. 특히나 타겟 클래스가 전체의 약 15% 가량에 불과한 불균형성을 띄고 있으므로, 단순한 정확도가 아닌 Recall, Precision, F1 Score, Specificity 등 다양한 지표를 종합적으로 고려하였다.
 
-| **지표**               | **설명**                                     |
-| -------------------- | ------------------------------------------ |
+| **지표**             | **설명**                                                     |
+| -------------------- | ------------------------------------------------------------ |
 | **Precision**        | 사기 예측 중 실제 사기일 확률 (False Positive 최소화에 기여) |
-| **Recall**           | 실제 사기 중 탐지한 비율 (False Negative 최소화에 기여)    |
+| **Recall**           | 실제 사기 중 탐지한 비율 (False Negative 최소화에 기여)      |
 | **F1 Score (Macro)** | 클래스 불균형을 고려한 전체 모델 균형 평가                   |
-| **Accuracy**         | 전체 정답 비율 (보조적인 참고 지표)                      |
-| **Specificity**      | 정상 클래스(0)에 대해 올바르게 예측한 비율= TN / (TN + FP)  |
+| **Accuracy**         | 전체 정답 비율 (보조적인 참고 지표)                          |
+| **Specificity**      | 정상 클래스(0)에 대해 올바르게 예측한 비율= TN / (TN + FP)   |
 
 ## Confusion Matrix : Before and After
+
 모델 성능 향상을 직관적으로 보여주기 위해, 모델 최적화 전과 후의 혼동 행렬을 비교하였다.
 
 <div class="row">
@@ -533,25 +557,33 @@ Macro 평균 F1 Score는 0.90 이상으로, 클래스 간 균형 잡힌 분류 �
 본 평가 결과는 threshold 조정, Optuna 기반 튜닝, soft voting 앙상블 전략이 불균형 문제에 효과적으로 작용했음을 실증적으로 보여준다. 특히 Recall과 F1 Score의 개선은 실제 사기 탐지 목적에 매우 부합한다.
 
 ### Key Observations
+
 - Recall 개선: baseline 대비 class 1의 recall이 0.20 → 0.87로 대폭 향상되었음 → 사기 탐지 능력 실질적 확보
 - Precision 향상: 모델 threshold 조정 및 앙상블로 False Positive 억제 성공
 - Specificity 보존: class 0의 예측 정확도(0.96)는 여전히 높게 유지됨 → 실무에서의 오탐 부담 최소화
 - F1 Score 균형화: class imbalance에 민감한 F1 macro 기준에서도 안정적 모델 구조 확보
 
-
 # Conclusion
 
 본 프로젝트는 보험 청구 데이터 기반의 자동 사기 탐지 시스템 개발을 목표로 하였으며, 다음과 같은 전략을 통해 성과를 도출하였다:
+
 1. 데이터 전처리 및 고도화된 피처 엔지니어링
+
 - 로그 변환, 비율 기반 파생 변수, 다중 범주 조합 등의 설계를 통해 핵심 변수 구조 강화
 - 시간, 경제적, 행동적 특성을 모두 반영하는 파생 변수 설계
+
 2. 트리 기반 모델 앙상블 및 튜닝 최적화
+
 - XGBoost, LightGBM, CatBoost를 활용하여 앙상블 구성
 - Optuna 기반 하이퍼파라미터 튜닝 + 모델별 threshold 조정 적용
+
 3. 모델 해석 가능성 확보 및 실제 효과 평가
+
 - SHAP 분석을 통해 주요 영향 변수 도출
 - 성능 향상 전후 비교(Class 1의 F1: 0.23 → 0.84, Macro F1: 0.55 → 0.90)를 통해 실질적인 개선 확인
+
 4. 정확도뿐 아니라 실무 적용에 중요한 Recall / Specificity / F1을 균형적으로 개선
+
 - Recall (fraud): 0.20 → 0.87
 - Specificity (normal): 0.89 → 0.96
 
