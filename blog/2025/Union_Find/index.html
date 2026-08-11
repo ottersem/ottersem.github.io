@@ -24,11 +24,11 @@
 </pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">i</span>
-    
+
     <span class="c1"># Recursive
 </span>    <span class="c1"># 경로 압축: 찾은 대표(Root)를 현재 노드의 새로운 부모로 설정한다.
 </span>    <span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">parent</span><span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">parent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> <h1 id="unionab">Union(a,b)</h1> <p>Union연산은 a,b가 속한 그룹의 대표 $R_A, R_B$를 찾은 다음, 둘 중 하나를 다른 하나의 자식으로 만들면 끝난다.</p> <p>그렇지만 기준 없이 무작정 한쪽을 다른 쪽의 자식으로 만들면 위에서 제시했던 효율성 문제가 또 발생할 수 있다. 이를 해결하기 위해 아래 두 가지 최적화 기법을 사용한다. 다음 최적화 기법을 통해 트리의 높이를 항상 $\log N$에 가깝게 유지해 효율을 높일 수 있다.</p> <h2 id="union-by-size">Union by Size</h2> <p>원소의 개수가 더 많은 그룹에 원소의 개수가 적은 그룹을 합친다.</p> <h3 id="size-arrray">size arrray</h3> <p>크기를 기반으로 합치려면 Union-Find 구조에 추가적으로 그룹의 크기를 추적해야 한다. 크기 정보를 모든 노드에 저장할 필요는 없고, 그룹의 Root 노드에만 저장하는 것이 효율적이다.</p> <ol> <li>별도의 size array 또는 size dictionary 생성</li> <li>size[i]는 노드 i가 Root일 때만 그룹의 총 원소 개수를 저장</li> <li>초기 상태에서는 모든 원소가 독립적인 Root이므로 size[i]는 모두 1</li> <li>작은 그룹을 큰 그룹에 합쳐야 트리의 깊이가 깊어지는 것을 방지할 수 있음!!</li> </ol> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -53,22 +53,22 @@
 </pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">union_by_size</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
     <span class="n">root_a</span> <span class="o">=</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
     <span class="n">root_b</span> <span class="o">=</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">root_a</span> <span class="o">!=</span> <span class="n">root_b</span><span class="p">:</span>
         <span class="c1"># 그룹 크기 비교: 작은 그룹을 큰 그룹에 합칩니다.
 </span>        <span class="k">if</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="n">root_b</span><span class="p">]:</span>
             <span class="n">root_a</span><span class="p">,</span> <span class="n">root_b</span> <span class="o">=</span> <span class="n">root_b</span><span class="p">,</span> <span class="n">root_a</span> <span class="c1"># root_a가 항상 큰 그룹이 되도록 스왑
-</span>            
+</span>
         <span class="c1"># 1. 부모 업데이트: root_b를 root_a의 자식으로 만듭니다.
 </span>        <span class="n">parent</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_a</span>
-        
+
         <span class="c1"># 2. 크기 업데이트: root_a의 크기를 두 그룹의 합으로 갱신합니다.
 </span>        <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">size</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span>
-        
+
         <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span>
-        
+
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span>  
+        <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="union-by-rank">Union by Rank</h2> <p>트리의 깊이(Rank)가 더 깊은 쪽에 얕은 쪽을 합친다.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -94,23 +94,23 @@
 </pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">union_by_rank</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">rank</span><span class="p">):</span>
     <span class="n">root_a</span> <span class="o">=</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
     <span class="n">root_b</span> <span class="o">=</span> <span class="nf">find_root</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
-    
+
     <span class="k">if</span> <span class="n">root_a</span> <span class="o">!=</span> <span class="n">root_b</span><span class="p">:</span>
         <span class="c1"># 1. 랭크가 다를 때: A의 랭크가 B의 랭크보다 작을 경우
 </span>        <span class="k">if</span> <span class="n">rank</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">rank</span><span class="p">[</span><span class="n">root_b</span><span class="p">]:</span>
             <span class="n">parent</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_b</span>
-            
+
         <span class="c1"># 2. 랭크가 다를 때: A의 랭크가 B의 랭크보다 클 경우
 </span>        <span class="k">elif</span> <span class="n">rank</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">rank</span><span class="p">[</span><span class="n">root_b</span><span class="p">]:</span>
             <span class="n">parent</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_a</span>
-            
+
         <span class="c1"># 3. 랭크가 같을 때
 </span>        <span class="k">else</span><span class="p">:</span>
             <span class="n">parent</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_a</span>
             <span class="n">rank</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-            
-        <span class="k">return</span> <span class="bp">True</span> 
-    
+
+        <span class="k">return</span> <span class="bp">True</span>
+
     <span class="k">return</span> <span class="bp">False</span> <span class="c1"># 이미 같은 그룹
 </span></pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="rank-array">rank array</h3> <p>크기 기반 합치기와 유사하게 rank배열을 사용하여 root노드의 랭크를 저장한다. 초기 랭크는 보통 0으로 설정한다.</p> <ol> <li>두 root $R_A,R_B$의 랭크를 비교한다.</li> <li>랭크가 <strong>다를때</strong> : 랭크가 낮은 트리를 랭크가 높은 트리에 연결한다. 이때 새 root의 랭크는 변하지 않는다</li> <li>랭크가 <strong>같을때</strong> : 어느 쪽을 Root로 삼든 상관없으며, 연결 후 새 Root의 랭크는 <strong>1</strong> 증가한다.</li> </ol> <h1 id="example">Example</h1> <p><a href="https://www.acmicpc.net/problem/4195" rel="external nofollow noopener" target="_blank">친구 네트워크(4195)</a></p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -180,14 +180,14 @@
     <span class="k">if</span> <span class="n">root_a</span> <span class="o">!=</span> <span class="n">root_b</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="n">root_b</span><span class="p">]:</span>
             <span class="n">root_a</span><span class="p">,</span> <span class="n">root_b</span> <span class="o">=</span> <span class="n">root_b</span><span class="p">,</span> <span class="n">root_a</span>
-        
+
         <span class="n">parent</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_a</span>
 
         <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">size</span><span class="p">[</span><span class="n">root_b</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">size</span><span class="p">[</span><span class="n">root_a</span><span class="p">]</span>
-    
+
 <span class="k">def</span> <span class="nf">get_id_and_init</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">name2id</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name2id</span><span class="p">:</span>
         <span class="n">new</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">name2id</span><span class="p">)</span>
@@ -199,12 +199,12 @@
         <span class="k">return</span> <span class="n">new</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">name2id</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-    
+
 <span class="k">def</span> <span class="nf">answer</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
     <span class="n">name2id</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
     <span class="n">parent</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">size</span> <span class="o">=</span> <span class="p">{}</span>
-    
+
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
         <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
 
@@ -219,7 +219,9 @@
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() {
+    dataLayer.push(arguments);
+  }
   gtag('js', new Date());
 
   gtag('config', 'G-T1KYNCMYPR');

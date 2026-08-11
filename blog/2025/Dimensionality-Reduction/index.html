@@ -95,7 +95,7 @@
 <span class="c1"># 훈련 데이터에 PCA 적용
 </span><span class="n">pca</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">scaled_train</span><span class="p">)</span>
 <span class="n">pca_transformed_train</span> <span class="o">=</span> <span class="n">pca</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">scaled_train</span><span class="p">)</span>
-    
+
 <span class="c1"># Scree Plot 그리기
 </span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nf">len</span><span class="p">(</span><span class="n">pca</span><span class="p">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">pca</span><span class="p">.</span><span class="n">explained_variance_ratio_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="sh">'</span><span class="s">o</span><span class="sh">'</span><span class="p">)</span>
@@ -225,7 +225,9 @@
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1KYNCMYPR"></script> <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() {
+    dataLayer.push(arguments);
+  }
   gtag('js', new Date());
 
   gtag('config', 'G-T1KYNCMYPR');
