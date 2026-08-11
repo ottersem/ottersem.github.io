@@ -2,7 +2,7 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Techlog # the website title (if blank, full name will be used instead)
+title: # the website title (if blank, full name will be used instead)
 first_name: Seungmin
 middle_name: Justin
 last_name: Park
@@ -85,7 +85,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Techlog # blog_name will be displayed in your blog page
+blog_name: Seungmin Park # blog_name will be displayed in your blog page
 blog_description: Blog and CV about Machine Learning, Computer Vision, Data Science, Python.
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
