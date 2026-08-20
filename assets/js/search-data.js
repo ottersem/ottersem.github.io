@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-paper-multitask-active-learning-for-graph-anomaly-detection",
+        },{id: "post-paper-adaptive-compensation-for-robotic-joint-failures-using-partially-observable-reinforcement-learning",
+      
+        title: "[Paper] Adaptive Compensation for Robotic Joint Failures Using Partially Observable  Reinforcement Learning",
+      
+      description: "Review of paper &#39;Adaptive Compensation for Robotic Joint Failures Using Partially Observable  Reinforcement Learning&#39;",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/Adaptive-Compensation-for-Robotic-Joint-Failures/";
+        
+      },
+    },{id: "post-paper-multitask-active-learning-for-graph-anomaly-detection",
       
         title: "[Paper] Multitask Active Learning for Graph Anomaly Detection",
       
