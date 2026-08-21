@@ -8,17 +8,24 @@ categories: Paper
 pretty_table: true
 ---
 
-[Multitask Active Learning for Graph Anomaly Detection](https://arxiv.org/abs/2409.14435)
+[Adaptive Compensation for Robotic Joint Failures Using Partially Observable  Reinforcement Learning](https://arxiv.org/abs/2409.14435)
 
 # First pass
 ## Words
 **DRL(Deep Reinforcement Learning)**
+
 **FTC(Fault-Tolerant Control)** : Fault-tolerant control aims at a gradual shutdown response in automated systems when faults occur
+
 **FDI(Fault detection and isolation)**
+
 **POMDP(Partially Observed Markov Decision Process)**
+
 **PPO(Proximal Policy Optimization) Algorithm**
+
 **GAE(Generalized Advantage Estimation)**
+
 **Denavit-Hartenberg Convention(DH convention)**
+
 ## 5C
 1. **Category** : DRL을 적용한 FTC RL embodied AI 시스템 개발
 2. **Context**  
@@ -126,6 +133,7 @@ RL 프레임워크의 강건성을 측정하기 위해 두 종류의 joint malfu
 측정을 위한 primary metric은 다음과 같다
 - Success rate of completing the task.
 - Time taken to complete the task.
+
 ## Inverse Kinematics
 ### Denavit-Hartenberg Parameters and Inverse Kinematics Solving
 **Forward Kinematics**
