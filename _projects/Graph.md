@@ -109,9 +109,11 @@ $$
 ### Optimizing an Encoder-Decoder Model
 Reconstruction objective를 달성하기 위해 일반적으로 학습 노드 쌍의 집합 $\mathcal{D}$에 대한 emperical reconstruction loss $\mathcal{L}$을 최소화 하여야 한다.
 
+{% raw %}
 $$
 \mathcal{L} = \sum_{(u,v)\in\mathcal{D}}l(\text{DEC}(\mathbf{z}_u,\mathbf{z}_v),\mathbf{S}[u,v])
 $$
+{% endraw %}
 
 이때 $l$은 디코더가 산출한 유사도 값 $\text{DEC}(\mathbf{z}_u,\mathbf{z}_v)$와 실제 값 $\mathbf{S}[u,v]$ 사이의 차이를 측정하는 loss function이다.
 
