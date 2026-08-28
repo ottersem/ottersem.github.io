@@ -136,8 +136,8 @@ $$
 이때, 임베딩 행렬 $\mathbf{Z}$와 relation 행렬 $\mathbf{R}_\tau, \forall_\tau \in \mathcal{R}$은 다음과 같은 mean-squared reconstruction loss를 사용한다.
 
 $$\begin{align}
-\mathcal{L} & =\sum_{{u}\in\mathcal{V}}\sum_{{v}\in\mathcal{V}}\sum_{{\tau}\in\mathcal{R}}\| \text{DEC}(u,\tau,v)-\mathcal{A}[u,\tau,v]\|^2 \\
-&= \sum_{{u}\in\mathcal{V}}\sum_{{v}\in\mathcal{V}}\sum_{{\tau}\in\mathcal{R}} \|\mathbf{z}_u^\top \mathbf{R}_\tau \mathbf{z}_v-\mathcal{A}[u,\tau,v]\|^2
+\mathcal{L} & =\sum_{u\in\mathcal{V}}\sum_{v\in\mathcal{V}}\sum_{\tau\in\mathcal{R}}\| \text{DEC}(u,\tau,v)-\mathcal{A}[u,\tau,v]\|^2 \\
+&= \sum_{u\in\mathcal{V}}\sum_{v\in\mathcal{V}}\sum_{\tau\in\mathcal{R}} \|\mathbf{z}_u^\top \mathbf{R}_\tau \mathbf{z}_v-\mathcal{A}[u,\tau,v]\|^2
 \end{align}$$
 
 이 때, $\mathcal{A} \in \mathbb{R}^{|\mathcal{V}|\times|\mathcal{R}|\times|\mathcal{V}|}$는 multi-relational graph를 위한 adjacency tensor다.
