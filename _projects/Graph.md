@@ -2,7 +2,7 @@
 layout: distill
 title: Graph Representation Learning
 description: Graph Representation Learning and GNN
-img: assets/img/GE_project/Thumbnail.jpeg
+img: assets/img/GRL_cover.jpeg
 importance: 1
 category: study
 toc:
