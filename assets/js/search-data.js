@@ -717,6 +717,11 @@ ninja.data = [{
           description: "Focusing on Unity&#39;s C# scripting",
           section: "Projects",handler: () => {
               window.location.href = "/projects/Game_Engine_Assignment/";
+            },},{id: "projects-graph-representation-learning",
+          title: 'Graph Representation Learning',
+          description: "Graph Representation Learning and GNN",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/Graph/";
             },},{id: "projects-mathmatics-for-machine-learning",
           title: 'Mathmatics for Machine Learning',
           description: "Summerize MML",
