@@ -6,7 +6,7 @@
     "email": "smtm050390@gmail.com",
     "phone": "",
     "url": "https://ottersem.github.io",
-    "summary": "Research interests in computer vision, machine learning, and multimodal AI, with a focus on integrating visual data into medical and scientific applications. Background in industrial optical measurement software development.",
+    "summary": "Research interests in computer vision, machine learning, and multimodal AI, with a focus on integrating visual data into robotics and scientific applications. Background in industrial optical measurement software development.",
     "location": {
       "address": "Seoul, South Korea",
       "postalCode": "04019",
@@ -36,6 +36,16 @@
     }
   ],
   "experience": [
+    {
+      "institution": "Chung-Ang University",
+      "location": "Seoul, South Korea",
+      "area": "Visual Intelligence Lab",
+      "url": "https://www.vilab.cau.ac.kr/",
+      "position": "Teaching Assistant, Military AI Education Program",
+      "startDate": "2026-04-01",
+      "endDate": "2026-06-28",
+      "description": "Python programming for military personnel."
+    },
     {
       "institution": "Chung-Ang University",
       "location": "Seoul, South Korea",
@@ -94,20 +104,6 @@
       "icon": "fa fa-certificate"
     }
   ],
-  "skills": [
-    {
-      "name": "Language",
-      "level": "Intermediate",
-      "icon": "fa-solid fa-hashtag",
-      "keywords": ["Python", "SQL", "MEL(Maya Embedded Language)", "C++"]
-    },
-    {
-      "name": "Data Analysis",
-      "level": "Novice",
-      "icon": "fa-solid fa-hashtag",
-      "keywords": ["Pandas", "Pytorch", "Seaborn", "Matplotlib"]
-    }
-  ],
   "languages": [
     {
       "language": "Korean",
@@ -116,7 +112,7 @@
     },
     {
       "language": "English",
-      "fluency": ["TOEIC : 880"],
+      "fluency": ["Advanced (TOEIC : 880)"],
       "icon": ""
     },
     {
@@ -127,12 +123,23 @@
   ],
   "interests": [
     {
-      "name": "Computer Science",
+      "name": "Artificial Intelligence",
       "icon": "fa-solid fa-desktop",
-      "keywords": ["Deep Learning Algorithm", "Computer Vision", "Multimoal AI focused on medical and scientific applications"]
+      "keywords": ["Computer Vision", "Multimoal AI focused scientific applications"]
+    },
+    {
+      "name": "Robotics",
+      "icon": "fa-solid fa-robot",
+      "keywords": ["Embodied AI", "Vision Language Action mmodel"]
     }
   ],
   "projects": [
+    {
+      "name": "AI for Cultural Heritage Understanding",
+      "summary": "Participating in a Ministry of Culture, Sports and Tourism funded R&D project",
+      "highlights": ["Graph Neural Network", "GAN", "Active Learning"],
+      "startDate": "2026-04-01"
+    },
     {
       "name": "Application Modernization",
       "summary": "Modernize Eldim(optical metrology engineering company)'s operting software. Project details under NDA",
