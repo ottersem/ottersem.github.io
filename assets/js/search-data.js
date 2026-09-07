@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-paper-adaptive-compensation-for-robotic-joint-failures-using-partially-observable-reinforcement-learning",
+        },{id: "post-",
+      
+        title: "",
+      
+      description: "",
+      section: "Posts",
+      handler: () => {
+        
+          window.location.href = "/blog/2026/2026-09-06-pi0.5/";
+        
+      },
+    },{id: "post-paper-adaptive-compensation-for-robotic-joint-failures-using-partially-observable-reinforcement-learning",
       
         title: "[Paper] Adaptive Compensation for Robotic Joint Failures Using Partially Observable  Reinforcement Learning",
       
