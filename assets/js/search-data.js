@@ -37,15 +37,15 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-",
+        },{id: "post-paper-π0-5-a-vision-language-action-model-with-open-world-generalization",
       
-        title: "",
+        title: "[Paper] π0.5 : a Vision-Language-Action Model with Open-World Generalization",
       
-      description: "",
+      description: "Review of paper &#39;π0.5 : a Vision-Language-Action Model with Open-World Generalization&#39;",
       section: "Posts",
       handler: () => {
         
-          window.location.href = "/blog/2026/2026-09-06-pi0.5/";
+          window.location.href = "/blog/2026/pi0.5/";
         
       },
     },{id: "post-paper-adaptive-compensation-for-robotic-joint-failures-using-partially-observable-reinforcement-learning",
