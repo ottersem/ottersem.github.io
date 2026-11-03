@@ -35,6 +35,17 @@
       "startDate": "2026-03-01"
     }
   ],
+  "domesticPapers": [
+    {
+      "name": "Relational Graph Convolutional Networks for Anomalous Attribute Detection in Cultural Heritage Knowledge Graphs",
+      "authors": [{ "name": "Seungmin Park" }, { "name": "Kanghee Lee" }, { "name": "Jongwon Choi", "corresponding": true }],
+      "publisher": "The Korean Institute of Broadcast and Media Engineers (KIBME)",
+      "presentationDate": "2026-11-19",
+      "status": "Accepted",
+      "type": "Poster"
+    }
+  ],
+  "internationalPapers": [],
   "experience": [
     {
       "institution": "Chung-Ang University",

@@ -4,7 +4,7 @@
 
 title: blank # the website title (if blank, full name will be used instead)
 first_name: Seungmin
-middle_name: 
+middle_name:
 last_name: Park
 contact_note: >
   Contact by e-mail please.
@@ -631,6 +631,8 @@ jekyll_get_json:
 jsonresume:
   - basics
   - education
+  - domesticPapers
+  - internationalPapers
   - experience
   - certificates
   - skills

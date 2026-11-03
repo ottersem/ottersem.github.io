@@ -1,0 +1,43 @@
+<ul class="card-text font-weight-light list-group list-group-flush">
+  {% assign papers = data[1] | sort: 'presentationDate' | reverse %}
+  {% for paper in papers %}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-12 col-md-2 text-center date-column">
+          {% if paper.presentationDate %}
+            <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px">
+              {{ paper.presentationDate | date: '%Y' }}
+            </span>
+          {% endif %}
+        </div>
+        <div class="col-12 col-md-10 mt-2 mt-md-0">
+          <h6 class="title font-weight-bold ml-1 ml-md-4">
+            {% if paper.url and paper.url != '' %}
+              <a href="{{ paper.url | relative_url }}">{{ paper.name | escape }}</a>
+            {% else %}
+              {{ paper.name | escape }}
+            {% endif %}
+          </h6>
+          <p class="ml-1 ml-md-4 mb-1">
+            {% for author in paper.authors %}
+              {%- if author.name == site.data.resume.basics.name -%}
+                <strong>{{ author.name | escape }}</strong>
+              {%- else -%}
+                {{ author.name | escape }}
+              {%- endif -%}
+              {%- if author.corresponding %} (corresponding author){% endif -%}
+              {%- unless forloop.last %}, {% endunless -%}
+            {% endfor %}
+          </p>
+          <p class="ml-1 ml-md-4 mb-1">{{ paper.publisher | escape }}</p>
+          <p class="ml-1 ml-md-4 mb-1">{{ paper.type | escape }} &middot; {{ paper.status | escape }}</p>
+          {% if paper.presentationDate %}
+            <p class="ml-1 ml-md-4 mb-0">Presentation date: {{ paper.presentationDate | date: '%B %-d, %Y' }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </li>
+  {% else %}
+    <li class="list-group-item text-muted">No papers listed yet.</li>
+  {% endfor %}
+</ul>

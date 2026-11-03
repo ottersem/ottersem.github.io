@@ -85,12 +85,21 @@ layout: default
               {% continue %}
             {% endunless %}
           {% endif %}
-          {% if data[0] == 'meta' or data[1].size == 0 %} {% continue %} {% endif %}
+          {% if data[0] == 'meta' %} {% continue %} {% endif %}
+          {% if data[1].size == 0 %}
+            {% unless data[0] == 'domesticPapers' or data[0] == 'internationalPapers' %}
+              {% continue %}
+            {% endunless %}
+          {% endif %}
           <a class="anchor" id="{{ data[0] }}"></a>
           <div class="card mt-3 p-3 resume-section-{{ data[0] | slugify }}">
             {% assign section_title = data[0] | capitalize %}
             {% if data[0] == 'relevantCoursework' %}
               {% assign section_title = 'Relevant Coursework' %}
+            {% elsif data[0] == 'domesticPapers' %}
+              {% assign section_title = 'Domestic Papers' %}
+            {% elsif data[0] == 'internationalPapers' %}
+              {% assign section_title = 'International Papers' %}
             {% endif %}
             <h3 class="card-title font-weight-medium">{{ section_title }}</h3>
             <div>
@@ -113,6 +122,8 @@ layout: default
                   {% include resume/skills.liquid %}
                 {% when 'publications' %}
                   {% include resume/publications.liquid %}
+                {% when 'domesticPapers', 'internationalPapers' %}
+                  {% include resume/papers.liquid %}
                 {% when 'languages' %}
                   {% include resume/languages.liquid %}
                 {% when 'interests' %}
